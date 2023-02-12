@@ -7,15 +7,15 @@ BinPackArguments: false
 BinPackParameters: false
 BreakConstructorInitializers: BeforeComma
 ColumnLimit: 120
-CommentPragmas: '^(!|NOLINT)'
+CommentPragmas: "^(!|NOLINT)"
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^<.*'
+  - Regex: "^<.*"
     Priority: 2
-  - Regex: '.*'
+  - Regex: ".*"
     Priority: 1
-IncludeIsMainRegex: '(_dt|_win)?$'
+IncludeIsMainRegex: "(_dt|_win)?$"
 IndentCaseLabels: true
 IndentWidth: 2
 KeepEmptyLinesAtTheStartOfBlocks: false
@@ -23,4 +23,3 @@ PenaltyReturnTypeOnItsOwnLine: 200
 SpacesBeforeTrailingComments: 2
 TabWidth: 4
 UseTab: Never
-...

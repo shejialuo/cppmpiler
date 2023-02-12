@@ -2,6 +2,7 @@
 #define _LEXER_LEXER_HPP_
 
 #include "token.hpp"
+
 #include <string>
 
 /**
@@ -10,15 +11,13 @@
  */
 class Lexer {
 private:
-  std::string input; // input string
-  int position;      // current position in input (points to current char)
-  int nextPosition;  // current reading position in input (after current char)
-  char ch;           // current char under examination
+  std::string input;  // input string
+  int position;       // current position in input (points to current char)
+  int nextPosition;   // current reading position in input (after current char)
+  char ch;            // current char under examination
 public:
   Lexer() = delete;
-  Lexer(std::string i) : input(std::move(i)), position{}, nextPosition{}, ch{} {
-    readChar();
-  }
+  Lexer(std::string i) : input(std::move(i)), position{}, nextPosition{}, ch{} { readChar(); }
   Lexer(const Lexer &) = delete;
   Lexer(Lexer &&) = delete;
 
@@ -38,4 +37,4 @@ public:
   Token nextToken();
 };
 
-#endif // _LEXER_LEXER_HPP_
+#endif  // _LEXER_LEXER_HPP_

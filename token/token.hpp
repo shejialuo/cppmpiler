@@ -51,4 +51,4 @@ struct Token {
   void setToken(std::string_view &t, char ch);
 };
 
-#endif // _TOKEN_TOKEN_HPP_
+#endif  // _TOKEN_TOKEN_HPP_

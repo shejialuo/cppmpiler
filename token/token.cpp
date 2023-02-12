@@ -1,4 +1,5 @@
 #include "token.hpp"
+
 #include <string>
 #include <string_view>
 
