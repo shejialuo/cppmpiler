@@ -1,6 +1,7 @@
 #ifndef _TOKEN_TOKEN_HPP_
 #define _TOKEN_TOKEN_HPP_
 
+#include <ostream>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -81,5 +82,7 @@ struct Token {
    */
   void setIdentifiers(std::string &identifiers);
 };
+
+std::ostream &operator<<(std::ostream &os, Token &token);
 
 #endif  // _TOKEN_TOKEN_HPP_

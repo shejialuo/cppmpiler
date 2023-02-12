@@ -44,3 +44,8 @@ void Token::setIdentifiers(std::string &identifiers) {
     Type = std::string{TokenTypes::IDENT};
   }
 }
+
+std::ostream &operator<<(std::ostream &os, Token &token) {
+  os << "{Type:" << token.Type << " Literal:" << token.Literal << "}";
+  return os;
+}

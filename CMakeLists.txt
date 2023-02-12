@@ -67,3 +67,10 @@ add_subdirectory(./deps/spdlog)
 
 add_subdirectory(./token)
 add_subdirectory(./lexer)
+add_subdirectory(./repl)
+
+add_executable(simpleInterpreter main.cpp)
+target_include_directories(simpleInterpreter PRIVATE ./repl)
+target_link_libraries(simpleInterpreter repl)
+
+set_target_properties(simpleInterpreter PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/)
