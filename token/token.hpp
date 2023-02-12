@@ -22,6 +22,13 @@ struct TokenTypes {
   // Operators
   static std::string_view ASSIGN;
   static std::string_view PLUS;
+  static std::string_view MINUS;
+  static std::string_view BANG;
+  static std::string_view ASTERISK;
+  static std::string_view SLASH;
+
+  static std::string_view LT;
+  static std::string_view GT;
 
   // Delimiters
   static std::string_view COMMA;
@@ -49,6 +56,12 @@ struct Token {
   Token() = default;
   Token(TokenType_t &t, std::string &l) : Type{t}, Literal{l} {}
   void setToken(std::string_view &t, char ch);
+
+  /**
+   * @brief auxiliary functions to loop up the keywords
+   *
+   */
+  TokenType_t lookupIdentifiers(std::string &identifiers);
 };
 
 #endif  // _TOKEN_TOKEN_HPP_

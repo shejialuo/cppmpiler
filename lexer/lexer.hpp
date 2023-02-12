@@ -3,6 +3,7 @@
 
 #include "token.hpp"
 
+#include <functional>
 #include <string>
 
 /**
@@ -35,6 +36,33 @@ public:
    * @return Token
    */
   Token nextToken();
+
+  /**
+   * @brief get consecutive substring s, which all of the char c in s
+   * satisfies fn(c) == true.
+   *
+   * @param fn a criterion function
+   * @return std::string
+   */
+  std::string consecutiveSubstring(std::function<bool(char)> fn);
 };
+
+/**
+ * @brief auxiliary functions to tell whether `ch` is a letter or '_'
+ *
+ */
+static bool isLetter(char ch);
+
+/**
+ * @brief auxiliary functions to tell whether `ch` is a digit
+ *
+ */
+static bool isDigit(char ch);
+
+/**
+ * @brief auxiliary functions to tell where `ch` is a generic whitespace
+ *
+ */
+static bool isWhitespace(char ch);
 
 #endif  // _LEXER_LEXER_HPP_
