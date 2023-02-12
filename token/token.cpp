@@ -4,9 +4,6 @@
 #include <string_view>
 #include <unordered_map>
 
-std::unordered_map<std::string, TokenType_t> Keywords{{"fn", std::string(TokenTypes::FUNCTION)},
-                                                      {"let", std::string(TokenTypes::LET)}};
-
 std::string_view TokenTypes::ILLEGAL{"ILLEGAL"};
 std::string_view TokenTypes::_EOF{"EOF"};
 std::string_view TokenTypes::IDENT{"IDENT"};
@@ -33,10 +30,10 @@ void Token::setToken(std::string_view &t, char ch) {
   Literal = std::string{ch};
 }
 
-TokenType_t Token::lookupIdentifiers(std::string &identifiers) {
-  if (Keywords.count(identifiers)) {
-    return Keywords[identifiers];
+void Token::setIdentifiers(std::string &identifiers) {
+  if (keywords.count(identifiers)) {
+    Type = keywords[identifiers];
   } else {
-    return std::string{TokenTypes::IDENT};
+    Type = std::string{TokenTypes::IDENT};
   }
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <string_view>
+#include <unordered_map>
 
 // For simplicity, we define all the `TokenType` to be the `std::string`
 using TokenType_t = std::string;
@@ -53,15 +54,18 @@ struct Token {
   TokenType_t Type;
   std::string Literal;
 
+  std::unordered_map<std::string, TokenType_t> keywords{{"fn", std::string(TokenTypes::FUNCTION)},
+                                                        {"let", std::string(TokenTypes::LET)}};
+
   Token() = default;
   Token(TokenType_t &t, std::string &l) : Type{t}, Literal{l} {}
   void setToken(std::string_view &t, char ch);
 
   /**
-   * @brief auxiliary functions to loop up the keywords
+   * @brief auxiliary functions to set the keywords
    *
    */
-  TokenType_t lookupIdentifiers(std::string &identifiers);
+  void setIdentifiers(std::string &identifiers);
 };
 
 #endif  // _TOKEN_TOKEN_HPP_

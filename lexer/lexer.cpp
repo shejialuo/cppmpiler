@@ -71,7 +71,7 @@ Token Lexer::nextToken() {
     default:
       if (isLetter(ch)) {
         token.Literal = consecutiveSubstring(isLetter);
-        token.Type = token.lookupIdentifiers(token.Literal);
+        token.setIdentifiers(token.Literal);
         return token;
       } else if (isDigit(ch)) {
         token.Type = TokenTypes::INT;
