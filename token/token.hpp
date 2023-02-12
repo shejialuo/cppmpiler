@@ -27,6 +27,8 @@ struct TokenTypes {
   static std::string_view BANG;
   static std::string_view ASTERISK;
   static std::string_view SLASH;
+  static std::string_view EQ;
+  static std::string_view NOT_EQ;
 
   static std::string_view LT;
   static std::string_view GT;

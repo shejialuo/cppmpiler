@@ -181,3 +181,38 @@ TEST(Lexer, TestIfElseOperation) {
     }
   }
 }
+
+TEST(Lexer, TestEqualAndNotEqual) {
+  std::string input{"10 == 10; \
+                       10 != 9;"};
+
+  std::vector<TestToken> tests{
+      {TokenTypes::INT, "10"},
+      {TokenTypes::EQ, "=="},
+      {TokenTypes::INT, "10"},
+      {TokenTypes::SEMICOLON, ";"},
+      {TokenTypes::INT, "10"},
+      {TokenTypes::NOT_EQ, "!="},
+      {TokenTypes::INT, "9"},
+      {TokenTypes::SEMICOLON, ";"},
+  };
+
+  Lexer l{input};
+
+  for (int i = 0; i < tests.size(); ++i) {
+    Token token = l.nextToken();
+
+    TestToken &testToken = tests[i];
+
+    if (token.Type != testToken.expectedType) {
+      spdlog::error("test[{}] - token type wrong. expected='{}', got='{}'", i, testToken.expectedType, token.Type);
+      FAIL();
+    }
+
+    if (token.Literal != testToken.expectedLiteral) {
+      spdlog::error(
+          "test[{}] - token literal wrong. expected='{}', got='{}'", i, testToken.expectedLiteral, token.Literal);
+      FAIL();
+    }
+  }
+}

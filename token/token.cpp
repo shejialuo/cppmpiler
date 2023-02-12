@@ -29,6 +29,8 @@ std::string_view TokenTypes::FALSE{"FALSE"};
 std::string_view TokenTypes::IF{"IF"};
 std::string_view TokenTypes::ELSE{"ELSE"};
 std::string_view TokenTypes::RETURN{"RETURN"};
+std::string_view TokenTypes::EQ{"=="};
+std::string_view TokenTypes::NOT_EQ{"!="};
 
 void Token::setToken(std::string_view &t, char ch) {
   Type = t;

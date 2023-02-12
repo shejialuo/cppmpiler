@@ -23,7 +23,14 @@ Token Lexer::nextToken() {
 
   switch (ch) {
     case '=':
-      token.setToken(TokenTypes::ASSIGN, ch);
+      if (examineNextChar() == '=') {
+        readChar();
+        token.Type = TokenTypes::EQ;
+        token.Literal = "==";
+      } else {
+        token.setToken(TokenTypes::ASSIGN, ch);
+      }
+
       break;
     case ';':
       token.setToken(TokenTypes::SEMICOLON, ch);
@@ -50,7 +57,13 @@ Token Lexer::nextToken() {
       token.setToken(TokenTypes::MINUS, ch);
       break;
     case '!':
-      token.setToken(TokenTypes::BANG, ch);
+      if (examineNextChar() == '=') {
+        readChar();
+        token.Type = TokenTypes::NOT_EQ;
+        token.Literal = "!=";
+      } else {
+        token.setToken(TokenTypes::BANG, ch);
+      }
       break;
     case '/':
       token.setToken(TokenTypes::SLASH, ch);
@@ -95,6 +108,14 @@ std::string Lexer::consecutiveSubstring(std::function<bool(char)> fn) {
   }
 
   return input.substr(originalPosition, position - originalPosition);
+}
+
+char Lexer::examineNextChar() {
+  if (nextPosition >= input.size()) {
+    return 0;
+  } else {
+    return input[nextPosition];
+  }
 }
 
 static bool isLetter(char ch) { return std::isalpha(ch) || ch == '_'; }
