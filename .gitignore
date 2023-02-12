@@ -1,0 +1,6 @@
+# build
+.cache/
+build/
+
+# binary
+simple-interpreter
