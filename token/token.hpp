@@ -43,6 +43,11 @@ struct TokenTypes {
   // Keywords
   static std::string_view FUNCTION;
   static std::string_view LET;
+  static std::string_view TRUE;
+  static std::string_view FALSE;
+  static std::string_view IF;
+  static std::string_view ELSE;
+  static std::string_view RETURN;
 };
 
 /**
@@ -54,8 +59,15 @@ struct Token {
   TokenType_t Type;
   std::string Literal;
 
-  std::unordered_map<std::string, TokenType_t> keywords{{"fn", std::string(TokenTypes::FUNCTION)},
-                                                        {"let", std::string(TokenTypes::LET)}};
+  std::unordered_map<std::string, TokenType_t> keywords{
+      {"fn", std::string(TokenTypes::FUNCTION)},
+      {"let", std::string(TokenTypes::LET)},
+      {"true", std::string(TokenTypes::TRUE)},
+      {"false", std::string(TokenTypes::FALSE)},
+      {"if", std::string(TokenTypes::IF)},
+      {"else", std::string(TokenTypes::ELSE)},
+      {"return", std::string(TokenTypes::RETURN)},
+  };
 
   Token() = default;
   Token(TokenType_t &t, std::string &l) : Type{t}, Literal{l} {}

@@ -134,3 +134,50 @@ TEST(Lexer, TestNextTokenMoreOperators) {
     }
   }
 }
+
+TEST(Lexer, TestIfElseOperation) {
+  std::string input{"if (5 < 10) { \
+                          return true; \
+                    } else { \
+                          return false; \
+                    }"};
+
+  std::vector<TestToken> tests{
+      {TokenTypes::IF, "if"},
+      {TokenTypes::LPAREN, "("},
+      {TokenTypes::INT, "5"},
+      {TokenTypes::LT, "<"},
+      {TokenTypes::INT, "10"},
+      {TokenTypes::RPAREN, ")"},
+      {TokenTypes::LBRACE, "{"},
+      {TokenTypes::RETURN, "return"},
+      {TokenTypes::TRUE, "true"},
+      {TokenTypes::SEMICOLON, ";"},
+      {TokenTypes::RBRACE, "}"},
+      {TokenTypes::ELSE, "else"},
+      {TokenTypes::LBRACE, "{"},
+      {TokenTypes::RETURN, "return"},
+      {TokenTypes::FALSE, "false"},
+      {TokenTypes::SEMICOLON, ";"},
+      {TokenTypes::RBRACE, "}"},
+  };
+
+  Lexer l{input};
+
+  for (int i = 0; i < tests.size(); ++i) {
+    Token token = l.nextToken();
+
+    TestToken &testToken = tests[i];
+
+    if (token.Type != testToken.expectedType) {
+      spdlog::error("test[{}] - token type wrong. expected='{}', got='{}'", i, testToken.expectedType, token.Type);
+      FAIL();
+    }
+
+    if (token.Literal != testToken.expectedLiteral) {
+      spdlog::error(
+          "test[{}] - token literal wrong. expected='{}', got='{}'", i, testToken.expectedLiteral, token.Literal);
+      FAIL();
+    }
+  }
+}

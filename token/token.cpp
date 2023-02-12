@@ -24,6 +24,11 @@ std::string_view TokenTypes::ASTERISK{"*"};
 std::string_view TokenTypes::SLASH{"/"};
 std::string_view TokenTypes::LT{"<"};
 std::string_view TokenTypes::GT{">"};
+std::string_view TokenTypes::TRUE{"TRUE"};
+std::string_view TokenTypes::FALSE{"FALSE"};
+std::string_view TokenTypes::IF{"IF"};
+std::string_view TokenTypes::ELSE{"ELSE"};
+std::string_view TokenTypes::RETURN{"RETURN"};
 
 void Token::setToken(std::string_view &t, char ch) {
   Type = t;
