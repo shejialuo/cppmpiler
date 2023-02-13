@@ -32,6 +32,11 @@ std::string_view TokenTypes::RETURN{"RETURN"};
 std::string_view TokenTypes::EQ{"=="};
 std::string_view TokenTypes::NOT_EQ{"!="};
 
+Token::Token(const Token &token) {
+  Type = token.Type;
+  Literal = token.Literal;
+}
+
 void Token::setToken(std::string_view &t, char ch) {
   Type = t;
   Literal = std::string{ch};

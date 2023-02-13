@@ -74,6 +74,7 @@ struct Token {
 
   Token() = default;
   Token(TokenType_t &t, std::string &l) : Type{t}, Literal{l} {}
+  Token(const Token &);
   void setToken(std::string_view &t, char ch);
 
   /**

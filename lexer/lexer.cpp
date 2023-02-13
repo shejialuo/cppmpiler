@@ -107,6 +107,10 @@ std::string Lexer::consecutiveSubstring(std::function<bool(char)> fn) {
     readChar();
   }
 
+  if (position >= input.size()) {
+    return "";
+  }
+
   return input.substr(originalPosition, position - originalPosition);
 }
 
