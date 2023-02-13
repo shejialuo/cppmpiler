@@ -98,12 +98,31 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief ReturnStatement represents return statement
+ * for example, `return 3`
+ */
 class ReturnStatement : public Statement {
 public:
   ReturnStatement() = default;
   ReturnStatement(const Token &);
   Token token;
   std::unique_ptr<Expression> returnValue;
+  void statementNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
+/**
+ * @brief Expression could also be a statement.
+ * for example: `x + 10`.
+ *
+ */
+class ExpressionStatement : public Statement {
+public:
+  Token token;
+  std::unique_ptr<Expression> expression;
+
   void statementNode() override;
   std::string tokenLiteral() override;
   std::string getString() override;

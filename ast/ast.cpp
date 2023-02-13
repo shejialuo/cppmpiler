@@ -51,3 +51,12 @@ std::string ReturnStatement::getString() {
 
   return info;
 }
+
+void ExpressionStatement::statementNode() {}
+std::string ExpressionStatement::tokenLiteral() { return token.Literal; }
+std::string ExpressionStatement::getString() {
+  if (expression != nullptr) {
+    return expression->getString();
+  }
+  return "";
+}
