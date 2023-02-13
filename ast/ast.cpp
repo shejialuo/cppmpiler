@@ -16,3 +16,7 @@ std::string Identifier::tokenLiteral() { return token.Literal; }
 LetStatement::LetStatement(const Token &t) : token{t} {}
 void LetStatement::statementNode() {}
 std::string LetStatement::tokenLiteral() { return token.Literal; }
+
+ReturnStatement::ReturnStatement(const Token &t) : token{t} {}
+void ReturnStatement::statementNode() {}
+std::string ReturnStatement::tokenLiteral() { return token.Literal; }

@@ -35,6 +35,8 @@ std::unique_ptr<Program> Parser::parseProgram() {
 std::unique_ptr<Statement> Parser::parseStatement() {
   if (currentToken.Type == TokenTypes::LET) {
     return std::move(parseLetStatement());
+  } else if (currentToken.Type == TokenTypes::RETURN) {
+    return std::move(parserReturnStatement());
   } else {
     return nullptr;
   }
@@ -61,6 +63,20 @@ std::unique_ptr<LetStatement> Parser::parseLetStatement() {
   return std::move(letStatement);
 }
 
+std::unique_ptr<ReturnStatement> Parser::parserReturnStatement() {
+  auto returnStatement = std::make_unique<ReturnStatement>(currentToken);
+
+  nextToken();
+
+  // TODO: skip the expressions until encountering a semicolon.
+
+  while (!currentTokenIs(TokenTypes::SEMICOLON)) {
+    nextToken();
+  }
+
+  return std::move(returnStatement);
+}
+
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }
 
 bool Parser::peekTokenIs(std::string_view &t) { return peekToken.Type == t; }
@@ -70,5 +86,11 @@ bool Parser::expectPeek(std::string_view &t) {
     nextToken();
     return true;
   }
+  peekError(t);
   return false;
+}
+
+void Parser::peekError(std::string_view &t) {
+  std::string message = "expected next token to be " + std::string(t) + " got " + peekToken.Type + " instead";
+  errors.push_back(std::move(message));
 }

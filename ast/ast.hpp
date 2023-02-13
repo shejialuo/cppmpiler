@@ -88,4 +88,14 @@ public:
   std::string tokenLiteral() override;
 };
 
+class ReturnStatement : public Statement {
+public:
+  ReturnStatement() = default;
+  ReturnStatement(const Token &);
+  Token token;
+  std::unique_ptr<Expression> returnValue;
+  void statementNode() override;
+  std::string tokenLiteral() override;
+};
+
 #endif  // _AST_AST_HPP_

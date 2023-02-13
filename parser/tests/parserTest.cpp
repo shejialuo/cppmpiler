@@ -9,6 +9,7 @@
 #include <vector>
 
 bool testLetStatement(Statement *statement, std::string name);
+bool checkParseErrors(Parser &parser);
 
 struct TestData {
   std::string expectedIdentifier;
@@ -24,6 +25,10 @@ TEST(Parser, TestLetStatements) {
   Parser parser{&lexer};
 
   std::unique_ptr<Program> program = parser.parseProgram();
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
   if (program == nullptr) {
     spdlog::error("parseProgram() returned null");
     FAIL();
@@ -68,4 +73,47 @@ bool testLetStatement(Statement *statement, std::string name) {
     return false;
   }
   return true;
+}
+
+TEST(Parser, TestReturnStatements) {
+  std::string input = "return 5;\
+                       return 10; \
+                       return 993322;";
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+
+  auto program = parser.parseProgram();
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  if (program->statements.size() != 3) {
+    spdlog::error("program->statements does not contain 3 statements. got='{}'", program->statements.size());
+    FAIL();
+  }
+
+  for (auto &&statement : program->statements) {
+    ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(statement.get());
+    if (returnStatement == nullptr) {
+      spdlog::error("statement is not an returnStatement");
+      FAIL();
+    }
+
+    if (returnStatement->tokenLiteral() != "return") {
+      spdlog::error("letStatement.name not 'return', got='{}'", returnStatement->tokenLiteral());
+      FAIL();
+    }
+  }
+}
+
+bool checkParseErrors(Parser &parser) {
+  if (parser.getErrors().size() == 0) {
+    return true;
+  } else {
+    for (auto &&message : parser.getErrors()) {
+      spdlog::error("parser error: {}", message);
+    }
+    return false;
+  }
 }
