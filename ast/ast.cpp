@@ -6,17 +6,48 @@
 
 void Statement::statementNode() {}
 std::string Statement::tokenLiteral() { return ""; }
+std::string Statement::getString() { return ""; }
 
 std::string Program::tokenLiteral() { return statements.size() > 0 ? statements[0]->tokenLiteral() : ""; }
+std::string Program::getString() {
+  std::string info{};
+  for (auto &&statement : statements) {
+    info += statement->getString();
+  }
+  return info;
+}
 
 Identifier::Identifier(const Token &t, std::string &s) : token{t}, value{s} {}
 void Identifier::expressionNode() {}
 std::string Identifier::tokenLiteral() { return token.Literal; }
+std::string Identifier::getString() { return value; }
 
 LetStatement::LetStatement(const Token &t) : token{t} {}
 void LetStatement::statementNode() {}
 std::string LetStatement::tokenLiteral() { return token.Literal; }
+std::string LetStatement::getString() {
+  std::string info{tokenLiteral() + " " + name->getString() + " = "};
+
+  if (value != nullptr) {
+    info += value->getString();
+  }
+
+  info += ";";
+
+  return info;
+}
 
 ReturnStatement::ReturnStatement(const Token &t) : token{t} {}
 void ReturnStatement::statementNode() {}
 std::string ReturnStatement::tokenLiteral() { return token.Literal; }
+std::string ReturnStatement::getString() {
+  std::string info{tokenLiteral() + " "};
+
+  if (returnValue != nullptr) {
+    info += returnValue->getString();
+  }
+
+  info += ";";
+
+  return info;
+}

@@ -20,6 +20,12 @@ public:
    * @return std::string
    */
   virtual std::string tokenLiteral() = 0;
+  /**
+   * @brief Get the string information
+   *
+   * @return std::string
+   */
+  virtual std::string getString() = 0;
 };
 
 /**
@@ -30,6 +36,7 @@ public:
 class Statement : public Node {
 public:
   std::string tokenLiteral() override;
+  std::string getString() override;
   virtual void statementNode();
 };
 
@@ -54,6 +61,7 @@ class Program : public Node {
 public:
   std::vector<std::unique_ptr<Statement>> statements{};
   std::string tokenLiteral() override;
+  std::string getString() override;
 };
 
 /**
@@ -70,6 +78,7 @@ public:
   std::string value;
   void expressionNode() override;
   std::string tokenLiteral() override;
+  std::string getString() override;
 };
 
 /**
@@ -86,6 +95,7 @@ public:
   std::unique_ptr<Expression> value;
   void statementNode() override;
   std::string tokenLiteral() override;
+  std::string getString() override;
 };
 
 class ReturnStatement : public Statement {
@@ -96,6 +106,7 @@ public:
   std::unique_ptr<Expression> returnValue;
   void statementNode() override;
   std::string tokenLiteral() override;
+  std::string getString() override;
 };
 
 #endif  // _AST_AST_HPP_

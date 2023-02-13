@@ -32,6 +32,16 @@ std::string_view TokenTypes::RETURN{"RETURN"};
 std::string_view TokenTypes::EQ{"=="};
 std::string_view TokenTypes::NOT_EQ{"!="};
 
+std::unordered_map<std::string, TokenType_t> Token::keywords{
+    {"fn", std::string(TokenTypes::FUNCTION)},
+    {"let", std::string(TokenTypes::LET)},
+    {"true", std::string(TokenTypes::TRUE)},
+    {"false", std::string(TokenTypes::FALSE)},
+    {"if", std::string(TokenTypes::IF)},
+    {"else", std::string(TokenTypes::ELSE)},
+    {"return", std::string(TokenTypes::RETURN)},
+};
+
 Token::Token(const Token &token) {
   Type = token.Type;
   Literal = token.Literal;

@@ -62,15 +62,7 @@ struct Token {
   TokenType_t Type;
   std::string Literal;
 
-  std::unordered_map<std::string, TokenType_t> keywords{
-      {"fn", std::string(TokenTypes::FUNCTION)},
-      {"let", std::string(TokenTypes::LET)},
-      {"true", std::string(TokenTypes::TRUE)},
-      {"false", std::string(TokenTypes::FALSE)},
-      {"if", std::string(TokenTypes::IF)},
-      {"else", std::string(TokenTypes::ELSE)},
-      {"return", std::string(TokenTypes::RETURN)},
-  };
+  static std::unordered_map<std::string, TokenType_t> keywords;
 
   Token() = default;
   Token(TokenType_t &t, std::string &l) : Type{t}, Literal{l} {}
