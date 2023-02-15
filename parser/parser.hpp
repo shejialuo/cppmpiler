@@ -86,6 +86,13 @@ public:
   std::unique_ptr<Expression> parseIdentifier();
 
   /**
+   * @brief This function need to be registered in the `prefixParseFns`.
+   *
+   * @return std::unique_ptr<Expression>
+   */
+  std::unique_ptr<Expression> parseIntegerLiteral();
+
+  /**
    * @brief A helper function to tell whether
    * `currentToken == t`
    *

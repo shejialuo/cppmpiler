@@ -65,3 +65,8 @@ std::string ExpressionStatement::getString() {
   }
   return "";
 }
+
+IntegerLiteral::IntegerLiteral(const Token &t, int64_t v) : token{t}, value{v} {}
+void IntegerLiteral::expressionNode() {}
+std::string IntegerLiteral::tokenLiteral() { return token.Literal; }
+std::string IntegerLiteral::getString() { return token.Literal; }

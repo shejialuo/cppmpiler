@@ -4,6 +4,8 @@
 #include "lexer.hpp"
 #include "token.hpp"
 
+#include <cstddef>
+#include <cstdlib>
 #include <functional>
 #include <memory>
 #include <string_view>
@@ -27,8 +29,11 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   nextToken();
   nextToken();
 
-  TokenType_t type = std::string(TokenTypes::IDENT);
-  registerPrefix(type, std::bind(&Parser::parseIdentifier, this));
+  TokenType_t identType = std::string(TokenTypes::IDENT);
+  registerPrefix(identType, std::bind(&Parser::parseIdentifier, this));
+
+  TokenType_t intType = std::string(TokenTypes::INT);
+  registerPrefix(intType, std::bind(&Parser::parseIntegerLiteral, this));
 }
 
 void Parser::nextToken() {
@@ -124,6 +129,12 @@ std::unique_ptr<ExpressionStatement> Parser::parseExpressionStatement() {
 std::unique_ptr<Expression> Parser::parseIdentifier() {
   auto identifier = std::make_unique<Identifier>(currentToken, currentToken.Literal);
   return std::move(identifier);
+}
+
+std::unique_ptr<Expression> Parser::parseIntegerLiteral() {
+  int64_t value = std::strtoll(currentToken.Literal.c_str(), nullptr, 10);
+  auto integerLiteral = std::make_unique<IntegerLiteral>(currentToken, value);
+  return std::move(integerLiteral);
 }
 
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }

@@ -147,6 +147,46 @@ TEST(Parser, TestIdentifierExpression) {
   }
 }
 
+TEST(Parser, TestIntegerLiteralExpression) {
+  std::string input{"5;"};
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+
+  auto program = parser.parseProgram();
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  if (program->statements.size() != 1) {
+    spdlog::error("program has not enough statements. got='{}'", program->statements.size());
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+
+  if (expressionStatement == nullptr) {
+    spdlog::error("statement is not an ExpressionStatement");
+    FAIL();
+  }
+
+  IntegerLiteral *integer = dynamic_cast<IntegerLiteral *>(expressionStatement->expression.get());
+  if (integer == nullptr) {
+    spdlog::error("expression is not an IntegerLiteral");
+    FAIL();
+  }
+
+  if (integer->value != 5) {
+    spdlog::error("identifier->value not 5. got='{}'", integer->value);
+    FAIL();
+  }
+
+  if (integer->tokenLiteral() != "5") {
+    spdlog::error("identifier->tokenLiteral not '5'. got='{}'", integer->tokenLiteral());
+    FAIL();
+  }
+}
+
 bool checkParseErrors(Parser &parser) {
   if (parser.getErrors().size() == 0) {
     return true;

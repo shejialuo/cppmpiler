@@ -3,6 +3,7 @@
 
 #include "token.hpp"
 
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
@@ -128,6 +129,23 @@ public:
   std::unique_ptr<Expression> expression;
 
   void statementNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
+/**
+ * @brief `IntegerLiteral` is an expression which represents
+ * the `5`.
+ *
+ */
+class IntegerLiteral : public Expression {
+public:
+  IntegerLiteral() = default;
+  IntegerLiteral(const Token &, int64_t);
+
+  Token token;
+  int64_t value;
+  void expressionNode() override;
   std::string tokenLiteral() override;
   std::string getString() override;
 };
