@@ -4,13 +4,31 @@
 #include "lexer.hpp"
 #include "token.hpp"
 
+#include <functional>
 #include <memory>
 #include <string_view>
 
-Parser::Parser(Lexer *l) : lexer{l} {
+/**
+ * @brief define the precedence
+ *
+ */
+enum class Precedence {
+  LOWEST = 0,
+  EQUALS,       // ==
+  LESSGREATER,  // > or <
+  SUM,          // +
+  PRODUCT,      // *
+  PREFIX,       // -X or !x
+  CALL,         // myFunction(X)
+};
+
+Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   // Read two tokens, set `currentToken` and `peekToken`.
   nextToken();
   nextToken();
+
+  TokenType_t type = std::string(TokenTypes::IDENT);
+  registerPrefix(type, std::bind(&Parser::parseIdentifier, this));
 }
 
 void Parser::nextToken() {
@@ -36,9 +54,9 @@ std::unique_ptr<Statement> Parser::parseStatement() {
   if (currentToken.Type == TokenTypes::LET) {
     return std::move(parseLetStatement());
   } else if (currentToken.Type == TokenTypes::RETURN) {
-    return std::move(parserReturnStatement());
+    return std::move(parseReturnStatement());
   } else {
-    return nullptr;
+    return std::move(parseExpressionStatement());
   }
 }
 
@@ -63,7 +81,7 @@ std::unique_ptr<LetStatement> Parser::parseLetStatement() {
   return std::move(letStatement);
 }
 
-std::unique_ptr<ReturnStatement> Parser::parserReturnStatement() {
+std::unique_ptr<ReturnStatement> Parser::parseReturnStatement() {
   auto returnStatement = std::make_unique<ReturnStatement>(currentToken);
 
   nextToken();
@@ -75,6 +93,37 @@ std::unique_ptr<ReturnStatement> Parser::parserReturnStatement() {
   }
 
   return std::move(returnStatement);
+}
+
+std::unique_ptr<Expression> Parser::parseExpression(Precedence precedence) {
+  if (!prefixParseFns.count(currentToken.Type)) {
+    return nullptr;
+  }
+
+  auto &&prefix = prefixParseFns[currentToken.Type];
+
+  auto leftExpression = prefix();
+
+  Identifier *test = dynamic_cast<Identifier *>(leftExpression.get());
+
+  return std::move(leftExpression);
+}
+
+std::unique_ptr<ExpressionStatement> Parser::parseExpressionStatement() {
+  auto expressionStatement = std::make_unique<ExpressionStatement>(currentToken);
+
+  expressionStatement->expression = std::move(parseExpression(Precedence::LOWEST));
+
+  if (peekTokenIs(TokenTypes::SEMICOLON)) {
+    nextToken();
+  }
+
+  return std::move(expressionStatement);
+}
+
+std::unique_ptr<Expression> Parser::parseIdentifier() {
+  auto identifier = std::make_unique<Identifier>(currentToken, currentToken.Literal);
+  return std::move(identifier);
 }
 
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }
@@ -94,3 +143,6 @@ void Parser::peekError(std::string_view &t) {
   std::string message = "expected next token to be " + std::string(t) + " got " + peekToken.Type + " instead";
   errors.push_back(std::move(message));
 }
+
+void Parser::registerPrefix(TokenType_t &tokenType, prefixParseFn fn) { prefixParseFns[tokenType] = fn; }
+void Parser::registerInfix(TokenType_t &tokenType, infixParseFn fn) { infixParseFns[tokenType] = fn; }

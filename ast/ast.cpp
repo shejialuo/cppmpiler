@@ -8,6 +8,10 @@ void Statement::statementNode() {}
 std::string Statement::tokenLiteral() { return ""; }
 std::string Statement::getString() { return ""; }
 
+void Expression::expressionNode() {}
+std::string Expression::tokenLiteral() { return ""; }
+std::string Expression::getString() { return ""; }
+
 std::string Program::tokenLiteral() { return statements.size() > 0 ? statements[0]->tokenLiteral() : ""; }
 std::string Program::getString() {
   std::string info{};
@@ -52,6 +56,7 @@ std::string ReturnStatement::getString() {
   return info;
 }
 
+ExpressionStatement::ExpressionStatement(const Token &t) : token{t} {}
 void ExpressionStatement::statementNode() {}
 std::string ExpressionStatement::tokenLiteral() { return token.Literal; }
 std::string ExpressionStatement::getString() {

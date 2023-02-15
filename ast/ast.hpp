@@ -48,8 +48,9 @@ public:
  */
 class Expression : public Node {
 public:
-  // TODO: currently we do not consider about Expression.
-  virtual void expressionNode() = 0;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+  virtual void expressionNode();
 };
 
 /**
@@ -120,6 +121,9 @@ public:
  */
 class ExpressionStatement : public Statement {
 public:
+  ExpressionStatement() = default;
+  ExpressionStatement(const Token &);
+
   Token token;
   std::unique_ptr<Expression> expression;
 

@@ -5,9 +5,16 @@
 #include "lexer.hpp"
 #include "token.hpp"
 
+#include <functional>
 #include <memory>
 #include <string_view>
+#include <unordered_map>
 #include <vector>
+
+using prefixParseFn = std::function<std::unique_ptr<Expression>()>;
+using infixParseFn = std::function<std::unique_ptr<Expression>(Expression *)>;
+
+enum class Precedence;
 
 class Parser {
 private:
@@ -15,6 +22,9 @@ private:
   Token currentToken;                 // current token
   Token peekToken;                    // next token
   std::vector<std::string> errors{};  // error information
+
+  std::unordered_map<TokenType_t, prefixParseFn> prefixParseFns;
+  std::unordered_map<TokenType_t, infixParseFn> infixParseFns;
 
 public:
   Parser() = delete;
@@ -52,7 +62,28 @@ public:
    *
    * @return std::unique_ptr<ReturnStatement>
    */
-  std::unique_ptr<ReturnStatement> parserReturnStatement();
+  std::unique_ptr<ReturnStatement> parseReturnStatement();
+
+  /**
+   * @brief Parse the expression
+   *
+   * @return std::unique_ptr<Expression>
+   */
+  std::unique_ptr<Expression> parseExpression(Precedence precedence);
+
+  /**
+   * @brief Parse the expression statement
+   *
+   * @return std::unique_ptr<ExpressionStatement>
+   */
+  std::unique_ptr<ExpressionStatement> parseExpressionStatement();
+
+  /**
+   * @brief This function need to be registered in the `prefixParseFns`.
+   *
+   * @return std::unique_ptr<Expression>
+   */
+  std::unique_ptr<Expression> parseIdentifier();
 
   /**
    * @brief A helper function to tell whether
@@ -87,6 +118,10 @@ public:
    *
    */
   void peekError(std::string_view &t);
+
+  void registerPrefix(TokenType_t &tokenType, prefixParseFn fn);
+
+  void registerInfix(TokenType_t &tokenType, infixParseFn fn);
 };
 
 #endif  // _PARSER_PARSER_HPP_

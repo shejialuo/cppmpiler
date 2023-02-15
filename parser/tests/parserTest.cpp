@@ -107,6 +107,46 @@ TEST(Parser, TestReturnStatements) {
   }
 }
 
+TEST(Parser, TestIdentifierExpression) {
+  std::string input{"foobar;"};
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+  auto program = parser.parseProgram();
+
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  if (program->statements.size() != 1) {
+    spdlog::error("program has not enough statements. got='{}'", program->statements.size());
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+
+  if (expressionStatement == nullptr) {
+    spdlog::error("statement is not an ExpressionStatement");
+    FAIL();
+  }
+
+  Identifier *identifier = dynamic_cast<Identifier *>(expressionStatement->expression.get());
+  if (identifier == nullptr) {
+    spdlog::error("expression is not an Identifier");
+    FAIL();
+  }
+
+  if (identifier->value != "foobar") {
+    spdlog::error("identifier->value not 'foobar'. got='{}'", identifier->value);
+    FAIL();
+  }
+
+  if (identifier->tokenLiteral() != "foobar") {
+    spdlog::error("identifier->tokenLiteral not 'foobar'. got='{}'", identifier->tokenLiteral());
+    FAIL();
+  }
+}
+
 bool checkParseErrors(Parser &parser) {
   if (parser.getErrors().size() == 0) {
     return true;
