@@ -27,6 +27,7 @@ public:
    * @return std::string
    */
   virtual std::string getString() = 0;
+  virtual ~Node() = default;
 };
 
 /**
