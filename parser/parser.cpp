@@ -34,6 +34,12 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
 
   TokenType_t intType = std::string(TokenTypes::INT);
   registerPrefix(intType, std::bind(&Parser::parseIntegerLiteral, this));
+
+  TokenType_t bangType = std::string(TokenTypes::BANG);
+  registerPrefix(bangType, std::bind(&Parser::parsePrefixExpression, this));
+
+  TokenType_t minusType = std::string(TokenTypes::MINUS);
+  registerPrefix(minusType, std::bind(&Parser::parsePrefixExpression, this));
 }
 
 void Parser::nextToken() {
@@ -100,16 +106,25 @@ std::unique_ptr<ReturnStatement> Parser::parseReturnStatement() {
   return std::move(returnStatement);
 }
 
+std::unique_ptr<PrefixExpression> Parser::parsePrefixExpression() {
+  auto prefixExpression = std::make_unique<PrefixExpression>(currentToken, currentToken.Literal);
+
+  nextToken();
+
+  prefixExpression->right = std::move(parseExpression(Precedence::PREFIX));
+
+  return std::move(prefixExpression);
+}
+
 std::unique_ptr<Expression> Parser::parseExpression(Precedence precedence) {
   if (!prefixParseFns.count(currentToken.Type)) {
+    noPrefixParseFnError(currentToken.Type);
     return nullptr;
   }
 
   auto &&prefix = prefixParseFns[currentToken.Type];
 
   auto leftExpression = prefix();
-
-  Identifier *test = dynamic_cast<Identifier *>(leftExpression.get());
 
   return std::move(leftExpression);
 }
@@ -152,6 +167,11 @@ bool Parser::expectPeek(std::string_view &t) {
 
 void Parser::peekError(std::string_view &t) {
   std::string message = "expected next token to be " + std::string(t) + " got " + peekToken.Type + " instead";
+  errors.push_back(std::move(message));
+}
+
+void Parser::noPrefixParseFnError(TokenType_t &tokenType) {
+  std::string message = "no prefix parse function for " + tokenType + " found";
   errors.push_back(std::move(message));
 }
 

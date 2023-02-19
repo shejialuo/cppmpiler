@@ -151,4 +151,23 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief `PrefixExpression` is an expression which
+ * represents `<prefix operator><expression>;`
+ *
+ */
+class PrefixExpression : public Expression {
+public:
+  PrefixExpression() = default;
+  PrefixExpression(Token &, std::string &);
+
+  Token token;
+  std::string _operator;
+  std::unique_ptr<Expression> right;
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
 #endif  // _AST_AST_HPP_

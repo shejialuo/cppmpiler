@@ -70,3 +70,11 @@ IntegerLiteral::IntegerLiteral(const Token &t, int64_t v) : token{t}, value{v} {
 void IntegerLiteral::expressionNode() {}
 std::string IntegerLiteral::tokenLiteral() { return token.Literal; }
 std::string IntegerLiteral::getString() { return token.Literal; }
+
+PrefixExpression::PrefixExpression(Token &t, std::string &op) : token{t}, _operator{op} {}
+void PrefixExpression::expressionNode() {}
+std::string PrefixExpression::tokenLiteral() { return token.Literal; }
+std::string PrefixExpression::getString() {
+  std::string info = "(" + _operator + right->getString() + ")";
+  return info;
+}

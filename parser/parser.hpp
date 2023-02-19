@@ -93,6 +93,14 @@ public:
   std::unique_ptr<Expression> parseIntegerLiteral();
 
   /**
+   * @brief This function is used to parse the prefix expression.
+   * need to be registered in `prefixParseFns`.
+   *
+   * @return std::unique_ptr<PrefixExpression>
+   */
+  std::unique_ptr<PrefixExpression> parsePrefixExpression();
+
+  /**
    * @brief A helper function to tell whether
    * `currentToken == t`
    *
@@ -125,6 +133,8 @@ public:
    *
    */
   void peekError(std::string_view &t);
+
+  void noPrefixParseFnError(TokenType_t &tokenType);
 
   void registerPrefix(TokenType_t &tokenType, prefixParseFn fn);
 
