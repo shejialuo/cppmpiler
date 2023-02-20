@@ -49,6 +49,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerPrefix(std::string(TokenTypes::MINUS), std::bind(&Parser::parsePrefixExpression, this));
   registerPrefix(std::string(TokenTypes::TRUE), std::bind(&Parser::parseBooleanExpression, this));
   registerPrefix(std::string(TokenTypes::FALSE), std::bind(&Parser::parseBooleanExpression, this));
+  registerPrefix(std::string(TokenTypes::LPAREN), std::bind(&Parser::ParseGroupedExpression, this));
 
   registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
@@ -196,6 +197,19 @@ std::unique_ptr<Expression> Parser::parseIntegerLiteral() {
   int64_t value = std::strtoll(currentToken.Literal.c_str(), nullptr, 10);
   auto integerLiteral = std::make_unique<IntegerLiteral>(currentToken, value);
   return std::move(integerLiteral);
+}
+
+std::unique_ptr<Expression> Parser::ParseGroupedExpression() {
+  nextToken();
+
+  auto expression = parseExpression(Precedence::LOWEST);
+
+  // The last token must should be ')'.
+  if (!expectPeek(TokenTypes::RPAREN)) {
+    return nullptr;
+  }
+
+  return std::move(expression);
 }
 
 std::unique_ptr<BooleanExpression> Parser::parseBooleanExpression() {

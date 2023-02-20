@@ -95,6 +95,15 @@ public:
   std::unique_ptr<Expression> parseIntegerLiteral();
 
   /**
+   * @brief This function is need to be registered in the `prefixParsFns`.
+   * It is used to parse the `()`, we just need to change the next
+   * precedence to be the lowest.
+   *
+   * @return std::unique_ptr<Expression>
+   */
+  std::unique_ptr<Expression> ParseGroupedExpression();
+
+  /**
    * @brief This function is used to parse the prefix expression.
    * need to be registered in `prefixParseFns`.
    *
