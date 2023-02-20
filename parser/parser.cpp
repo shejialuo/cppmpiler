@@ -144,15 +144,20 @@ std::unique_ptr<InfixExpression> Parser::parseInfixExpression(std::unique_ptr<Ex
 }
 
 std::unique_ptr<Expression> Parser::parseExpression(Precedence precedence) {
+  // The first thing is to check whether there is a `prefixParseFn` associated
+  // with the currentTokenType.
   if (!prefixParseFns.count(currentToken.Type)) {
     noPrefixParseFnError(currentToken.Type);
     return nullptr;
   }
 
+  // We call the corresponding registered functions
   auto &&prefix = prefixParseFns[currentToken.Type];
 
   auto leftExpression = prefix();
 
+  // This is the most important loop, it will recursively handle the
+  // nested expressions based on the precedence, this is a nice design.
   while (!peekTokenIs(TokenTypes::SEMICOLON) && precedence < peekPrecedence()) {
     if (!infixParseFns.count(peekToken.Type)) {
       return std::move(leftExpression);
