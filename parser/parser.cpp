@@ -47,6 +47,8 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerPrefix(std::string(TokenTypes::INT), std::bind(&Parser::parseIntegerLiteral, this));
   registerPrefix(std::string(TokenTypes::BANG), std::bind(&Parser::parsePrefixExpression, this));
   registerPrefix(std::string(TokenTypes::MINUS), std::bind(&Parser::parsePrefixExpression, this));
+  registerPrefix(std::string(TokenTypes::TRUE), std::bind(&Parser::parseBooleanExpression, this));
+  registerPrefix(std::string(TokenTypes::FALSE), std::bind(&Parser::parseBooleanExpression, this));
 
   registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
@@ -194,6 +196,11 @@ std::unique_ptr<Expression> Parser::parseIntegerLiteral() {
   int64_t value = std::strtoll(currentToken.Literal.c_str(), nullptr, 10);
   auto integerLiteral = std::make_unique<IntegerLiteral>(currentToken, value);
   return std::move(integerLiteral);
+}
+
+std::unique_ptr<BooleanExpression> Parser::parseBooleanExpression() {
+  auto booleanExpression = std::make_unique<BooleanExpression>(currentToken, currentTokenIs(TokenTypes::TRUE));
+  return std::move(booleanExpression);
 }
 
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }

@@ -86,3 +86,9 @@ std::string InfixExpression::getString() {
   std::string info = "(" + left->getString() + " " + _operator + " " + right->getString() + ")";
   return info;
 }
+
+BooleanExpression::BooleanExpression(const Token &t, bool v) : token{t}, value{v} {}
+
+void BooleanExpression::expressionNode() {}
+std::string BooleanExpression::tokenLiteral() { return token.Literal; }
+std::string BooleanExpression::getString() { return token.Literal; }

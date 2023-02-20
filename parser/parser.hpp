@@ -111,6 +111,14 @@ public:
   std::unique_ptr<InfixExpression> parseInfixExpression(std::unique_ptr<Expression> left);
 
   /**
+   * @brief This function is used to parse the boolean expression.
+   * need to be registered in `prefixParseFns`.
+   *
+   * @return std::unique_ptr<BooleanExpression>
+   */
+  std::unique_ptr<BooleanExpression> parseBooleanExpression();
+
+  /**
    * @brief A helper function to tell whether
    * `currentToken == t`
    *

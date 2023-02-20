@@ -190,4 +190,21 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief represent the boolean value
+ *
+ */
+class BooleanExpression : public Expression {
+public:
+  BooleanExpression() = default;
+  BooleanExpression(const Token &, bool);
+
+  Token token;
+  bool value;
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
 #endif  // _AST_AST_HPP_
