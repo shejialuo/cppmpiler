@@ -1,0 +1,5 @@
+<map id="BooleanExpression" name="BooleanExpression">
+<area shape="rect" id="node1" title="represent the boolean value" alt="" coords="5,155,152,181"/>
+<area shape="rect" id="node2" href="$classExpression.html" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="32,80,125,107"/>
+<area shape="rect" id="node3" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="51,5,107,32"/>
+</map>

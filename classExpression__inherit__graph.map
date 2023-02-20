@@ -1,8 +1,9 @@
 <map id="Expression" name="Expression">
-<area shape="rect" id="node1" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="193,80,287,107"/>
-<area shape="rect" id="node3" href="$classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="5,155,85,181"/>
-<area shape="rect" id="node4" href="$classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="110,155,231,181"/>
-<area shape="rect" id="node5" href="$classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="256,155,365,181"/>
-<area shape="rect" id="node6" href="$classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="389,155,520,181"/>
-<area shape="rect" id="node2" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="212,5,268,32"/>
+<area shape="rect" id="node1" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="295,80,388,107"/>
+<area shape="rect" id="node3" href="$classBooleanExpression.html" title="represent the boolean value" alt="" coords="5,155,152,181"/>
+<area shape="rect" id="node4" href="$classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="176,155,256,181"/>
+<area shape="rect" id="node5" href="$classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="281,155,402,181"/>
+<area shape="rect" id="node6" href="$classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="427,155,536,181"/>
+<area shape="rect" id="node7" href="$classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="560,155,691,181"/>
+<area shape="rect" id="node2" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="313,5,369,32"/>
 </map>

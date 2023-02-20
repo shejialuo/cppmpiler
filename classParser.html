@@ -108,6 +108,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5cd9b01f9eda1371174f66be253003dd"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classInfixExpression.html">InfixExpression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a5cd9b01f9eda1371174f66be253003dd">parseInfixExpression</a> (std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; left)</td></tr>
 <tr class="memdesc:a5cd9b01f9eda1371174f66be253003dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to parse the infix expression. need to be registered in <code>infixParseFns</code>.  <a href="classParser.html#a5cd9b01f9eda1371174f66be253003dd">More...</a><br /></td></tr>
 <tr class="separator:a5cd9b01f9eda1371174f66be253003dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8016cb0d850c73a1f5d91ee750737db9"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classBooleanExpression.html">BooleanExpression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8016cb0d850c73a1f5d91ee750737db9">parseBooleanExpression</a> ()</td></tr>
+<tr class="memdesc:a8016cb0d850c73a1f5d91ee750737db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to parse the boolean expression. need to be registered in <code>prefixParseFns</code>.  <a href="classParser.html#a8016cb0d850c73a1f5d91ee750737db9">More...</a><br /></td></tr>
+<tr class="separator:a8016cb0d850c73a1f5d91ee750737db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e0650bac2163108bccae9db68aca464"><td class="memItemLeft" align="right" valign="top"><a id="a8e0650bac2163108bccae9db68aca464"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8e0650bac2163108bccae9db68aca464">currentTokenIs</a> (std::string_view &amp;t)</td></tr>
 <tr class="memdesc:a8e0650bac2163108bccae9db68aca464"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper function to tell whether <code>currentToken == t</code> <br /></td></tr>
@@ -189,6 +192,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
 
 <p>Get the errors object. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::string&gt;&amp; </dd></dl>
+
+</div>
+</div>
+<a id="a8016cb0d850c73a1f5d91ee750737db9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8016cb0d850c73a1f5d91ee750737db9">&#9670;&nbsp;</a></span>parseBooleanExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classBooleanExpression.html">BooleanExpression</a> &gt; Parser::parseBooleanExpression </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is used to parse the boolean expression. need to be registered in <code>prefixParseFns</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;BooleanExpression&gt; </dd></dl>
 
 </div>
 </div>

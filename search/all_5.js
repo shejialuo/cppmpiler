@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['nexttoken_13',['nextToken',['../classLexer.html#ad70ae308f841161587a0407daaeea480',1,'Lexer::nextToken()'],['../classParser.html#a324a5bb61c9dfc645300a92aecd6fe69',1,'Parser::nextToken()']]],
-  ['node_14',['Node',['../classNode.html',1,'']]]
+  ['letstatement_12',['LetStatement',['../classLetStatement.html',1,'']]],
+  ['lexer_13',['Lexer',['../classLexer.html',1,'']]]
 ];
