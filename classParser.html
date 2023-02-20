@@ -102,6 +102,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:afcd7904cff9857a52b38030e8b28c8e8"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#afcd7904cff9857a52b38030e8b28c8e8">parseIntegerLiteral</a> ()</td></tr>
 <tr class="memdesc:afcd7904cff9857a52b38030e8b28c8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function need to be registered in the <code>prefixParseFns</code>.  <a href="classParser.html#afcd7904cff9857a52b38030e8b28c8e8">More...</a><br /></td></tr>
 <tr class="separator:afcd7904cff9857a52b38030e8b28c8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af18845738e78689ac6a51eb46d324c3a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#af18845738e78689ac6a51eb46d324c3a">ParseGroupedExpression</a> ()</td></tr>
+<tr class="memdesc:af18845738e78689ac6a51eb46d324c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is need to be registered in the <code>prefixParsFns</code>. It is used to parse the <code>()</code>, we just need to change the next precedence to be the lowest.  <a href="classParser.html#af18845738e78689ac6a51eb46d324c3a">More...</a><br /></td></tr>
+<tr class="separator:af18845738e78689ac6a51eb46d324c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67fca16bf1ebf89ef4c49a7ba08562b6"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classPrefixExpression.html">PrefixExpression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a67fca16bf1ebf89ef4c49a7ba08562b6">parsePrefixExpression</a> ()</td></tr>
 <tr class="memdesc:a67fca16bf1ebf89ef4c49a7ba08562b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to parse the prefix expression. need to be registered in <code>prefixParseFns</code>.  <a href="classParser.html#a67fca16bf1ebf89ef4c49a7ba08562b6">More...</a><br /></td></tr>
 <tr class="separator:a67fca16bf1ebf89ef4c49a7ba08562b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,6 +256,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
 
 <p>Parse the expression statement. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;ExpressionStatement&gt; </dd></dl>
+
+</div>
+</div>
+<a id="af18845738e78689ac6a51eb46d324c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af18845738e78689ac6a51eb46d324c3a">&#9670;&nbsp;</a></span>ParseGroupedExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; Parser::ParseGroupedExpression </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is need to be registered in the <code>prefixParsFns</code>. It is used to parse the <code>()</code>, we just need to change the next precedence to be the lowest. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;Expression&gt; </dd></dl>
 
 </div>
 </div>
