@@ -78,3 +78,11 @@ std::string PrefixExpression::getString() {
   std::string info = "(" + _operator + right->getString() + ")";
   return info;
 }
+
+InfixExpression::InfixExpression(Token &t, std::string &op) : token{t}, _operator{op} {}
+void InfixExpression::expressionNode() {}
+std::string InfixExpression::tokenLiteral() { return token.Literal; }
+std::string InfixExpression::getString() {
+  std::string info = "(" + left->getString() + " " + _operator + " " + right->getString() + ")";
+  return info;
+}

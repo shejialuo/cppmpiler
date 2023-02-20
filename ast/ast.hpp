@@ -170,4 +170,24 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief `InfixExpression` is an expression which
+ * represents `<expression><infix operator><expression>`
+ *
+ */
+class InfixExpression : public Expression {
+public:
+  InfixExpression() = default;
+  InfixExpression(Token &, std::string &);
+
+  Token token;
+  std::unique_ptr<Expression> left;
+  std::string _operator;
+  std::unique_ptr<Expression> right;
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
 #endif  // _AST_AST_HPP_

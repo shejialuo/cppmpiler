@@ -9,6 +9,7 @@
 #include <functional>
 #include <memory>
 #include <string_view>
+#include <unordered_map>
 
 /**
  * @brief define the precedence
@@ -29,17 +30,32 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   nextToken();
   nextToken();
 
-  TokenType_t identType = std::string(TokenTypes::IDENT);
-  registerPrefix(identType, std::bind(&Parser::parseIdentifier, this));
+  precedences = {
+      {std::string(TokenTypes::EQ), Precedence::EQUALS},
+      {std::string(TokenTypes::NOT_EQ), Precedence::EQUALS},
+      {std::string(TokenTypes::LT), Precedence::LESSGREATER},
+      {std::string(TokenTypes::GT), Precedence::LESSGREATER},
+      {std::string(TokenTypes::PLUS), Precedence::SUM},
+      {std::string(TokenTypes::MINUS), Precedence::SUM},
+      {std::string(TokenTypes::SLASH), Precedence::PRODUCT},
+      {std::string(TokenTypes::ASTERISK), Precedence::PRODUCT},
+  };
 
-  TokenType_t intType = std::string(TokenTypes::INT);
-  registerPrefix(intType, std::bind(&Parser::parseIntegerLiteral, this));
+  using std::placeholders::_1;
 
-  TokenType_t bangType = std::string(TokenTypes::BANG);
-  registerPrefix(bangType, std::bind(&Parser::parsePrefixExpression, this));
+  registerPrefix(std::string(TokenTypes::IDENT), std::bind(&Parser::parseIdentifier, this));
+  registerPrefix(std::string(TokenTypes::INT), std::bind(&Parser::parseIntegerLiteral, this));
+  registerPrefix(std::string(TokenTypes::BANG), std::bind(&Parser::parsePrefixExpression, this));
+  registerPrefix(std::string(TokenTypes::MINUS), std::bind(&Parser::parsePrefixExpression, this));
 
-  TokenType_t minusType = std::string(TokenTypes::MINUS);
-  registerPrefix(minusType, std::bind(&Parser::parsePrefixExpression, this));
+  registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::SLASH), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::ASTERISK), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::EQ), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::NOT_EQ), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::LT), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::GT), std::bind(&Parser::parseInfixExpression, this, _1));
 }
 
 void Parser::nextToken() {
@@ -116,6 +132,17 @@ std::unique_ptr<PrefixExpression> Parser::parsePrefixExpression() {
   return std::move(prefixExpression);
 }
 
+std::unique_ptr<InfixExpression> Parser::parseInfixExpression(std::unique_ptr<Expression> left) {
+  auto infixExpression = std::make_unique<InfixExpression>(currentToken, currentToken.Literal);
+
+  infixExpression->left = std::move(left);
+  Precedence precedence = currentPrecedence();
+  nextToken();
+  infixExpression->right = parseExpression(precedence);
+
+  return std::move(infixExpression);
+}
+
 std::unique_ptr<Expression> Parser::parseExpression(Precedence precedence) {
   if (!prefixParseFns.count(currentToken.Type)) {
     noPrefixParseFnError(currentToken.Type);
@@ -125,6 +152,18 @@ std::unique_ptr<Expression> Parser::parseExpression(Precedence precedence) {
   auto &&prefix = prefixParseFns[currentToken.Type];
 
   auto leftExpression = prefix();
+
+  while (!peekTokenIs(TokenTypes::SEMICOLON) && precedence < peekPrecedence()) {
+    if (!infixParseFns.count(peekToken.Type)) {
+      return std::move(leftExpression);
+    }
+
+    auto &&infix = infixParseFns[peekToken.Type];
+
+    nextToken();
+
+    leftExpression = std::move(infix(std::move(leftExpression)));
+  }
 
   return std::move(leftExpression);
 }
@@ -170,10 +209,26 @@ void Parser::peekError(std::string_view &t) {
   errors.push_back(std::move(message));
 }
 
+Precedence Parser::currentPrecedence() {
+  if (precedences.count(currentToken.Type)) {
+    return precedences[currentToken.Type];
+  }
+
+  return Precedence::LOWEST;
+}
+
+Precedence Parser::peekPrecedence() {
+  if (precedences.count(peekToken.Type)) {
+    return precedences[peekToken.Type];
+  }
+
+  return Precedence::LOWEST;
+}
+
 void Parser::noPrefixParseFnError(TokenType_t &tokenType) {
   std::string message = "no prefix parse function for " + tokenType + " found";
   errors.push_back(std::move(message));
 }
 
-void Parser::registerPrefix(TokenType_t &tokenType, prefixParseFn fn) { prefixParseFns[tokenType] = fn; }
-void Parser::registerInfix(TokenType_t &tokenType, infixParseFn fn) { infixParseFns[tokenType] = fn; }
+void Parser::registerPrefix(const TokenType_t &tokenType, prefixParseFn fn) { prefixParseFns[tokenType] = fn; }
+void Parser::registerInfix(const TokenType_t &tokenType, infixParseFn fn) { infixParseFns[tokenType] = fn; }

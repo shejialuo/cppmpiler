@@ -12,7 +12,7 @@
 #include <vector>
 
 using prefixParseFn = std::function<std::unique_ptr<Expression>()>;
-using infixParseFn = std::function<std::unique_ptr<Expression>(Expression *)>;
+using infixParseFn = std::function<std::unique_ptr<Expression>(std::unique_ptr<Expression>)>;
 
 enum class Precedence;
 
@@ -25,6 +25,8 @@ private:
 
   std::unordered_map<TokenType_t, prefixParseFn> prefixParseFns;
   std::unordered_map<TokenType_t, infixParseFn> infixParseFns;
+
+  std::unordered_map<TokenType_t, Precedence> precedences;
 
 public:
   Parser() = delete;
@@ -101,6 +103,14 @@ public:
   std::unique_ptr<PrefixExpression> parsePrefixExpression();
 
   /**
+   * @brief This function is used to parse the infix expression.
+   * need to be registered in `infixParseFns`.
+   *
+   * @return std::unique_ptr<InfixExpression>
+   */
+  std::unique_ptr<InfixExpression> parseInfixExpression(std::unique_ptr<Expression> left);
+
+  /**
    * @brief A helper function to tell whether
    * `currentToken == t`
    *
@@ -134,11 +144,25 @@ public:
    */
   void peekError(std::string_view &t);
 
+  /**
+   * @brief Get current operator's precedence
+   *
+   * @return Precedence
+   */
+  Precedence currentPrecedence();
+
+  /**
+   * @brief Get next operator's precedence
+   *
+   * @return Precedence
+   */
+  Precedence peekPrecedence();
+
   void noPrefixParseFnError(TokenType_t &tokenType);
 
-  void registerPrefix(TokenType_t &tokenType, prefixParseFn fn);
+  void registerPrefix(const TokenType_t &tokenType, prefixParseFn fn);
 
-  void registerInfix(TokenType_t &tokenType, infixParseFn fn);
+  void registerInfix(const TokenType_t &tokenType, infixParseFn fn);
 };
 
 #endif  // _PARSER_PARSER_HPP_

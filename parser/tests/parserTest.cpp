@@ -27,6 +27,23 @@ struct TestPrefixData {
   TestPrefixData(std::string i, std::string op, int64_t v) : input{i}, _operator{op}, value{v} {}
 };
 
+struct TestInfixData {
+  std::string input;
+  int64_t leftValue;
+  std::string _operator;
+  int64_t rightValue;
+
+  TestInfixData(std::string i, int64_t l, std::string op, int64_t r)
+      : input{i}, leftValue{l}, _operator{op}, rightValue{r} {}
+};
+
+struct TestPrecedenceData {
+  std::string input;
+  std::string expected;
+
+  TestPrecedenceData(const std::string &i, const std::string &e) : input{i}, expected{e} {}
+};
+
 TEST(Parser, TestLetStatements) {
   std::string input = "let x = 5; \
                        let y = 10; \
@@ -209,7 +226,9 @@ TEST(Parser, TestParsingPrefixExpressions) {
 
     auto program = parser.parseProgram();
 
-    checkParseErrors(parser);
+    if (!checkParseErrors(parser)) {
+      FAIL();
+    }
 
     if (program->statements.size() != 1) {
       spdlog::error("program->statements does not contain 1 statements. got='{}'", program->statements.size());
@@ -235,6 +254,130 @@ TEST(Parser, TestParsingPrefixExpressions) {
     }
 
     if (!testIntegerLiteral(prefixExpression->right.get(), prefixTest.value)) {
+      FAIL();
+    }
+  }
+}
+
+TEST(Parser, TestParsingInfixExpressions) {
+  TestInfixData infixTests[] = {
+      {"5 + 5;", 5, "+", 5},
+      {"5 - 5;", 5, "-", 5},
+      {"5 * 5;", 5, "*", 5},
+      {"5 / 5;", 5, "/", 5},
+      {"5 > 5;", 5, ">", 5},
+      {"5 < 5;", 5, "<", 5},
+      {"5 == 5;", 5, "==", 5},
+      {"5 != 5;", 5, "!=", 5},
+  };
+
+  for (auto &&infixTest : infixTests) {
+    Lexer lexer{infixTest.input};
+    Parser parser{&lexer};
+    auto program = parser.parseProgram();
+
+    if (!checkParseErrors(parser)) {
+      FAIL();
+    }
+
+    if (program->statements.size() != 1) {
+      spdlog::error("program->statements does not contain 1 statements. got='{}'", program->statements.size());
+      FAIL();
+    }
+
+    ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+    if (expressionStatement == nullptr) {
+      spdlog::error("statement is not an ExpressionStatement");
+      FAIL();
+    }
+
+    InfixExpression *infixExpression = dynamic_cast<InfixExpression *>(expressionStatement->expression.get());
+    if (infixExpression == nullptr) {
+      spdlog::error("expression is not a PrefixExpression");
+      FAIL();
+    }
+
+    if (!testIntegerLiteral(infixExpression->left.get(), infixTest.leftValue)) {
+      FAIL();
+    }
+
+    if (infixExpression->_operator != infixTest._operator) {
+      spdlog::error(
+          "infixExpression->_operator is not '{}'. got='{}'", infixTest._operator, infixExpression->_operator);
+      FAIL();
+    }
+
+    if (!testIntegerLiteral(infixExpression->right.get(), infixTest.rightValue)) {
+      FAIL();
+    }
+  }
+}
+
+TEST(Parser, TestOperatorPrecedenceParsing) {
+  TestPrecedenceData tests[] = {
+      {
+          "-a * b;",
+          "((-a) * b)",
+      },
+      {
+          "!-a;",
+          "(!(-a))",
+      },
+      {
+          "a + b + c;",
+          "((a + b) + c)",
+      },
+      {
+          "a + b - c;",
+          "((a + b) - c)",
+      },
+      {
+          "a * b * c;",
+          "((a * b) * c)",
+      },
+      {
+          "a * b / c;",
+          "((a * b) / c)",
+      },
+      {
+          "a + b / c;",
+          "(a + (b / c))",
+      },
+      {
+          "a + b * c + d / e - f;",
+          "(((a + (b * c)) + (d / e)) - f)",
+      },
+      {
+          "3 + 4; -5 * 5;",
+          "(3 + 4)((-5) * 5)",
+      },
+      {
+          "5 > 4 == 3 < 4;",
+          "((5 > 4) == (3 < 4))",
+      },
+      {
+          "5 < 4 != 3 > 4;",
+          "((5 < 4) != (3 > 4))",
+      },
+      {
+          "3 + 4 * 5 == 3 * 1 + 4 * 5;",
+          "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))",
+      },
+  };
+
+  for (auto &&test : tests) {
+    Lexer lexer{test.input};
+    Parser parser{&lexer};
+
+    auto program = parser.parseProgram();
+
+    if (!checkParseErrors(parser)) {
+      FAIL();
+    }
+
+    std::string actual = program->getString();
+    if (actual != test.expected) {
+      spdlog::error("expected='{}', got='{}'", test.expected, actual);
       FAIL();
     }
   }
