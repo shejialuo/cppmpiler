@@ -1,0 +1,5 @@
+<map id="LetStatement" name="LetStatement">
+<area shape="rect" id="node1" title="LetStatement represents let statement, for example let a = 3." alt="" coords="5,155,116,181"/>
+<area shape="rect" id="node2" href="$classStatement.html" title="Represent the statements, for example, let a = 3; is a statement. It should inherit from Node." alt="" coords="15,80,106,107"/>
+<area shape="rect" id="node3" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="33,5,89,32"/>
+</map>

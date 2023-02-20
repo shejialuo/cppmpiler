@@ -1,0 +1,5 @@
+<map id="ExpressionStatement" name="ExpressionStatement">
+<area shape="rect" id="node1" title="Expression could also be a statement. for example: x + 10." alt="" coords="5,155,167,181"/>
+<area shape="rect" id="node2" href="$classStatement.html" title="Represent the statements, for example, let a = 3; is a statement. It should inherit from Node." alt="" coords="41,80,131,107"/>
+<area shape="rect" id="node3" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="58,5,114,32"/>
+</map>
