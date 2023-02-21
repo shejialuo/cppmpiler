@@ -50,6 +50,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerPrefix(std::string(TokenTypes::TRUE), std::bind(&Parser::parseBooleanExpression, this));
   registerPrefix(std::string(TokenTypes::FALSE), std::bind(&Parser::parseBooleanExpression, this));
   registerPrefix(std::string(TokenTypes::LPAREN), std::bind(&Parser::ParseGroupedExpression, this));
+  registerPrefix(std::string(TokenTypes::IF), std::bind(&Parser::parseIfExpression, this));
 
   registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
@@ -210,6 +211,55 @@ std::unique_ptr<Expression> Parser::ParseGroupedExpression() {
   }
 
   return std::move(expression);
+}
+
+std::unique_ptr<Expression> Parser::parseIfExpression() {
+  auto ifExpression = std::make_unique<IfExpression>(currentToken);
+
+  if (!expectPeek(TokenTypes::LPAREN)) {
+    return nullptr;
+  }
+
+  nextToken();
+  ifExpression->condition = std::move(parseExpression(Precedence::LOWEST));
+
+  if (!expectPeek(TokenTypes::RPAREN)) {
+    return nullptr;
+  }
+
+  if (!expectPeek(TokenTypes::LBRACE)) {
+    return nullptr;
+  }
+
+  ifExpression->consequence = std::move(parseBlockStatement());
+
+  if (peekTokenIs(TokenTypes::ELSE)) {
+    nextToken();
+
+    if (!expectPeek(TokenTypes::LBRACE)) {
+      return nullptr;
+    }
+
+    ifExpression->alternative = std::move(parseBlockStatement());
+  }
+
+  return std::move(ifExpression);
+}
+
+std::unique_ptr<BlockStatement> Parser::parseBlockStatement() {
+  auto blockStatement = std::make_unique<BlockStatement>(currentToken);
+
+  nextToken();
+
+  while (!currentTokenIs(TokenTypes::RBRACE) && !currentTokenIs(TokenTypes::_EOF)) {
+    auto statement = parseStatement();
+    if (statement != nullptr) {
+      blockStatement->statements.push_back(std::move(statement));
+    }
+    nextToken();
+  }
+
+  return blockStatement;
 }
 
 std::unique_ptr<BooleanExpression> Parser::parseBooleanExpression() {

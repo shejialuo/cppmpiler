@@ -95,13 +95,27 @@ public:
   std::unique_ptr<Expression> parseIntegerLiteral();
 
   /**
-   * @brief This function is need to be registered in the `prefixParsFns`.
+   * @brief This function is need to be registered in the `prefixParseFns`.
    * It is used to parse the `()`, we just need to change the next
    * precedence to be the lowest.
    *
    * @return std::unique_ptr<Expression>
    */
   std::unique_ptr<Expression> ParseGroupedExpression();
+
+  /**
+   * @brief  This function need to be registered in the `prefixParseFns`.
+   *
+   * @return std::unique_ptr<Expression>
+   */
+  std::unique_ptr<Expression> parseIfExpression();
+
+  /**
+   * @brief parse the block statement `{}`.
+   *
+   * @return std::unique_ptr<BlockStatement>
+   */
+  std::unique_ptr<BlockStatement> parseBlockStatement();
 
   /**
    * @brief This function is used to parse the prefix expression.

@@ -135,6 +135,24 @@ public:
 };
 
 /**
+ * @brief `BlockStatement` is a block (`{}`) which contains
+ * many different statements.
+ *
+ */
+class BlockStatement : public Statement {
+public:
+  BlockStatement() = default;
+  BlockStatement(const Token &);
+
+  Token token;
+  std::vector<std::unique_ptr<Statement>> statements;
+
+  void statementNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
+/**
  * @brief `IntegerLiteral` is an expression which represents
  * the `5`.
  *
@@ -201,6 +219,28 @@ public:
 
   Token token;
   bool value;
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
+/**
+ * @brief `IfExpression` contains three important aspects:
+ * 1. the expression to evaluate to be true or false
+ * 2. the true branch
+ * 3. the false branch
+ *
+ */
+class IfExpression : public Expression {
+public:
+  IfExpression() = default;
+  IfExpression(const Token &);
+
+  Token token;
+  std::unique_ptr<Expression> condition;
+  std::unique_ptr<BlockStatement> consequence;
+  std::unique_ptr<BlockStatement> alternative;
 
   void expressionNode() override;
   std::string tokenLiteral() override;

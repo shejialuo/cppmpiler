@@ -66,6 +66,19 @@ std::string ExpressionStatement::getString() {
   return "";
 }
 
+BlockStatement::BlockStatement(const Token &t) : token{t} {}
+void BlockStatement::statementNode() {}
+std::string BlockStatement::tokenLiteral() { return token.Literal; }
+std::string BlockStatement::getString() {
+  std::string info{};
+
+  for (auto &&statement : statements) {
+    info += statement->getString();
+  }
+
+  return info;
+}
+
 IntegerLiteral::IntegerLiteral(const Token &t, int64_t v) : token{t}, value{v} {}
 void IntegerLiteral::expressionNode() {}
 std::string IntegerLiteral::tokenLiteral() { return token.Literal; }
@@ -92,3 +105,14 @@ BooleanExpression::BooleanExpression(const Token &t, bool v) : token{t}, value{v
 void BooleanExpression::expressionNode() {}
 std::string BooleanExpression::tokenLiteral() { return token.Literal; }
 std::string BooleanExpression::getString() { return token.Literal; }
+
+IfExpression::IfExpression(const Token &t) : token{t} {}
+void IfExpression::expressionNode() {}
+std::string IfExpression::tokenLiteral() { return token.Literal; }
+std::string IfExpression::getString() {
+  std::string info = "if" + condition->getString() + " " + consequence->getString();
+  if (alternative != nullptr) {
+    info += "else " + alternative->getString();
+  }
+  return info;
+}
