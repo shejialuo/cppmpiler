@@ -120,6 +120,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a8016cb0d850c73a1f5d91ee750737db9"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classBooleanExpression.html">BooleanExpression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8016cb0d850c73a1f5d91ee750737db9">parseBooleanExpression</a> ()</td></tr>
 <tr class="memdesc:a8016cb0d850c73a1f5d91ee750737db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to parse the boolean expression. need to be registered in <code>prefixParseFns</code>.  <a href="classParser.html#a8016cb0d850c73a1f5d91ee750737db9">More...</a><br /></td></tr>
 <tr class="separator:a8016cb0d850c73a1f5d91ee750737db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4145932fb1f57205105258d757f801"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classFunctionLiteral.html">FunctionLiteral</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aae4145932fb1f57205105258d757f801">parseFunctionLiteral</a> ()</td></tr>
+<tr class="memdesc:aae4145932fb1f57205105258d757f801"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is use to parse the function. need to be registered in <code>prefixParseFns</code>.  <a href="classParser.html#aae4145932fb1f57205105258d757f801">More...</a><br /></td></tr>
+<tr class="separator:aae4145932fb1f57205105258d757f801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10c5fea87eaebb80757ea4070287521b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classIdentifier.html">Identifier</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a10c5fea87eaebb80757ea4070287521b">parseFunctionParameters</a> ()</td></tr>
+<tr class="memdesc:a10c5fea87eaebb80757ea4070287521b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the function parameters.  <a href="classParser.html#a10c5fea87eaebb80757ea4070287521b">More...</a><br /></td></tr>
+<tr class="separator:a10c5fea87eaebb80757ea4070287521b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaeee30bf5bbcbbc28695a5d6b3efc3f"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classCallExpression.html">CallExpression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#acaeee30bf5bbcbbc28695a5d6b3efc3f">parseCallExpression</a> (std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; function)</td></tr>
+<tr class="memdesc:acaeee30bf5bbcbbc28695a5d6b3efc3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the Call <a class="el" href="classExpression.html" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression....">Expression</a> such as <code>add(x,y);</code>  <a href="classParser.html#acaeee30bf5bbcbbc28695a5d6b3efc3f">More...</a><br /></td></tr>
+<tr class="separator:acaeee30bf5bbcbbc28695a5d6b3efc3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa256a39ba42960649bbbd6d4dfbf4da8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa256a39ba42960649bbbd6d4dfbf4da8">parseCallArguments</a> ()</td></tr>
+<tr class="memdesc:aa256a39ba42960649bbbd6d4dfbf4da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the call arguments.  <a href="classParser.html#aa256a39ba42960649bbbd6d4dfbf4da8">More...</a><br /></td></tr>
+<tr class="separator:aa256a39ba42960649bbbd6d4dfbf4da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e0650bac2163108bccae9db68aca464"><td class="memItemLeft" align="right" valign="top"><a id="a8e0650bac2163108bccae9db68aca464"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8e0650bac2163108bccae9db68aca464">currentTokenIs</a> (std::string_view &amp;t)</td></tr>
 <tr class="memdesc:a8e0650bac2163108bccae9db68aca464"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper function to tell whether <code>currentToken == t</code> <br /></td></tr>
@@ -244,6 +256,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
 
 </div>
 </div>
+<a id="aa256a39ba42960649bbbd6d4dfbf4da8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa256a39ba42960649bbbd6d4dfbf4da8">&#9670;&nbsp;</a></span>parseCallArguments()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; &gt; Parser::parseCallArguments </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse the call arguments. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::unique_ptr&lt;Expression&gt;&gt; </dd></dl>
+
+</div>
+</div>
+<a id="acaeee30bf5bbcbbc28695a5d6b3efc3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaeee30bf5bbcbbc28695a5d6b3efc3f">&#9670;&nbsp;</a></span>parseCallExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classCallExpression.html">CallExpression</a> &gt; Parser::parseCallExpression </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&#160;</td>
+          <td class="paramname"><em>function</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse the Call <a class="el" href="classExpression.html" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression....">Expression</a> such as <code>add(x,y);</code> </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;CallExpression&gt; </dd></dl>
+
+</div>
+</div>
 <a id="a5f3d3dbb203a95118a84c0ed0d0c0b71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5f3d3dbb203a95118a84c0ed0d0c0b71">&#9670;&nbsp;</a></span>parseExpression()</h2>
 
@@ -282,6 +335,46 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
 
 <p>Parse the expression statement. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;ExpressionStatement&gt; </dd></dl>
+
+</div>
+</div>
+<a id="aae4145932fb1f57205105258d757f801"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae4145932fb1f57205105258d757f801">&#9670;&nbsp;</a></span>parseFunctionLiteral()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classFunctionLiteral.html">FunctionLiteral</a> &gt; Parser::parseFunctionLiteral </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is use to parse the function. need to be registered in <code>prefixParseFns</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;FunctionLiteral&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a10c5fea87eaebb80757ea4070287521b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10c5fea87eaebb80757ea4070287521b">&#9670;&nbsp;</a></span>parseFunctionParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classIdentifier.html">Identifier</a> &gt; &gt; Parser::parseFunctionParameters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse the function parameters. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::unique_ptr&lt;Identifier&gt;&gt; </dd></dl>
 
 </div>
 </div>
