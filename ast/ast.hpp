@@ -247,4 +247,41 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief This class represents the functional literal
+ *
+ */
+class FunctionLiteral : public Expression {
+public:
+  Token token;
+  std::vector<std::unique_ptr<Identifier>> parameters;
+  std::unique_ptr<BlockStatement> body;
+
+  FunctionLiteral() = default;
+  FunctionLiteral(const Token &);
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
+/**
+ * @brief This class represents the call for example
+ * `add(a + b, 5, 4)`
+ *
+ */
+class CallExpression : public Expression {
+public:
+  Token token;
+  std::unique_ptr<Expression> function;
+  std::vector<std::unique_ptr<Expression>> arguments;
+
+  CallExpression() = default;
+  CallExpression(const Token &);
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
 #endif  // _AST_AST_HPP_

@@ -268,6 +268,7 @@ bool testLiteralExpression(Expression *expression, T expected) {
   } else if constexpr (std::is_same_v<T, bool>) {
     return testBooleanLiteral(expression, expected);
   }
+  return false;
 }
 
 template <typename T>
@@ -645,6 +646,18 @@ TEST(Parser, TestOperatorPrecedenceParsing) {
           "!(true == true);",
           "(!(true == true))",
       },
+      {
+          "a + add(b * c) + d;",
+          "((a + add((b * c))) + d)",
+      },
+      {
+          "add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8));",
+          "add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))",
+      },
+      {
+          "add(a + b + c * d / f + g);",
+          "add((((a + b) + ((c * d) / f)) + g))",
+      },
   };
 
   for (auto &&test : tests) {
@@ -776,6 +789,112 @@ TEST(Parser, TestIfElseExpression) {
   }
 
   if (!testIdentifier(es->expression.get(), "y")) {
+    FAIL();
+  }
+}
+
+TEST(Parser, TestFunctionLiteralParsing) {
+  std::string input = "fn(x, y) { x + y; }";
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+  auto program = parser.parseProgram();
+
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  if (program->statements.size() != 1) {
+    spdlog::error("program body does not contain 1 statements. got=%d", program->statements.size());
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+  if (expressionStatement == nullptr) {
+    spdlog::error("program->statements[0] is not ExpressionStatement");
+    FAIL();
+  }
+
+  FunctionLiteral *function = dynamic_cast<FunctionLiteral *>(expressionStatement->expression.get());
+  if (function == nullptr) {
+    spdlog::error("expression is not FunctionLiteral");
+    FAIL();
+  }
+
+  if (function->parameters.size() != 2) {
+    spdlog::error("function literal parameters wrong. want 2, got={}", function->parameters.size());
+    FAIL();
+  }
+
+  if (!testLiteralExpression<std::string>(function->parameters[0].get(), "x")) {
+    FAIL();
+  }
+
+  if (!testLiteralExpression<std::string>(function->parameters[1].get(), "y")) {
+    FAIL();
+  }
+
+  if (function->body->statements.size() != 1) {
+    spdlog::error("function->body->statements has not 1 statements. got={}", function->body->statements.size());
+    FAIL();
+  }
+
+  ExpressionStatement *body = dynamic_cast<ExpressionStatement *>(function->body->statements[0].get());
+  if (body == nullptr) {
+    spdlog::error("function body is not ExpressionStatement");
+    FAIL();
+  }
+
+  if (!testInfixExpression<std::string, std::string>(body->expression.get(), "x", "+", "y")) {
+    FAIL();
+  }
+}
+
+TEST(Parser, TestCallExpressionParsing) {
+  std::string input = "add(1, 2 * 3, 4 + 5);";
+  Lexer lexer{input};
+  Parser parser{&lexer};
+  auto program = parser.parseProgram();
+
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  if (program->statements.size() != 1) {
+    spdlog::error("program->statements does not contain 1 statements. got={}", program->statements.size());
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+  if (expressionStatement == nullptr) {
+    spdlog::error("It is not an ExpressionStatement");
+    FAIL();
+  }
+
+  CallExpression *call = dynamic_cast<CallExpression *>(expressionStatement->expression.get());
+  if (call == nullptr) {
+    spdlog::error("call is not a CallExpression");
+    FAIL();
+  }
+
+  if (!testIdentifier(call->function.get(), "add")) {
+    FAIL();
+  }
+
+  if (call->arguments.size() != 3) {
+    spdlog::error("wrong length of arguments. got={}", call->arguments.size());
+    FAIL();
+  }
+
+  if (!testLiteralExpression<int64_t>(call->arguments[0].get(), 1)) {
+    FAIL();
+  }
+
+  if (!testInfixExpression<int64_t, int64_t>(call->arguments[1].get(), 2, "*", 3)) {
+    FAIL();
+  }
+
+  if (!testInfixExpression<int64_t, int64_t>(call->arguments[2].get(), 4, "+", 5)) {
     FAIL();
   }
 }

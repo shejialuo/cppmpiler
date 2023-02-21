@@ -116,3 +116,39 @@ std::string IfExpression::getString() {
   }
   return info;
 }
+
+FunctionLiteral::FunctionLiteral(const Token &t) : token{t} {}
+void FunctionLiteral::expressionNode() {}
+std::string FunctionLiteral::tokenLiteral() { return token.Literal; }
+std::string FunctionLiteral::getString() {
+  std::string info = tokenLiteral() + "(";
+
+  int i = 0;
+  for (; i < parameters.size() - 1; ++i) {
+    info += parameters[i]->getString() + ", ";
+  }
+
+  info += parameters[i]->getString() + ")";
+
+  return info;
+}
+
+CallExpression::CallExpression(const Token &t) : token{t} {}
+void CallExpression::expressionNode() {}
+std::string CallExpression::tokenLiteral() { return token.Literal; }
+std::string CallExpression::getString() {
+  std::string info{};
+
+  info += function->getString();
+
+  info += "(";
+
+  int i = 0;
+  for (; i < arguments.size() - 1; ++i) {
+    info += arguments[i]->getString() + ", ";
+  }
+
+  info += arguments[i]->getString() + ")";
+
+  return info;
+}

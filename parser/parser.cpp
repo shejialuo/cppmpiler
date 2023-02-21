@@ -10,6 +10,7 @@
 #include <memory>
 #include <string_view>
 #include <unordered_map>
+#include <vector>
 
 /**
  * @brief define the precedence
@@ -39,6 +40,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
       {std::string(TokenTypes::MINUS), Precedence::SUM},
       {std::string(TokenTypes::SLASH), Precedence::PRODUCT},
       {std::string(TokenTypes::ASTERISK), Precedence::PRODUCT},
+      {std::string(TokenTypes::LPAREN), Precedence::CALL},
   };
 
   using std::placeholders::_1;
@@ -51,6 +53,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerPrefix(std::string(TokenTypes::FALSE), std::bind(&Parser::parseBooleanExpression, this));
   registerPrefix(std::string(TokenTypes::LPAREN), std::bind(&Parser::ParseGroupedExpression, this));
   registerPrefix(std::string(TokenTypes::IF), std::bind(&Parser::parseIfExpression, this));
+  registerPrefix(std::string(TokenTypes::FUNCTION), std::bind(&Parser::parseFunctionLiteral, this));
 
   registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
@@ -60,6 +63,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerInfix(std::string(TokenTypes::NOT_EQ), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::LT), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::GT), std::bind(&Parser::parseInfixExpression, this, _1));
+  registerInfix(std::string(TokenTypes::LPAREN), std::bind(&Parser::parseCallExpression, this, _1));
 }
 
 void Parser::nextToken() {
@@ -265,6 +269,86 @@ std::unique_ptr<BlockStatement> Parser::parseBlockStatement() {
 std::unique_ptr<BooleanExpression> Parser::parseBooleanExpression() {
   auto booleanExpression = std::make_unique<BooleanExpression>(currentToken, currentTokenIs(TokenTypes::TRUE));
   return std::move(booleanExpression);
+}
+
+std::unique_ptr<FunctionLiteral> Parser::parseFunctionLiteral() {
+  auto literal = std::make_unique<FunctionLiteral>(currentToken);
+
+  if (!expectPeek(TokenTypes::LPAREN)) {
+    return nullptr;
+  }
+
+  literal->parameters = std::move(parseFunctionParameters());
+
+  if (!expectPeek(TokenTypes::LBRACE)) {
+    return nullptr;
+  }
+
+  literal->body = std::move(parseBlockStatement());
+
+  return std::move(literal);
+}
+
+std::vector<std::unique_ptr<Identifier>> Parser::parseFunctionParameters() {
+  std::vector<std::unique_ptr<Identifier>> identifiers{};
+
+  if (peekTokenIs(TokenTypes::RPAREN)) {
+    nextToken();
+    return identifiers;
+  }
+
+  nextToken();
+
+  auto ident = std::make_unique<Identifier>(currentToken, currentToken.Literal);
+  identifiers.push_back(std::move(ident));
+
+  while (peekTokenIs(TokenTypes::COMMA)) {
+    nextToken();
+    nextToken();
+
+    auto ident = std::make_unique<Identifier>(currentToken, currentToken.Literal);
+    identifiers.push_back(std::move(ident));
+  }
+
+  if (!expectPeek(TokenTypes::RPAREN)) {
+    return {};
+  }
+
+  return identifiers;
+}
+
+std::unique_ptr<CallExpression> Parser::parseCallExpression(std::unique_ptr<Expression> function) {
+  auto callExpression = std::make_unique<CallExpression>(currentToken);
+
+  callExpression->function = std::move(function);
+
+  callExpression->arguments = std::move(parseCallArguments());
+
+  return callExpression;
+}
+
+std::vector<std::unique_ptr<Expression>> Parser::parseCallArguments() {
+  std::vector<std::unique_ptr<Expression>> arguments;
+
+  if (peekTokenIs(TokenTypes::RPAREN)) {
+    nextToken();
+    return arguments;
+  }
+
+  nextToken();
+  arguments.push_back(std::move(parseExpression(Precedence::LOWEST)));
+
+  while (peekTokenIs(TokenTypes::COMMA)) {
+    nextToken();
+    nextToken();
+    arguments.push_back(std::move(parseExpression(Precedence::LOWEST)));
+  }
+
+  if (!expectPeek(TokenTypes::RPAREN)) {
+    return {};
+  }
+
+  return arguments;
 }
 
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }

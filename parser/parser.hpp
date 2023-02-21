@@ -142,6 +142,35 @@ public:
   std::unique_ptr<BooleanExpression> parseBooleanExpression();
 
   /**
+   * @brief This function is use to parse the function.
+   * need to be registered in `prefixParseFns`.
+   *
+   * @return std::unique_ptr<FunctionLiteral>
+   */
+  std::unique_ptr<FunctionLiteral> parseFunctionLiteral();
+
+  /**
+   * @brief Parse the function parameters
+   *
+   * @return std::vector<std::unique_ptr<Identifier>>
+   */
+  std::vector<std::unique_ptr<Identifier>> parseFunctionParameters();
+
+  /**
+   * @brief Parse the Call Expression such as `add(x,y);`
+   *
+   * @return std::unique_ptr<CallExpression>
+   */
+  std::unique_ptr<CallExpression> parseCallExpression(std::unique_ptr<Expression> function);
+
+  /**
+   * @brief Parse the call arguments
+   *
+   * @return std::vector<std::unique_ptr<Expression>>
+   */
+  std::vector<std::unique_ptr<Expression>> parseCallArguments();
+
+  /**
    * @brief A helper function to tell whether
    * `currentToken == t`
    *
