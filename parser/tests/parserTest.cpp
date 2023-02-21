@@ -295,10 +295,9 @@ bool testLetStatementHelper(TestLetStatementData<T> &test) {
 
   LetStatement *letStatement = dynamic_cast<LetStatement *>(statement);
 
-  // TODO: Until we handle the expression part in the let statement
-  // if (!testLiteralExpression<T>(letStatement->value.get(), test.expectedVar)) {
-  //   return false;
-  // }
+  if (!testLiteralExpression<T>(letStatement->value.get(), test.expectedVar)) {
+    return false;
+  }
 
   return true;
 }
@@ -354,10 +353,9 @@ bool testReturnStatementHelper(TestReturnData<T> &test) {
     return false;
   }
 
-  // TODO: until calculating the expression value
-  // if (!testLiteralExpression(returnStatement->returnValue.get(), test.expectedValue)) {
-  //   return false;
-  // }
+  if (!testLiteralExpression(returnStatement->returnValue.get(), test.expectedValue)) {
+    return false;
+  }
 
   return true;
 }

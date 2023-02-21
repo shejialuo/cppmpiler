@@ -1,9 +1,11 @@
 #include "lexer.hpp"
+#include "parser.hpp"
 #include "token.hpp"
 
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <vector>
 
 std::string_view PROMPT{">> "};
 
@@ -15,9 +17,16 @@ void start() {
       return;
     }
     Lexer l{line};
+    Parser p{&l};
+    auto program = p.parseProgram();
 
-    for (Token token = l.nextToken(); token.Type != TokenTypes::_EOF; token = l.nextToken()) {
-      std::cout << token << std::endl;
+    if (p.getErrors().size() != 0) {
+      for (auto &&error : p.getErrors()) {
+        std::cout << "\t" << error << "\n";
+      }
+      continue;
     }
+
+    std::cout << program->getString() << std::endl;
   }
 }

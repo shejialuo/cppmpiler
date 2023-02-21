@@ -108,8 +108,11 @@ std::unique_ptr<LetStatement> Parser::parseLetStatement() {
     return nullptr;
   }
 
-  // TODO: skip the expressions until encountering a semicolon.
-  while (!currentTokenIs(TokenTypes::SEMICOLON)) {
+  nextToken();
+
+  letStatement->value = std::move(parseExpression(Precedence::LOWEST));
+
+  if (peekTokenIs(TokenTypes::SEMICOLON)) {
     nextToken();
   }
 
@@ -121,9 +124,9 @@ std::unique_ptr<ReturnStatement> Parser::parseReturnStatement() {
 
   nextToken();
 
-  // TODO: skip the expressions until encountering a semicolon.
+  returnStatement->returnValue = std::move(parseExpression(Precedence::LOWEST));
 
-  while (!currentTokenIs(TokenTypes::SEMICOLON)) {
+  if (peekTokenIs(TokenTypes::SEMICOLON)) {
     nextToken();
   }
 

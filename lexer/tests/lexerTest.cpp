@@ -50,6 +50,37 @@ TEST(Lexer, TestNextToken) {
   }
 }
 
+TEST(Lexer, TestNextTokenWithNoSemicolon) {
+  std::string input{"let five = 5"};
+
+  std::vector<TestToken> tests{
+      {TokenTypes::LET, "let"},
+      {TokenTypes::IDENT, "five"},
+      {TokenTypes::ASSIGN, "="},
+      {TokenTypes::INT, "5"},
+      {TokenTypes::_EOF, ""},
+  };
+
+  Lexer l{input};
+
+  for (int i = 0; i < tests.size(); ++i) {
+    Token token = l.nextToken();
+
+    TestToken &testToken = tests[i];
+
+    if (token.Type != testToken.expectedType) {
+      spdlog::error("test[{}] - token type wrong. expected='{}', got='{}'", i, testToken.expectedType, token.Type);
+      FAIL();
+    }
+
+    if (token.Literal != testToken.expectedLiteral) {
+      spdlog::error(
+          "test[{}] - token literal wrong. expected='{}', got='{}'", i, testToken.expectedLiteral, token.Literal);
+      FAIL();
+    }
+  }
+}
+
 TEST(Lexer, TestNextTokenComplicated) {
   std::string input{"let five = 5; \
                         let ten = 10; \

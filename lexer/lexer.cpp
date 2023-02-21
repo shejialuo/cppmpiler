@@ -4,6 +4,7 @@
 
 #include <cctype>
 #include <functional>
+#include <iostream>
 #include <string>
 
 void Lexer::readChar() {
@@ -107,7 +108,10 @@ std::string Lexer::consecutiveSubstring(std::function<bool(char)> fn) {
     readChar();
   }
 
-  if (position >= input.size()) {
+  // Corner case, it should not be equal, there might be the
+  // the case such as `let x = 5`. postion would points to the
+  // `input.size()`.
+  if (position > input.size()) {
     return "";
   }
 
