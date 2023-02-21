@@ -1,0 +1,5 @@
+<map id="BlockStatement" name="BlockStatement">
+<area shape="rect" id="node1" title="BlockStatement is a block ({}) which contains many different statements." alt="" coords="5,155,132,181"/>
+<area shape="rect" id="node2" href="$classStatement.html" title="Represent the statements, for example, let a = 3; is a statement. It should inherit from Node." alt="" coords="23,80,114,107"/>
+<area shape="rect" id="node3" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="41,5,97,32"/>
+</map>

@@ -103,8 +103,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:afcd7904cff9857a52b38030e8b28c8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function need to be registered in the <code>prefixParseFns</code>.  <a href="classParser.html#afcd7904cff9857a52b38030e8b28c8e8">More...</a><br /></td></tr>
 <tr class="separator:afcd7904cff9857a52b38030e8b28c8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af18845738e78689ac6a51eb46d324c3a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#af18845738e78689ac6a51eb46d324c3a">ParseGroupedExpression</a> ()</td></tr>
-<tr class="memdesc:af18845738e78689ac6a51eb46d324c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is need to be registered in the <code>prefixParsFns</code>. It is used to parse the <code>()</code>, we just need to change the next precedence to be the lowest.  <a href="classParser.html#af18845738e78689ac6a51eb46d324c3a">More...</a><br /></td></tr>
+<tr class="memdesc:af18845738e78689ac6a51eb46d324c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is need to be registered in the <code>prefixParseFns</code>. It is used to parse the <code>()</code>, we just need to change the next precedence to be the lowest.  <a href="classParser.html#af18845738e78689ac6a51eb46d324c3a">More...</a><br /></td></tr>
 <tr class="separator:af18845738e78689ac6a51eb46d324c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe58ff7b7e5e100b3b12e4af33522792"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#afe58ff7b7e5e100b3b12e4af33522792">parseIfExpression</a> ()</td></tr>
+<tr class="memdesc:afe58ff7b7e5e100b3b12e4af33522792"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function need to be registered in the <code>prefixParseFns</code>.  <a href="classParser.html#afe58ff7b7e5e100b3b12e4af33522792">More...</a><br /></td></tr>
+<tr class="separator:afe58ff7b7e5e100b3b12e4af33522792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a003c01f2b9d5f32601d965cef327c73b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classBlockStatement.html">BlockStatement</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a003c01f2b9d5f32601d965cef327c73b">parseBlockStatement</a> ()</td></tr>
+<tr class="memdesc:a003c01f2b9d5f32601d965cef327c73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">parse the block statement <code>{}</code>.  <a href="classParser.html#a003c01f2b9d5f32601d965cef327c73b">More...</a><br /></td></tr>
+<tr class="separator:a003c01f2b9d5f32601d965cef327c73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67fca16bf1ebf89ef4c49a7ba08562b6"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classPrefixExpression.html">PrefixExpression</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a67fca16bf1ebf89ef4c49a7ba08562b6">parsePrefixExpression</a> ()</td></tr>
 <tr class="memdesc:a67fca16bf1ebf89ef4c49a7ba08562b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to parse the prefix expression. need to be registered in <code>prefixParseFns</code>.  <a href="classParser.html#a67fca16bf1ebf89ef4c49a7ba08562b6">More...</a><br /></td></tr>
 <tr class="separator:a67fca16bf1ebf89ef4c49a7ba08562b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,6 +204,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
 
 </div>
 </div>
+<a id="a003c01f2b9d5f32601d965cef327c73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a003c01f2b9d5f32601d965cef327c73b">&#9670;&nbsp;</a></span>parseBlockStatement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classBlockStatement.html">BlockStatement</a> &gt; Parser::parseBlockStatement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>parse the block statement <code>{}</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;BlockStatement&gt; </dd></dl>
+
+</div>
+</div>
 <a id="a8016cb0d850c73a1f5d91ee750737db9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8016cb0d850c73a1f5d91ee750737db9">&#9670;&nbsp;</a></span>parseBooleanExpression()</h2>
 
@@ -274,7 +300,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
       </table>
 </div><div class="memdoc">
 
-<p>This function is need to be registered in the <code>prefixParsFns</code>. It is used to parse the <code>()</code>, we just need to change the next precedence to be the lowest. </p>
+<p>This function is need to be registered in the <code>prefixParseFns</code>. It is used to parse the <code>()</code>, we just need to change the next precedence to be the lowest. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;Expression&gt; </dd></dl>
 
 </div>
@@ -287,6 +313,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
       <table class="memname">
         <tr>
           <td class="memname">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; Parser::parseIdentifier </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function need to be registered in the <code>prefixParseFns</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;Expression&gt; </dd></dl>
+
+</div>
+</div>
+<a id="afe58ff7b7e5e100b3b12e4af33522792"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe58ff7b7e5e100b3b12e4af33522792">&#9670;&nbsp;</a></span>parseIfExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; Parser::parseIfExpression </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

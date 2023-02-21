@@ -75,18 +75,20 @@ $(function() {
 </td></tr>
 <tr><td><img src="inherit_graph_1.png" border="0" usemap="#aNode" alt=""/>
 <map name="aNode" id="aNode">
-<area shape="rect" href="classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="5,201,61,228"/>
-<area shape="rect" href="classExpression.html" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="109,139,203,165"/>
-<area shape="rect" href="classProgram.html" title="This class is the entry point of the AST. it composes a consecutive statements." alt="" coords="117,201,195,228"/>
-<area shape="rect" href="classStatement.html" title="Represent the statements, for example, let a = 3; is a statement. It should inherit from Node." alt="" coords="111,277,201,304"/>
+<area shape="rect" href="classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="5,259,61,285"/>
+<area shape="rect" href="classExpression.html" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="109,157,203,184"/>
+<area shape="rect" href="classProgram.html" title="This class is the entry point of the AST. it composes a consecutive statements." alt="" coords="117,259,195,285"/>
+<area shape="rect" href="classStatement.html" title="Represent the statements, for example, let a = 3; is a statement. It should inherit from Node." alt="" coords="111,360,201,387"/>
 <area shape="rect" href="classBooleanExpression.html" title="represent the boolean value" alt="" coords="258,5,405,32"/>
 <area shape="rect" href="classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="291,56,371,83"/>
-<area shape="rect" href="classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="271,107,392,133"/>
-<area shape="rect" href="classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="277,157,386,184"/>
-<area shape="rect" href="classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="266,208,397,235"/>
-<area shape="rect" href="classExpressionStatement.html" title="Expression could also be a statement. for example: x + 10." alt="" coords="251,259,412,285"/>
-<area shape="rect" href="classLetStatement.html" title="LetStatement represents let statement, for example let a = 3." alt="" coords="276,309,387,336"/>
-<area shape="rect" href="classReturnStatement.html" title="ReturnStatement represents return statement for example, return 3" alt="" coords="265,360,398,387"/>
+<area shape="rect" href="classIfExpression.html" title="IfExpression contains three important aspects:" alt="" coords="280,107,383,133"/>
+<area shape="rect" href="classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="271,157,392,184"/>
+<area shape="rect" href="classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="277,208,386,235"/>
+<area shape="rect" href="classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="266,259,397,285"/>
+<area shape="rect" href="classBlockStatement.html" title="BlockStatement is a block ({}) which contains many different statements." alt="" coords="268,309,395,336"/>
+<area shape="rect" href="classExpressionStatement.html" title="Expression could also be a statement. for example: x + 10." alt="" coords="251,360,412,387"/>
+<area shape="rect" href="classLetStatement.html" title="LetStatement represents let statement, for example let a = 3." alt="" coords="276,411,387,437"/>
+<area shape="rect" href="classReturnStatement.html" title="ReturnStatement represents return statement for example, return 3" alt="" coords="265,461,398,488"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_2.png" border="0" usemap="#aParser" alt=""/>
@@ -94,14 +96,14 @@ $(function() {
 <area shape="rect" href="classParser.html" title=" " alt="" coords="5,5,68,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_3.png" border="0" usemap="#aTestData" alt=""/>
-<map name="aTestData" id="aTestData">
-<area shape="rect" href="structTestData.html" title=" " alt="" coords="5,5,84,32"/>
+<tr><td><img src="inherit_graph_3.png" border="0" usemap="#aTestInfixData_3_01T1_00_01T2_01_4" alt=""/>
+<map name="aTestInfixData_3_01T1_00_01T2_01_4" id="aTestInfixData_3_01T1_00_01T2_01_4">
+<area shape="rect" href="structTestInfixData.html" title=" " alt="" coords="5,5,183,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_4.png" border="0" usemap="#aTestInfixData" alt=""/>
-<map name="aTestInfixData" id="aTestInfixData">
-<area shape="rect" href="structTestInfixData.html" title=" " alt="" coords="5,5,112,32"/>
+<tr><td><img src="inherit_graph_4.png" border="0" usemap="#aTestLetStatementData_3_01T_01_4" alt=""/>
+<map name="aTestLetStatementData_3_01T_01_4" id="aTestLetStatementData_3_01T_01_4">
+<area shape="rect" href="structTestLetStatementData.html" title=" " alt="" coords="5,5,211,32"/>
 </map>
 </td></tr>
 <tr><td><img src="inherit_graph_5.png" border="0" usemap="#aTestPrecedenceData" alt=""/>
@@ -109,22 +111,27 @@ $(function() {
 <area shape="rect" href="structTestPrecedenceData.html" title=" " alt="" coords="5,5,160,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_6.png" border="0" usemap="#aTestPrefixData" alt=""/>
-<map name="aTestPrefixData" id="aTestPrefixData">
-<area shape="rect" href="structTestPrefixData.html" title=" " alt="" coords="5,5,121,32"/>
+<tr><td><img src="inherit_graph_6.png" border="0" usemap="#aTestPrefixData_3_01T_01_4" alt=""/>
+<map name="aTestPrefixData_3_01T_01_4" id="aTestPrefixData_3_01T_01_4">
+<area shape="rect" href="structTestPrefixData.html" title=" " alt="" coords="5,5,160,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_7.png" border="0" usemap="#aTestToken" alt=""/>
+<tr><td><img src="inherit_graph_7.png" border="0" usemap="#aTestReturnData_3_01T_01_4" alt=""/>
+<map name="aTestReturnData_3_01T_01_4" id="aTestReturnData_3_01T_01_4">
+<area shape="rect" href="structTestReturnData.html" title=" " alt="" coords="5,5,165,32"/>
+</map>
+</td></tr>
+<tr><td><img src="inherit_graph_8.png" border="0" usemap="#aTestToken" alt=""/>
 <map name="aTestToken" id="aTestToken">
 <area shape="rect" href="structTestToken.html" title=" " alt="" coords="5,5,91,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_8.png" border="0" usemap="#aToken" alt=""/>
+<tr><td><img src="inherit_graph_9.png" border="0" usemap="#aToken" alt=""/>
 <map name="aToken" id="aToken">
 <area shape="rect" href="structToken.html" title="Token is a data structure which represents the token. It has two fields, one is its type,..." alt="" coords="5,5,64,32"/>
 </map>
 </td></tr>
-<tr><td><img src="inherit_graph_9.png" border="0" usemap="#aTokenTypes" alt=""/>
+<tr><td><img src="inherit_graph_10.png" border="0" usemap="#aTokenTypes" alt=""/>
 <map name="aTokenTypes" id="aTokenTypes">
 <area shape="rect" href="structTokenTypes.html" title="TokenTypes is used to wrap the type definition." alt="" coords="5,5,101,32"/>
 </map>
