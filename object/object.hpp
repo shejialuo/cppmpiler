@@ -47,14 +47,4 @@ public:
   std::string inspect() override;
 };
 
-/**
- * @brief Null class represents null.
- *
- */
-class Null : public Object {
-public:
-  ObjectType type() override;
-  std::string inspect() override;
-};
-
 #endif  // _OBJECT_OBJECT_HPP_

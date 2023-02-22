@@ -23,4 +23,30 @@ std::unique_ptr<Object> eval(Node *node);
  */
 std::unique_ptr<Object> evalStatements(std::vector<std::unique_ptr<Statement>> &statements);
 
+/**
+ * @brief First calculate the right object, and then calculate
+ * the prefix operation
+ *
+ * @param op the prefix operation
+ * @param right the right evaluated object
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalPrefixExpression(const std::string &op, std::unique_ptr<Object> &right);
+
+/**
+ * @brief should be called by `evalPrefixExpression`
+ *
+ * @param right the right evaluated object
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalBangOperationExpression(std::unique_ptr<Object> &right);
+
+/**
+ * @brief should be called by `evalPrefixExpression`
+ *
+ * @param right the right evaluated object
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalMinusOperationExpression(std::unique_ptr<Object> &right);
+
 #endif  // _EVALUATOR_EVALUATOR_HPP_
