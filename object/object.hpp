@@ -2,6 +2,7 @@
 #define _OBJECT_OBJECT_HPP_
 
 #include <cstdint>
+#include <memory>
 #include <string>
 
 using ObjectType = std::string;
@@ -42,6 +43,20 @@ public:
 
   Boolean() = default;
   Boolean(bool v);
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
+/**
+ * @brief  ReturnValue class represents the return value
+ *
+ */
+class ReturnValue : public Object {
+public:
+  std::unique_ptr<Object> value;
+
+  ReturnValue() = default;
 
   ObjectType type() override;
   std::string inspect() override;

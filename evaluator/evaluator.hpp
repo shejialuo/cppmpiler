@@ -16,12 +16,12 @@
 std::unique_ptr<Object> eval(Node *node);
 
 /**
- * @brief iteratively evaluate the statements
+ * @brief iteratively evaluate the program
  *
  * @param statements
  * @return std::unique_ptr<Object>
  */
-std::unique_ptr<Object> evalStatements(std::vector<std::unique_ptr<Statement>> &statements);
+std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &statements);
 
 /**
  * @brief First calculate the right object, and then calculate
@@ -93,5 +93,13 @@ std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
  * @return std::unique_ptr<Object>
  */
 std::unique_ptr<Object> evalIfExpression(IfExpression *ie);
+
+/**
+ * @brief Evaluate the the block statement
+ *
+ * @param bs
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs);
 
 #endif  // _EVALUATOR_EVALUATOR_HPP_

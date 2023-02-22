@@ -6,15 +6,17 @@
 
 #include <iostream>
 #include <memory>
+#include <utility>
 
 constexpr std::string_view INTEGER_OBJ = "INTEGER";
 constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
+constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 
 std::unique_ptr<Object> eval(Node *node) {
   Program *program = dynamic_cast<Program *>(node);
 
   if (program != nullptr) {
-    return std::move(evalStatements(program->statements));
+    return std::move(evalProgram(program->statements));
   }
 
   ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(node);
@@ -25,7 +27,7 @@ std::unique_ptr<Object> eval(Node *node) {
 
   BlockStatement *blockStatement = dynamic_cast<BlockStatement *>(node);
   if (blockStatement != nullptr) {
-    return std::move(evalStatements(blockStatement->statements));
+    return std::move(evalBlockStatement(blockStatement));
   }
 
   IntegerLiteral *integer = dynamic_cast<IntegerLiteral *>(node);
@@ -57,14 +59,27 @@ std::unique_ptr<Object> eval(Node *node) {
     return std::move(evalIfExpression(ifExpression));
   }
 
+  ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(node);
+  if (returnStatement != nullptr) {
+    auto val = eval(returnStatement->returnValue.get());
+    auto returnValue = std::make_unique<ReturnValue>();
+    returnValue->value = std::move(val);
+    return std::move(returnValue);
+  }
+
   return nullptr;
 }
 
-std::unique_ptr<Object> evalStatements(std::vector<std::unique_ptr<Statement>> &statements) {
+std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &statements) {
   std::unique_ptr<Object> result{};
 
   for (auto &&statement : statements) {
     result = std::move(eval(statement.get()));
+
+    ReturnValue *returnValue = dynamic_cast<ReturnValue *>(result.get());
+    if (returnValue != nullptr) {
+      return std::move(returnValue->value);
+    }
   }
 
   return std::move(result);
@@ -189,4 +204,18 @@ std::unique_ptr<Object> evalIfExpression(IfExpression *ie) {
   }
 
   return nullptr;
+}
+
+std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs) {
+  std::unique_ptr<Object> result{};
+
+  for (auto &&statement : bs->statements) {
+    result = std::move(eval(statement.get()));
+
+    if (result != nullptr && result->type() == RETURN_VALUE_OBJ) {
+      return result;
+    }
+  }
+
+  return result;
 }
