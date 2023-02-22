@@ -17,10 +17,15 @@ std::unique_ptr<Object> eval(Node *node) {
     return std::move(evalStatements(program->statements));
   }
 
-  ExpressionStatement *es = dynamic_cast<ExpressionStatement *>(node);
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(node);
 
-  if (es != nullptr) {
-    return std::move(eval(es->expression.get()));
+  if (expressionStatement != nullptr) {
+    return std::move(eval(expressionStatement->expression.get()));
+  }
+
+  BlockStatement *blockStatement = dynamic_cast<BlockStatement *>(node);
+  if (blockStatement != nullptr) {
+    return std::move(evalStatements(blockStatement->statements));
   }
 
   IntegerLiteral *integer = dynamic_cast<IntegerLiteral *>(node);
@@ -29,22 +34,27 @@ std::unique_ptr<Object> eval(Node *node) {
     return std::move(std::make_unique<Integer>(integer->value));
   }
 
-  BooleanExpression *bs = dynamic_cast<BooleanExpression *>(node);
-  if (bs != nullptr) {
-    return std::move(std::make_unique<Boolean>(bs->value));
+  BooleanExpression *booleanExpression = dynamic_cast<BooleanExpression *>(node);
+  if (booleanExpression != nullptr) {
+    return std::move(std::make_unique<Boolean>(booleanExpression->value));
   }
 
-  PrefixExpression *pe = dynamic_cast<PrefixExpression *>(node);
-  if (pe != nullptr) {
-    auto right = eval(pe->right.get());
-    return std::move(evalPrefixExpression(pe->_operator, right));
+  PrefixExpression *prefixExpression = dynamic_cast<PrefixExpression *>(node);
+  if (prefixExpression != nullptr) {
+    auto right = eval(prefixExpression->right.get());
+    return std::move(evalPrefixExpression(prefixExpression->_operator, right));
   }
 
-  InfixExpression *ie = dynamic_cast<InfixExpression *>(node);
-  if (ie != nullptr) {
-    auto left = eval(ie->left.get());
-    auto right = eval(ie->right.get());
-    return std::move(evalInfixExpression(ie->_operator, left, right));
+  InfixExpression *infixExpression = dynamic_cast<InfixExpression *>(node);
+  if (infixExpression != nullptr) {
+    auto left = eval(infixExpression->left.get());
+    auto right = eval(infixExpression->right.get());
+    return std::move(evalInfixExpression(infixExpression->_operator, left, right));
+  }
+
+  IfExpression *ifExpression = dynamic_cast<IfExpression *>(node);
+  if (ifExpression != nullptr) {
+    return std::move(evalIfExpression(ifExpression));
   }
 
   return nullptr;
@@ -147,6 +157,35 @@ std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
     return std::make_unique<Boolean>(leftBoolean->value == rightBoolean->value);
   } else if (op == "!=") {
     return std::make_unique<Boolean>(leftBoolean->value != rightBoolean->value);
+  }
+
+  return nullptr;
+}
+
+std::unique_ptr<Object> evalIfExpression(IfExpression *ie) {
+  auto condition = eval(ie->condition.get());
+
+  if (condition == nullptr) {
+    return nullptr;
+  }
+
+  Boolean *result = dynamic_cast<Boolean *>(condition.get());
+
+  // Corner case: if (1) {10} else {20}
+  Integer *integer = dynamic_cast<Integer *>(condition.get());
+
+  if (result == nullptr && integer != nullptr) {
+    if (integer->value != 0) {
+      return std::move(eval(ie->consequence.get()));
+    } else {
+      return std::move(eval(ie->alternative.get()));
+    }
+  } else if (!result->value) {
+    if (ie->alternative != nullptr) {
+      return std::move(eval(ie->alternative.get()));
+    }
+  } else {
+    return std::move(eval(ie->consequence.get()));
   }
 
   return nullptr;

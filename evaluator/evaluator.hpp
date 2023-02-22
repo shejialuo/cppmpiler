@@ -86,4 +86,12 @@ std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
                                                    std::unique_ptr<Object> &left,
                                                    std::unique_ptr<Object> &right);
 
+/**
+ * @brief Evaluate the `IfExpression`
+ *
+ * @param ie IfExpression
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalIfExpression(IfExpression *ie);
+
 #endif  // _EVALUATOR_EVALUATOR_HPP_

@@ -13,6 +13,7 @@
 std::unique_ptr<Object> testEval(const std::string &input);
 bool testIntegerObject(Object *object, int64_t expected);
 bool testBooleanObject(Object *object, bool expected);
+bool testNullObject(Object *object);
 
 std::unique_ptr<Object> testEval(const std::string &input) {
   Lexer lexer{input};
@@ -52,6 +53,14 @@ bool testBooleanObject(Object *object, bool expected) {
     return false;
   }
 
+  return true;
+}
+
+bool testNullObject(Object *object) {
+  if (object != nullptr) {
+    spdlog::error("object is not nullptr");
+    return false;
+  }
   return true;
 }
 
@@ -147,6 +156,52 @@ TEST(Evaluator, TestBangOperator) {
   for (auto &&test : tests) {
     auto evaluated = testEval(test.input);
     if (!testBooleanObject(evaluated.get(), test.expected)) {
+      FAIL();
+    }
+  }
+}
+
+TEST(Evaluator, TestIfElseExpressions1) {
+  struct TestData {
+    std::string input;
+    int64_t expected;
+
+    TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
+  };
+
+  std::vector<TestData> tests{
+      {"if (true) { 10 }", 10},
+      {"if (1) { 10 }", 10},
+      {"if (1 < 2) { 10 }", 10},
+      {"if (1 > 2) { 10 } else { 20 }", 20},
+      {"if (1 < 2) { 10 } else { 20 }", 10},
+  };
+
+  for (auto &&test : tests) {
+    auto evaluated = testEval(test.input);
+    if (!testIntegerObject(evaluated.get(), test.expected)) {
+      FAIL();
+    }
+  }
+}
+
+TEST(Evaluator, TestIfElseExpressions2) {
+  struct TestData {
+    std::string input;
+
+    TestData(const std::string &s) : input{s} {}
+  };
+
+  std::vector<TestData> tests{
+      {"if (false) { 10 }"},
+      {"if (0) {10}"},
+      {"if (1 > 2) {10}"},
+      {"if (!1) {10}"},
+  };
+
+  for (auto &&test : tests) {
+    auto evaluated = testEval(test.input);
+    if (!testNullObject(evaluated.get())) {
       FAIL();
     }
   }
