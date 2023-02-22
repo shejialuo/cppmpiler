@@ -7,6 +7,7 @@
 constexpr std::string_view INTEGER_OBJ = "INTEGER";
 constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
+constexpr std::string_view ERROR_OBJ = "ERROR";
 
 Integer::Integer(int64_t v) : value{v} {}
 std::string Integer::inspect() { return std::to_string(value); }
@@ -18,3 +19,7 @@ ObjectType Boolean::type() { return std::string(BOOLEAN_OBJ); }
 
 std::string ReturnValue::inspect() { return value->inspect(); }
 ObjectType ReturnValue::type() { return std::string(RETURN_VALUE_OBJ); }
+
+Error::Error(const std::string &m) : message{m} {}
+std::string Error::inspect() { return "ERROR: " + message; }
+ObjectType Error::type() { return std::string(ERROR_OBJ); }

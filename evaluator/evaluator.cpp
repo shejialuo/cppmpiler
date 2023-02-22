@@ -11,6 +11,7 @@
 constexpr std::string_view INTEGER_OBJ = "INTEGER";
 constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
+constexpr std::string_view ERROR_OBJ = "ERROR";
 
 std::unique_ptr<Object> eval(Node *node) {
   Program *program = dynamic_cast<Program *>(node);
@@ -80,6 +81,11 @@ std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &sta
     if (returnValue != nullptr) {
       return std::move(returnValue->value);
     }
+
+    Error *error = dynamic_cast<Error *>(result.get());
+    if (error != nullptr) {
+      return std::move(result);
+    }
   }
 
   return std::move(result);
@@ -91,7 +97,7 @@ std::unique_ptr<Object> evalPrefixExpression(const std::string &op, std::unique_
   } else if (op == "-") {
     return std::move(evalMinusOperationExpression(right));
   }
-  return nullptr;
+  return newError("unkown operator: " + op + right->type());
 }
 
 std::unique_ptr<Object> evalBangOperationExpression(std::unique_ptr<Object> &right) {
@@ -112,7 +118,7 @@ std::unique_ptr<Object> evalBangOperationExpression(std::unique_ptr<Object> &rig
 
 std::unique_ptr<Object> evalMinusOperationExpression(std::unique_ptr<Object> &right) {
   if (right->type() != INTEGER_OBJ) {
-    return nullptr;
+    return newError("unknown operator: -" + right->type());
   }
 
   Integer *integer = dynamic_cast<Integer *>(right.get());
@@ -127,8 +133,10 @@ std::unique_ptr<Object> evalInfixExpression(const std::string &op,
     return std::move(evalIntegerInfixExpression(op, left, right));
   } else if (left->type() == BOOLEAN_OBJ && right->type() == BOOLEAN_OBJ) {
     return std::move(evalBooleanInfixExpression(op, left, right));
+  } else if (left->type() != right->type()) {
+    return newError("type mismatch: " + left->type() + " " + op + " " + right->type());
   }
-  return nullptr;
+  return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
 std::unique_ptr<Object> evalIntegerInfixExpression(const std::string &op,
@@ -155,7 +163,7 @@ std::unique_ptr<Object> evalIntegerInfixExpression(const std::string &op,
     return std::make_unique<Boolean>(leftInteger->value != rightInteger->value);
   }
 
-  return nullptr;
+  return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
 std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
@@ -164,17 +172,13 @@ std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
   Boolean *leftBoolean = dynamic_cast<Boolean *>(left.get());
   Boolean *rightBoolean = dynamic_cast<Boolean *>(right.get());
 
-  if (leftBoolean == nullptr || rightBoolean == nullptr) {
-    return nullptr;
-  }
-
   if (op == "==") {
     return std::make_unique<Boolean>(leftBoolean->value == rightBoolean->value);
   } else if (op == "!=") {
     return std::make_unique<Boolean>(leftBoolean->value != rightBoolean->value);
   }
 
-  return nullptr;
+  return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
 std::unique_ptr<Object> evalIfExpression(IfExpression *ie) {
@@ -212,10 +216,13 @@ std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs) {
   for (auto &&statement : bs->statements) {
     result = std::move(eval(statement.get()));
 
-    if (result != nullptr && result->type() == RETURN_VALUE_OBJ) {
-      return result;
+    if (result != nullptr) {
+      if (result->type() == RETURN_VALUE_OBJ || result->type() == ERROR_OBJ)
+        return result;
     }
   }
 
   return result;
 }
+
+std::unique_ptr<Error> newError(const std::string &s) { return std::make_unique<Error>(s); }

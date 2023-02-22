@@ -230,3 +230,59 @@ TEST(Evaluator, TestReturnStatements) {
     }
   }
 }
+
+TEST(Evaluator, TestErrorHandling) {
+  struct TestData {
+    std::string input;
+    std::string expectedMessage;
+
+    TestData(const std::string &s, const std::string &m) : input{s}, expectedMessage{m} {}
+  };
+
+  std::vector<TestData> tests{
+      {
+          "5 + true;",
+          "type mismatch: INTEGER + BOOLEAN",
+      },
+      {
+          "5 + true; 5;",
+          "type mismatch: INTEGER + BOOLEAN",
+      },
+      {
+          "-true;",
+          "unknown operator: -BOOLEAN",
+      },
+      {
+          "true + false;",
+          "unknown operator: BOOLEAN + BOOLEAN",
+      },
+      {
+          "5; true + false; 5",
+          "unknown operator: BOOLEAN + BOOLEAN",
+      },
+      {
+          "if (10 > 1) { true + false; }",
+          "unknown operator: BOOLEAN + BOOLEAN",
+      },
+      {
+          "if (10 > 1) { if (10 > 1) {return true + false;} return 1;}",
+          "unknown operator: BOOLEAN + BOOLEAN",
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto evaluated = testEval(test.input);
+
+    Error *error = dynamic_cast<Error *>(evaluated.get());
+
+    if (error == nullptr) {
+      spdlog::error("no error object returned");
+      FAIL();
+    }
+
+    if (error->message != test.expectedMessage) {
+      spdlog::error("wrong error message. expected='{}', got='{}'", test.expectedMessage, error->message);
+      FAIL();
+    }
+  }
+}

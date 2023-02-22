@@ -102,4 +102,12 @@ std::unique_ptr<Object> evalIfExpression(IfExpression *ie);
  */
 std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs);
 
+/**
+ * @brief Generate the Error message
+ *
+ * @param s the error message
+ * @return std::unique_ptr<Error>
+ */
+std::unique_ptr<Error> newError(const std::string &s);
+
 #endif  // _EVALUATOR_EVALUATOR_HPP_

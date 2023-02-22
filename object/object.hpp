@@ -62,4 +62,15 @@ public:
   std::string inspect() override;
 };
 
+class Error : public Object {
+public:
+  std::string message;
+
+  Error() = default;
+  Error(const std::string &m);
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
 #endif  // _OBJECT_OBJECT_HPP_
