@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['setidentifiers_46',['setIdentifiers',['../structToken.html#a183db540b6af6aa62306d893eafa9f1c',1,'Token']]],
-  ['simple_20interpreter_47',['Simple Interpreter',['../md_README.html',1,'']]],
-  ['statement_48',['Statement',['../classStatement.html',1,'']]]
+  ['readchar_48',['readChar',['../classLexer.html#af2c10bc1588bc371d87c0b3c096dfe5f',1,'Lexer']]],
+  ['returnstatement_49',['ReturnStatement',['../classReturnStatement.html',1,'']]]
 ];

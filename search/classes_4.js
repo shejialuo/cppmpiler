@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['identifier_64',['Identifier',['../classIdentifier.html',1,'']]],
-  ['ifexpression_65',['IfExpression',['../classIfExpression.html',1,'']]],
-  ['infixexpression_66',['InfixExpression',['../classInfixExpression.html',1,'']]],
-  ['integerliteral_67',['IntegerLiteral',['../classIntegerLiteral.html',1,'']]]
+  ['identifier_69',['Identifier',['../classIdentifier.html',1,'']]],
+  ['ifexpression_70',['IfExpression',['../classIfExpression.html',1,'']]],
+  ['infixexpression_71',['InfixExpression',['../classInfixExpression.html',1,'']]],
+  ['integer_72',['Integer',['../classInteger.html',1,'']]],
+  ['integerliteral_73',['IntegerLiteral',['../classIntegerLiteral.html',1,'']]]
 ];
