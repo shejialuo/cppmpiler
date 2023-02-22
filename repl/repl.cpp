@@ -1,3 +1,4 @@
+#include "evaluator.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "token.hpp"
@@ -26,7 +27,10 @@ void start() {
       }
       continue;
     }
+    auto evaluated = eval(program.get());
 
-    std::cout << program->getString() << std::endl;
+    if (evaluated != nullptr) {
+      std::cout << evaluated->inspect() << "\n";
+    }
   }
 }

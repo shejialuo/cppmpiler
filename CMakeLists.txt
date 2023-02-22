@@ -70,6 +70,8 @@ add_subdirectory(./lexer)
 add_subdirectory(./repl)
 add_subdirectory(./ast)
 add_subdirectory(./parser)
+add_subdirectory(./object)
+add_subdirectory(./evaluator)
 
 add_executable(simpleInterpreter main.cpp)
 target_include_directories(simpleInterpreter PRIVATE ./repl)
