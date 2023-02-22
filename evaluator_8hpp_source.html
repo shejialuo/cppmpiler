@@ -82,7 +82,13 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;std::unique_ptr&lt;Object&gt; evalStatements(std::vector&lt;std::unique_ptr&lt;Statement&gt;&gt; &amp;statements);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// _EVALUATOR_EVALUATOR_HPP_</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;std::unique_ptr&lt;Object&gt; evalPrefixExpression(<span class="keyword">const</span> std::string &amp;op, std::unique_ptr&lt;Object&gt; &amp;right);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;std::unique_ptr&lt;Object&gt; evalBangOperationExpression(std::unique_ptr&lt;Object&gt; &amp;right);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;std::unique_ptr&lt;Object&gt; evalMinusOperationExpression(std::unique_ptr&lt;Object&gt; &amp;right);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// _EVALUATOR_EVALUATOR_HPP_</span></div>
 <div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">Every node in the AST has to implement this abstract class.</div><div class="ttdef"><b>Definition:</b> ast.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
