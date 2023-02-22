@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(simpleInterpreter LANGUAGES CXX)
+project(cppmpiler LANGUAGES CXX)
 
 # GoogleTest requires are least C++14
 set(CMAKE_CXX_STANDARD 17)
@@ -22,7 +22,13 @@ FetchContent_Declare(
   GIT_TAG release-1.12.1
 )
 
-FetchContent_MakeAvailable(googletest)
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.x
+)
+
+FetchContent_MakeAvailable(googletest spdlog)
 
 # See https://cmake.org/cmake/help/latest/module/FindDoxygen.html
 find_package(Doxygen
@@ -63,8 +69,6 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_subdirectory(./deps/spdlog)
-
 add_subdirectory(./token)
 add_subdirectory(./lexer)
 add_subdirectory(./repl)
@@ -73,8 +77,8 @@ add_subdirectory(./parser)
 add_subdirectory(./object)
 add_subdirectory(./evaluator)
 
-add_executable(simpleInterpreter main.cpp)
-target_include_directories(simpleInterpreter PRIVATE ./repl)
-target_link_libraries(simpleInterpreter repl)
+add_executable(cppmpiler main.cpp)
+target_include_directories(cppmpiler PRIVATE ./repl)
+target_link_libraries(cppmpiler repl)
 
-set_target_properties(simpleInterpreter PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/)
+set_target_properties(cppmpiler PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/)

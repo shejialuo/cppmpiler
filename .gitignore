@@ -3,4 +3,4 @@
 build/
 
 # binary
-simpleInterpreter
+cppmpiler

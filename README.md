@@ -1,7 +1,7 @@
-# Simple Interpreter
+# cppmpiler
 
 This is my implementation of [Writing An Interpreter In Go](https://interpreterbook.com/)
-in cpp.
+and [Writing A Compiler In Go](https://compilerbook.com/) in cpp.
 
 ## Development Setup
 
