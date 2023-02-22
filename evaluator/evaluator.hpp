@@ -49,4 +49,41 @@ std::unique_ptr<Object> evalBangOperationExpression(std::unique_ptr<Object> &rig
  */
 std::unique_ptr<Object> evalMinusOperationExpression(std::unique_ptr<Object> &right);
 
+/**
+ * @brief First calculate the left expression and right
+ * expression. And then calculate
+ *
+ * @param op the infix operator
+ * @param left the left evaluated object
+ * @param right the right evaluated object
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalInfixExpression(const std::string &op,
+                                            std::unique_ptr<Object> &left,
+                                            std::unique_ptr<Object> &right);
+
+/**
+ * @brief Integer infix expression evaluation
+ *
+ * @param op the infix operator
+ * @param left the left evaluated object
+ * @param right the right evaluated object
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalIntegerInfixExpression(const std::string &op,
+                                                   std::unique_ptr<Object> &left,
+                                                   std::unique_ptr<Object> &right);
+
+/**
+ * @brief Boolean infix expression evaluation
+ *
+ * @param op the infix operator
+ * @param left the left evaluated object
+ * @param right the right evaluated object
+ * @return std::unique_ptr<Object>
+ */
+std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
+                                                   std::unique_ptr<Object> &left,
+                                                   std::unique_ptr<Object> &right);
+
 #endif  // _EVALUATOR_EVALUATOR_HPP_
