@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classParser.html" title=" " alt="" coords="5,5,68,32"/>
+<area shape="rect" id="node1" href="$classObject.html" title="Base class to represent the object." alt="" coords="5,81,69,108"/>
+<area shape="rect" id="node2" href="$classBoolean.html" title="Boolean class represents bool." alt="" coords="131,5,205,32"/>
+<area shape="rect" id="node3" href="$classError.html" title=" " alt="" coords="141,56,195,83"/>
+<area shape="rect" id="node4" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="134,107,202,133"/>
+<area shape="rect" id="node5" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="117,157,219,184"/>
 </map>
