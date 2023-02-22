@@ -13,7 +13,7 @@ constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view ERROR_OBJ = "ERROR";
 
-std::unique_ptr<Object> eval(Node *node) {
+std::unique_ptr<Object> Evaluator::eval(Node *node) {
   Program *program = dynamic_cast<Program *>(node);
 
   if (program != nullptr) {
@@ -71,7 +71,7 @@ std::unique_ptr<Object> eval(Node *node) {
   return nullptr;
 }
 
-std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &statements) {
+std::unique_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<Statement>> &statements) {
   std::unique_ptr<Object> result{};
 
   for (auto &&statement : statements) {
@@ -91,7 +91,7 @@ std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &sta
   return std::move(result);
 }
 
-std::unique_ptr<Object> evalPrefixExpression(const std::string &op, std::unique_ptr<Object> &right) {
+std::unique_ptr<Object> Evaluator::evalPrefixExpression(const std::string &op, std::unique_ptr<Object> &right) {
   if (op == "!") {
     return std::move(evalBangOperationExpression(right));
   } else if (op == "-") {
@@ -100,7 +100,7 @@ std::unique_ptr<Object> evalPrefixExpression(const std::string &op, std::unique_
   return newError("unkown operator: " + op + right->type());
 }
 
-std::unique_ptr<Object> evalBangOperationExpression(std::unique_ptr<Object> &right) {
+std::unique_ptr<Object> Evaluator::evalBangOperationExpression(std::unique_ptr<Object> &right) {
   Boolean *boolean = dynamic_cast<Boolean *>(right.get());
 
   // Here, I don't use `Null` class, I just use `nullptr`
@@ -116,7 +116,7 @@ std::unique_ptr<Object> evalBangOperationExpression(std::unique_ptr<Object> &rig
   return std::move(std::make_unique<Boolean>(false));
 }
 
-std::unique_ptr<Object> evalMinusOperationExpression(std::unique_ptr<Object> &right) {
+std::unique_ptr<Object> Evaluator::evalMinusOperationExpression(std::unique_ptr<Object> &right) {
   if (right->type() != INTEGER_OBJ) {
     return newError("unknown operator: -" + right->type());
   }
@@ -126,9 +126,9 @@ std::unique_ptr<Object> evalMinusOperationExpression(std::unique_ptr<Object> &ri
   return std::move(std::make_unique<Integer>(-integer->value));
 }
 
-std::unique_ptr<Object> evalInfixExpression(const std::string &op,
-                                            std::unique_ptr<Object> &left,
-                                            std::unique_ptr<Object> &right) {
+std::unique_ptr<Object> Evaluator::evalInfixExpression(const std::string &op,
+                                                       std::unique_ptr<Object> &left,
+                                                       std::unique_ptr<Object> &right) {
   if (left->type() == INTEGER_OBJ && right->type() == INTEGER_OBJ) {
     return std::move(evalIntegerInfixExpression(op, left, right));
   } else if (left->type() == BOOLEAN_OBJ && right->type() == BOOLEAN_OBJ) {
@@ -139,9 +139,9 @@ std::unique_ptr<Object> evalInfixExpression(const std::string &op,
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> evalIntegerInfixExpression(const std::string &op,
-                                                   std::unique_ptr<Object> &left,
-                                                   std::unique_ptr<Object> &right) {
+std::unique_ptr<Object> Evaluator::evalIntegerInfixExpression(const std::string &op,
+                                                              std::unique_ptr<Object> &left,
+                                                              std::unique_ptr<Object> &right) {
   Integer *leftInteger = dynamic_cast<Integer *>(left.get());
   Integer *rightInteger = dynamic_cast<Integer *>(right.get());
 
@@ -166,9 +166,9 @@ std::unique_ptr<Object> evalIntegerInfixExpression(const std::string &op,
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
-                                                   std::unique_ptr<Object> &left,
-                                                   std::unique_ptr<Object> &right) {
+std::unique_ptr<Object> Evaluator::evalBooleanInfixExpression(const std::string &op,
+                                                              std::unique_ptr<Object> &left,
+                                                              std::unique_ptr<Object> &right) {
   Boolean *leftBoolean = dynamic_cast<Boolean *>(left.get());
   Boolean *rightBoolean = dynamic_cast<Boolean *>(right.get());
 
@@ -181,7 +181,7 @@ std::unique_ptr<Object> evalBooleanInfixExpression(const std::string &op,
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> evalIfExpression(IfExpression *ie) {
+std::unique_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie) {
   auto condition = eval(ie->condition.get());
 
   if (condition == nullptr) {
@@ -210,7 +210,7 @@ std::unique_ptr<Object> evalIfExpression(IfExpression *ie) {
   return nullptr;
 }
 
-std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs) {
+std::unique_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs) {
   std::unique_ptr<Object> result{};
 
   for (auto &&statement : bs->statements) {
@@ -225,4 +225,4 @@ std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs) {
   return result;
 }
 
-std::unique_ptr<Error> newError(const std::string &s) { return std::make_unique<Error>(s); }
+std::unique_ptr<Error> Evaluator::newError(const std::string &s) { return std::make_unique<Error>(s); }

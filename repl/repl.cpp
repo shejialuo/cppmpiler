@@ -27,7 +27,7 @@ void start() {
       }
       continue;
     }
-    auto evaluated = eval(program.get());
+    auto evaluated = Evaluator::eval(program.get());
 
     if (evaluated != nullptr) {
       std::cout << evaluated->inspect() << "\n";

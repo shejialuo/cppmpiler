@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+Evaluator evaluator{};
+
 std::unique_ptr<Object> testEval(const std::string &input);
 bool testIntegerObject(Object *object, int64_t expected);
 bool testBooleanObject(Object *object, bool expected);
@@ -21,7 +23,7 @@ std::unique_ptr<Object> testEval(const std::string &input) {
 
   auto program = parser.parseProgram();
 
-  return std::move(eval(program.get()));
+  return std::move(evaluator.eval(program.get()));
 }
 
 bool testIntegerObject(Object *object, int64_t expected) {
