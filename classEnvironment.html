@@ -85,24 +85,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afc0c24e7485af1066ac27da6305888c2"><td class="memItemLeft" align="right" valign="top"><a id="afc0c24e7485af1066ac27da6305888c2"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Environment</b> (<a class="el" href="classEnvironment.html">Environment</a> &amp;&amp;)=default</td></tr>
 <tr class="separator:afc0c24e7485af1066ac27da6305888c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3823067b27210fe852cf695ac505b97"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEnvironment.html#ab3823067b27210fe852cf695ac505b97">get</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:ab3823067b27210fe852cf695ac505b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the binding value  <a href="classEnvironment.html#ab3823067b27210fe852cf695ac505b97">More...</a><br /></td></tr>
-<tr class="separator:ab3823067b27210fe852cf695ac505b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abacc13b7c41c3c40c92680a2d5b3c031"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEnvironment.html#abacc13b7c41c3c40c92680a2d5b3c031">set</a> (const std::string &amp;name, std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&amp;val)</td></tr>
-<tr class="memdesc:abacc13b7c41c3c40c92680a2d5b3c031"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the identifier  <a href="classEnvironment.html#abacc13b7c41c3c40c92680a2d5b3c031">More...</a><br /></td></tr>
-<tr class="separator:abacc13b7c41c3c40c92680a2d5b3c031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa125e02504519d7498b22216cfdb2d6a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEnvironment.html#aa125e02504519d7498b22216cfdb2d6a">get</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:aa125e02504519d7498b22216cfdb2d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the binding value  <a href="classEnvironment.html#aa125e02504519d7498b22216cfdb2d6a">More...</a><br /></td></tr>
+<tr class="separator:aa125e02504519d7498b22216cfdb2d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a873a0714309999e19da7d40cc8ce4df0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEnvironment.html#a873a0714309999e19da7d40cc8ce4df0">set</a> (const std::string &amp;name, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&amp;val)</td></tr>
+<tr class="memdesc:a873a0714309999e19da7d40cc8ce4df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the identifier  <a href="classEnvironment.html#a873a0714309999e19da7d40cc8ce4df0">More...</a><br /></td></tr>
+<tr class="separator:a873a0714309999e19da7d40cc8ce4df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classEnvironment.html" title="Environment is used to indicate the current frame environment. It is a scope and all the values assoc...">Environment</a> is used to indicate the current frame environment. It is a scope and all the values associated with this scope is recorded in it. When we meet a new scope such as functions, we should spawn a new scope, which means that we should create a new environment class. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab3823067b27210fe852cf695ac505b97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3823067b27210fe852cf695ac505b97">&#9670;&nbsp;</a></span>get()</h2>
+<a id="aa125e02504519d7498b22216cfdb2d6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa125e02504519d7498b22216cfdb2d6a">&#9670;&nbsp;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Environment::get </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Environment::get </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -118,12 +118,12 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;Object&gt; </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
 
 </div>
 </div>
-<a id="abacc13b7c41c3c40c92680a2d5b3c031"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abacc13b7c41c3c40c92680a2d5b3c031">&#9670;&nbsp;</a></span>set()</h2>
+<a id="a873a0714309999e19da7d40cc8ce4df0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a873a0714309999e19da7d40cc8ce4df0">&#9670;&nbsp;</a></span>set()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -137,7 +137,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
