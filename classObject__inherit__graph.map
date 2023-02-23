@@ -1,7 +1,8 @@
 <map id="Object" name="Object">
-<area shape="rect" id="node1" title="Base class to represent the object." alt="" coords="141,5,205,32"/>
+<area shape="rect" id="node1" title="Base class to represent the object." alt="" coords="188,5,252,32"/>
 <area shape="rect" id="node2" href="$classBoolean.html" title="Boolean class represents bool." alt="" coords="5,80,80,107"/>
-<area shape="rect" id="node3" href="$classError.html" title=" " alt="" coords="104,80,157,107"/>
-<area shape="rect" id="node4" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="182,80,250,107"/>
-<area shape="rect" id="node5" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="275,80,376,107"/>
+<area shape="rect" id="node3" href="$classError.html" title="Error class represents the error." alt="" coords="104,80,157,107"/>
+<area shape="rect" id="node4" href="$classFunction.html" title="Function class represents the function." alt="" coords="181,80,259,107"/>
+<area shape="rect" id="node5" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="283,80,351,107"/>
+<area shape="rect" id="node6" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="376,80,477,107"/>
 </map>
