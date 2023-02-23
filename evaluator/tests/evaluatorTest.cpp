@@ -12,7 +12,7 @@
 
 Evaluator evaluator{};
 
-std::shared_ptr<Object> testEval(const std::string &input, std::unique_ptr<Environment> &env);
+std::shared_ptr<Object> testEval(const std::string &input, std::shared_ptr<Environment> &env);
 bool testIntegerObject(Object *object, int64_t expected);
 bool testBooleanObject(Object *object, bool expected);
 bool testNullObject(Object *object);
@@ -22,7 +22,7 @@ std::shared_ptr<Object> testEval(const std::string &input) {
   Parser parser{&lexer};
 
   auto program = parser.parseProgram();
-  auto env = std::make_unique<Environment>();
+  auto env = std::make_shared<Environment>();
 
   return evaluator.eval(program.get(), env);
 }
@@ -363,5 +363,34 @@ TEST(Evaluator, TestFunctionApplication) {
     if (!testIntegerObject(testEval(test.input).get(), test.expected)) {
       FAIL();
     }
+  }
+}
+
+TEST(Evaluator, TestClosures) {
+  std::string input = "let newAdder = fn(x) { fn(y){x + y}; }; \
+                       let addTwo = newAdder(2); \
+                       addTwo(2);";
+  if (!testIntegerObject(testEval(input).get(), 4)) {
+    FAIL();
+  }
+}
+
+TEST(Evaluator, TestHighOrder1) {
+  std::string input = "let add = fn(a, b) {a + b}; \
+                       let sub = fn(a, b) {a - b}; \
+                       let applyFunc = fn(a, b, func) { func(a, b)}; \
+                       applyFunc(2, 2, add)";
+  if (!testIntegerObject(testEval(input).get(), 4)) {
+    FAIL();
+  }
+}
+
+TEST(Evaluator, TestHighOrder2) {
+  std::string input = "let add = fn(a, b) {a + b}; \
+                       let sub = fn(a, b) {a - b}; \
+                       let applyFunc = fn(a, b, func) { func(a, b)}; \
+                       applyFunc(10, 2, sub)";
+  if (!testIntegerObject(testEval(input).get(), 8)) {
+    FAIL();
   }
 }

@@ -20,7 +20,7 @@ public:
    * @param env the environment
    * @return std::shared_ptr<Object>
    */
-  static std::shared_ptr<Object> eval(Node *node, std::unique_ptr<Environment> &env);
+  static std::shared_ptr<Object> eval(Node *node, std::shared_ptr<Environment> &env);
 
   /**
    * @brief iteratively evaluate the program
@@ -30,7 +30,7 @@ public:
    * @return std::shared_ptr<Object>
    */
   static std::shared_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &statements,
-                                             std::unique_ptr<Environment> &env);
+                                             std::shared_ptr<Environment> &env);
 
   /**
    * @brief First calculate the right object, and then calculate
@@ -102,7 +102,7 @@ public:
    * @param en
    * @return std::shared_ptr<Object>
    */
-  static std::shared_ptr<Object> evalIfExpression(IfExpression *ie, std::unique_ptr<Environment> &env);
+  static std::shared_ptr<Object> evalIfExpression(IfExpression *ie, std::shared_ptr<Environment> &env);
 
   /**
    * @brief Evaluate the the block statement
@@ -111,7 +111,7 @@ public:
    * @param env
    * @return std::shared_ptr<Object>
    */
-  static std::shared_ptr<Object> evalBlockStatement(BlockStatement *bs, std::unique_ptr<Environment> &env);
+  static std::shared_ptr<Object> evalBlockStatement(BlockStatement *bs, std::shared_ptr<Environment> &env);
 
   /**
    * @brief Generate the Error message
@@ -128,7 +128,7 @@ public:
    * @param env
    * @return std::shared_ptr<Object>
    */
-  static std::shared_ptr<Object> evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env);
+  static std::shared_ptr<Object> evalIdentifier(Identifier *i, std::shared_ptr<Environment> &env);
 
   /**
    * @brief eval the call arguments
@@ -138,7 +138,7 @@ public:
    * @return std::vector<std::shared_ptr<Object>>
    */
   static std::vector<std::shared_ptr<Object>> evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
-                                                            std::unique_ptr<Environment> &env);
+                                                            std::shared_ptr<Environment> &env);
 
   /**
    * @brief Evaluate functions

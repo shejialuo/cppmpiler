@@ -14,7 +14,7 @@ std::string_view PROMPT{">> "};
 void start() {
   Evaluator evaluator{};
   std::string line{};
-  auto env = std::make_unique<Environment>();
+  auto env = std::make_shared<Environment>();
   while (true) {
     std::cout << PROMPT;
     if (!std::getline(std::cin, line)) {

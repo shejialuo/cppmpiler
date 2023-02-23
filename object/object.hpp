@@ -76,12 +76,12 @@ class Function : public Object {
 public:
   std::vector<std::unique_ptr<Identifier>> parameters;
   std::unique_ptr<BlockStatement> body;
-  std::unique_ptr<Environment> env;
+  std::shared_ptr<Environment> env;
 
   Function() = default;
   Function(std::vector<std::unique_ptr<Identifier>> &p,
            std::unique_ptr<BlockStatement> &&b,
-           std::unique_ptr<Environment> &e);
+           std::shared_ptr<Environment> e);
 
   ObjectType type() override;
   std::string inspect() override;
@@ -112,12 +112,12 @@ public:
  */
 class Environment {
 private:
-  std::unique_ptr<Environment> *outer;
+  std::shared_ptr<Environment> outer;
   std::unordered_map<std::string, std::shared_ptr<Object>> store{};
 
 public:
   Environment() = default;
-  Environment(std::unique_ptr<Environment> *o);
+  Environment(std::shared_ptr<Environment> o);
   Environment(const Environment &) = delete;
   Environment(Environment &&) = default;
 
@@ -135,7 +135,7 @@ public:
    * @param name the identifier name
    * @param val the new object value
    */
-  void set(const std::string &name, std::shared_ptr<Object> &&val);
+  void set(const std::string &name, std::shared_ptr<Object> val);
 };
 
 #endif  // _OBJECT_OBJECT_HPP_

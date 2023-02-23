@@ -1,6 +1,7 @@
 #include "object.hpp"
 
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <string_view>
 
@@ -27,12 +28,12 @@ ObjectType Error::type() { return std::string(ERROR_OBJ); }
 
 Function::Function(std::vector<std::unique_ptr<Identifier>> &p,
                    std::unique_ptr<BlockStatement> &&b,
-                   std::unique_ptr<Environment> &e) {
+                   std::shared_ptr<Environment> e) {
   parameters = std::move(p);
   body = std::move(b);
 
-  // Set the outer
-  env = std::make_unique<Environment>(&e);
+  // set the current environment
+  env = e;
 }
 std::string Function::inspect() {
   std::string info{};

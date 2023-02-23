@@ -17,7 +17,7 @@ constexpr std::string_view ERROR_OBJ = "ERROR";
 std::shared_ptr<Boolean> Evaluator::True = std::make_shared<Boolean>(true);
 std::shared_ptr<Boolean> Evaluator::False = std::make_shared<Boolean>(false);
 
-std::shared_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment> &env) {
+std::shared_ptr<Object> Evaluator::eval(Node *node, std::shared_ptr<Environment> &env) {
   Program *program = dynamic_cast<Program *>(node);
 
   if (program != nullptr) {
@@ -85,8 +85,8 @@ std::shared_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment>
 
   FunctionLiteral *functionLiteral = dynamic_cast<FunctionLiteral *>(node);
   if (functionLiteral != nullptr) {
-    auto function = std::make_unique<Function>(functionLiteral->parameters, std::move(functionLiteral->body), env);
-    return std::move(function);
+    auto function = std::make_shared<Function>(functionLiteral->parameters, std::move(functionLiteral->body), env);
+    return function;
   }
 
   CallExpression *callExpression = dynamic_cast<CallExpression *>(node);
@@ -100,7 +100,7 @@ std::shared_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment>
 }
 
 std::shared_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<Statement>> &statements,
-                                               std::unique_ptr<Environment> &env) {
+                                               std::shared_ptr<Environment> &env) {
   std::shared_ptr<Object> result{};
 
   for (auto &&statement : statements) {
@@ -210,7 +210,7 @@ std::shared_ptr<Object> Evaluator::evalBooleanInfixExpression(const std::string 
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::shared_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::unique_ptr<Environment> &env) {
+std::shared_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::shared_ptr<Environment> &env) {
   auto condition = eval(ie->condition.get(), env);
 
   if (condition == nullptr) {
@@ -239,7 +239,7 @@ std::shared_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::uniqu
   return nullptr;
 }
 
-std::shared_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::unique_ptr<Environment> &env) {
+std::shared_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::shared_ptr<Environment> &env) {
   std::shared_ptr<Object> result{};
 
   for (auto &&statement : bs->statements) {
@@ -254,7 +254,7 @@ std::shared_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::u
   return result;
 }
 
-std::shared_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env) {
+std::shared_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::shared_ptr<Environment> &env) {
   auto result = env->get(i->value);
   if (result == nullptr) {
     return std::make_shared<Error>("identifier not found: " + i->value);
@@ -265,7 +265,7 @@ std::shared_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::unique_ptr
 std::shared_ptr<Error> Evaluator::newError(const std::string &s) { return std::make_shared<Error>(s); }
 
 std::vector<std::shared_ptr<Object>> Evaluator::evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
-                                                              std::unique_ptr<Environment> &env) {
+                                                              std::shared_ptr<Environment> &env) {
   std::vector<std::shared_ptr<Object>> results{};
 
   for (auto &&argument : arguments) {
@@ -282,18 +282,18 @@ std::shared_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::sh
     return newError("not a function: " + fn->type());
   }
 
-  auto extendedEnv = std::make_unique<Environment>(&function->env);
+  auto extendedEnv = std::make_shared<Environment>(function->env);
 
   int i = 0;
   for (auto &&parameter : function->parameters) {
-    extendedEnv->set(parameter->value, std::move(arguments[i]));
+    extendedEnv->set(parameter->value, arguments[i++]);
   }
 
   auto evaluated = eval(function->body.get(), extendedEnv);
 
   ReturnValue *returnValue = dynamic_cast<ReturnValue *>(evaluated.get());
   if (returnValue != nullptr) {
-    return std::move(returnValue->value);
+    return returnValue->value;
   }
-  return std::move(evaluated);
+  return evaluated;
 }
