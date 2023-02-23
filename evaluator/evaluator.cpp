@@ -13,22 +13,22 @@ constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view ERROR_OBJ = "ERROR";
 
-std::unique_ptr<Object> Evaluator::eval(Node *node) {
+std::unique_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment> &env) {
   Program *program = dynamic_cast<Program *>(node);
 
   if (program != nullptr) {
-    return std::move(evalProgram(program->statements));
+    return std::move(evalProgram(program->statements, env));
   }
 
   ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(node);
 
   if (expressionStatement != nullptr) {
-    return std::move(eval(expressionStatement->expression.get()));
+    return std::move(eval(expressionStatement->expression.get(), env));
   }
 
   BlockStatement *blockStatement = dynamic_cast<BlockStatement *>(node);
   if (blockStatement != nullptr) {
-    return std::move(evalBlockStatement(blockStatement));
+    return std::move(evalBlockStatement(blockStatement, env));
   }
 
   IntegerLiteral *integer = dynamic_cast<IntegerLiteral *>(node);
@@ -44,38 +44,50 @@ std::unique_ptr<Object> Evaluator::eval(Node *node) {
 
   PrefixExpression *prefixExpression = dynamic_cast<PrefixExpression *>(node);
   if (prefixExpression != nullptr) {
-    auto right = eval(prefixExpression->right.get());
+    auto right = eval(prefixExpression->right.get(), env);
     return std::move(evalPrefixExpression(prefixExpression->_operator, right));
   }
 
   InfixExpression *infixExpression = dynamic_cast<InfixExpression *>(node);
   if (infixExpression != nullptr) {
-    auto left = eval(infixExpression->left.get());
-    auto right = eval(infixExpression->right.get());
+    auto left = eval(infixExpression->left.get(), env);
+    auto right = eval(infixExpression->right.get(), env);
     return std::move(evalInfixExpression(infixExpression->_operator, left, right));
   }
 
   IfExpression *ifExpression = dynamic_cast<IfExpression *>(node);
   if (ifExpression != nullptr) {
-    return std::move(evalIfExpression(ifExpression));
+    return std::move(evalIfExpression(ifExpression, env));
   }
 
   ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(node);
   if (returnStatement != nullptr) {
-    auto val = eval(returnStatement->returnValue.get());
+    auto val = eval(returnStatement->returnValue.get(), env);
     auto returnValue = std::make_unique<ReturnValue>();
     returnValue->value = std::move(val);
     return std::move(returnValue);
   }
 
+  LetStatement *letStatement = dynamic_cast<LetStatement *>(node);
+  if (letStatement != nullptr) {
+    auto val = eval(letStatement->value.get(), env);
+    env->set(letStatement->name->value, std::move(val));
+  }
+
+  Identifier *identifier = dynamic_cast<Identifier *>(node);
+  if (identifier != nullptr) {
+    return evalIdentifier(identifier, env);
+  }
+
   return nullptr;
 }
 
-std::unique_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<Statement>> &statements) {
+std::unique_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<Statement>> &statements,
+                                               std::unique_ptr<Environment> &env) {
   std::unique_ptr<Object> result{};
 
   for (auto &&statement : statements) {
-    result = std::move(eval(statement.get()));
+    result = std::move(eval(statement.get(), env));
 
     ReturnValue *returnValue = dynamic_cast<ReturnValue *>(result.get());
     if (returnValue != nullptr) {
@@ -181,8 +193,8 @@ std::unique_ptr<Object> Evaluator::evalBooleanInfixExpression(const std::string 
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie) {
-  auto condition = eval(ie->condition.get());
+std::unique_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::unique_ptr<Environment> &env) {
+  auto condition = eval(ie->condition.get(), env);
 
   if (condition == nullptr) {
     return nullptr;
@@ -195,26 +207,26 @@ std::unique_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie) {
 
   if (result == nullptr && integer != nullptr) {
     if (integer->value != 0) {
-      return std::move(eval(ie->consequence.get()));
+      return std::move(eval(ie->consequence.get(), env));
     } else {
-      return std::move(eval(ie->alternative.get()));
+      return std::move(eval(ie->alternative.get(), env));
     }
   } else if (!result->value) {
     if (ie->alternative != nullptr) {
-      return std::move(eval(ie->alternative.get()));
+      return std::move(eval(ie->alternative.get(), env));
     }
   } else {
-    return std::move(eval(ie->consequence.get()));
+    return std::move(eval(ie->consequence.get(), env));
   }
 
   return nullptr;
 }
 
-std::unique_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs) {
+std::unique_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::unique_ptr<Environment> &env) {
   std::unique_ptr<Object> result{};
 
   for (auto &&statement : bs->statements) {
-    result = std::move(eval(statement.get()));
+    result = std::move(eval(statement.get(), env));
 
     if (result != nullptr) {
       if (result->type() == RETURN_VALUE_OBJ || result->type() == ERROR_OBJ)
@@ -222,6 +234,14 @@ std::unique_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs) {
     }
   }
 
+  return result;
+}
+
+std::unique_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env) {
+  auto result = std::move(env->get(i->value));
+  if (result == nullptr) {
+    return std::make_unique<Error>("identifier not found: " + i->value);
+  }
   return result;
 }
 

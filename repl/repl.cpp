@@ -1,9 +1,11 @@
+#include "environment.hpp"
 #include "evaluator.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "token.hpp"
 
 #include <iostream>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -11,7 +13,9 @@
 std::string_view PROMPT{">> "};
 
 void start() {
+  Evaluator evaluator{};
   std::string line{};
+  auto env = std::make_unique<Environment>();
   while (true) {
     std::cout << PROMPT;
     if (!std::getline(std::cin, line)) {
@@ -27,7 +31,7 @@ void start() {
       }
       continue;
     }
-    auto evaluated = Evaluator::eval(program.get());
+    auto evaluated = evaluator.eval(program.get(), env);
 
     if (evaluated != nullptr) {
       std::cout << evaluated->inspect() << "\n";

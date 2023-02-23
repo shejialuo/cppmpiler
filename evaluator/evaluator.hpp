@@ -2,6 +2,7 @@
 #define _EVALUATOR_EVALUATOR_HPP_
 
 #include "ast.hpp"
+#include "environment.hpp"
 #include "object.hpp"
 
 #include <memory>
@@ -13,17 +14,20 @@ public:
    * @brief evaluate the node
    *
    * @param node the unique_ptr parsed by `Parser::program()`
+   * @param env the environment
    * @return std::unique_ptr<Object>
    */
-  static std::unique_ptr<Object> eval(Node *node);
+  static std::unique_ptr<Object> eval(Node *node, std::unique_ptr<Environment> &env);
 
   /**
    * @brief iteratively evaluate the program
    *
    * @param statements
+   * @param env
    * @return std::unique_ptr<Object>
    */
-  static std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &statements);
+  static std::unique_ptr<Object> evalProgram(std::vector<std::unique_ptr<Statement>> &statements,
+                                             std::unique_ptr<Environment> &env);
 
   /**
    * @brief First calculate the right object, and then calculate
@@ -92,17 +96,19 @@ public:
    * @brief Evaluate the `IfExpression`
    *
    * @param ie IfExpression
+   * @param en
    * @return std::unique_ptr<Object>
    */
-  static std::unique_ptr<Object> evalIfExpression(IfExpression *ie);
+  static std::unique_ptr<Object> evalIfExpression(IfExpression *ie, std::unique_ptr<Environment> &env);
 
   /**
    * @brief Evaluate the the block statement
    *
    * @param bs
+   * @param env
    * @return std::unique_ptr<Object>
    */
-  static std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs);
+  static std::unique_ptr<Object> evalBlockStatement(BlockStatement *bs, std::unique_ptr<Environment> &env);
 
   /**
    * @brief Generate the Error message
@@ -111,6 +117,15 @@ public:
    * @return std::unique_ptr<Error>
    */
   static std::unique_ptr<Error> newError(const std::string &s);
+
+  /**
+   * @brief eval the identifier
+   *
+   * @param i
+   * @param env
+   * @return std::unique_ptr<Object>
+   */
+  static std::unique_ptr<Object> evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env);
 };
 
 #endif  // _EVALUATOR_EVALUATOR_HPP_

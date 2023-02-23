@@ -1,3 +1,4 @@
+#include "environment.hpp"
 #include "evaluator.hpp"
 #include "lexer.hpp"
 #include "object.hpp"
@@ -12,7 +13,7 @@
 
 Evaluator evaluator{};
 
-std::unique_ptr<Object> testEval(const std::string &input);
+std::unique_ptr<Object> testEval(const std::string &input, std::unique_ptr<Environment> &env);
 bool testIntegerObject(Object *object, int64_t expected);
 bool testBooleanObject(Object *object, bool expected);
 bool testNullObject(Object *object);
@@ -22,8 +23,9 @@ std::unique_ptr<Object> testEval(const std::string &input) {
   Parser parser{&lexer};
 
   auto program = parser.parseProgram();
+  auto env = std::make_unique<Environment>();
 
-  return std::move(evaluator.eval(program.get()));
+  return std::move(evaluator.eval(program.get(), env));
 }
 
 bool testIntegerObject(Object *object, int64_t expected) {
@@ -270,6 +272,10 @@ TEST(Evaluator, TestErrorHandling) {
           "if (10 > 1) { if (10 > 1) {return true + false;} return 1;}",
           "unknown operator: BOOLEAN + BOOLEAN",
       },
+      {
+          "foobar",
+          "identifier not found: foobar",
+      },
   };
 
   for (auto &&test : tests) {
@@ -284,6 +290,28 @@ TEST(Evaluator, TestErrorHandling) {
 
     if (error->message != test.expectedMessage) {
       spdlog::error("wrong error message. expected='{}', got='{}'", test.expectedMessage, error->message);
+      FAIL();
+    }
+  }
+}
+
+TEST(Evaluator, TestLetStatements) {
+  struct TestData {
+    std::string input;
+    int64_t expected;
+
+    TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
+  };
+
+  std::vector<TestData> tests{
+      {"let a = 5; a;", 5},
+      {"let a = 5 * 5; a;", 25},
+      {"let a = 5; let b = a; b;", 5},
+      {"let a = 5; let b = a; let c = a + b + 5; c;", 15},
+  };
+
+  for (auto &&test : tests) {
+    if (!testIntegerObject(testEval(test.input).get(), test.expected)) {
       FAIL();
     }
   }
