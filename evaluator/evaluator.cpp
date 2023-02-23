@@ -14,11 +14,14 @@ constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view ERROR_OBJ = "ERROR";
 
-std::unique_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment> &env) {
+std::shared_ptr<Boolean> Evaluator::True = std::make_shared<Boolean>(true);
+std::shared_ptr<Boolean> Evaluator::False = std::make_shared<Boolean>(false);
+
+std::shared_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment> &env) {
   Program *program = dynamic_cast<Program *>(node);
 
   if (program != nullptr) {
-    return std::move(evalProgram(program->statements, env));
+    return evalProgram(program->statements, env);
   }
 
   ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(node);
@@ -53,7 +56,7 @@ std::unique_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment>
   if (infixExpression != nullptr) {
     auto left = eval(infixExpression->left.get(), env);
     auto right = eval(infixExpression->right.get(), env);
-    return std::move(evalInfixExpression(infixExpression->_operator, left, right));
+    return evalInfixExpression(infixExpression->_operator, left, right);
   }
 
   IfExpression *ifExpression = dynamic_cast<IfExpression *>(node);
@@ -64,8 +67,8 @@ std::unique_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment>
   ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(node);
   if (returnStatement != nullptr) {
     auto val = eval(returnStatement->returnValue.get(), env);
-    auto returnValue = std::make_unique<ReturnValue>();
-    returnValue->value = std::move(val);
+    auto returnValue = std::make_shared<ReturnValue>();
+    returnValue->value = val;
     return std::move(returnValue);
   }
 
@@ -96,9 +99,9 @@ std::unique_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment>
   return nullptr;
 }
 
-std::unique_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<Statement>> &statements,
+std::shared_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<Statement>> &statements,
                                                std::unique_ptr<Environment> &env) {
-  std::unique_ptr<Object> result{};
+  std::shared_ptr<Object> result{};
 
   for (auto &&statement : statements) {
     result = std::move(eval(statement.get(), env));
@@ -117,44 +120,44 @@ std::unique_ptr<Object> Evaluator::evalProgram(std::vector<std::unique_ptr<State
   return std::move(result);
 }
 
-std::unique_ptr<Object> Evaluator::evalPrefixExpression(const std::string &op, std::unique_ptr<Object> &right) {
+std::shared_ptr<Object> Evaluator::evalPrefixExpression(const std::string &op, std::shared_ptr<Object> &right) {
   if (op == "!") {
-    return std::move(evalBangOperationExpression(right));
+    return evalBangOperationExpression(right);
   } else if (op == "-") {
     return std::move(evalMinusOperationExpression(right));
   }
   return newError("unkown operator: " + op + right->type());
 }
 
-std::unique_ptr<Object> Evaluator::evalBangOperationExpression(std::unique_ptr<Object> &right) {
+std::shared_ptr<Object> Evaluator::evalBangOperationExpression(std::shared_ptr<Object> &right) {
   Boolean *boolean = dynamic_cast<Boolean *>(right.get());
 
   // Here, I don't use `Null` class, I just use `nullptr`
   // for simplicity.
   if (boolean == nullptr) {
-    return std::move(std::make_unique<Boolean>(false));
+    return std::shared_ptr<Boolean>(False);
   }
 
   if (!boolean->value) {
-    return std::move(std::make_unique<Boolean>(true));
+    return std::shared_ptr<Boolean>(True);
   }
 
-  return std::move(std::make_unique<Boolean>(false));
+  return std::shared_ptr<Boolean>(False);
 }
 
-std::unique_ptr<Object> Evaluator::evalMinusOperationExpression(std::unique_ptr<Object> &right) {
+std::shared_ptr<Object> Evaluator::evalMinusOperationExpression(std::shared_ptr<Object> &right) {
   if (right->type() != INTEGER_OBJ) {
     return newError("unknown operator: -" + right->type());
   }
 
   Integer *integer = dynamic_cast<Integer *>(right.get());
 
-  return std::move(std::make_unique<Integer>(-integer->value));
+  return std::make_shared<Integer>(-integer->value);
 }
 
-std::unique_ptr<Object> Evaluator::evalInfixExpression(const std::string &op,
-                                                       std::unique_ptr<Object> &left,
-                                                       std::unique_ptr<Object> &right) {
+std::shared_ptr<Object> Evaluator::evalInfixExpression(const std::string &op,
+                                                       std::shared_ptr<Object> &left,
+                                                       std::shared_ptr<Object> &right) {
   if (left->type() == INTEGER_OBJ && right->type() == INTEGER_OBJ) {
     return std::move(evalIntegerInfixExpression(op, left, right));
   } else if (left->type() == BOOLEAN_OBJ && right->type() == BOOLEAN_OBJ) {
@@ -165,49 +168,49 @@ std::unique_ptr<Object> Evaluator::evalInfixExpression(const std::string &op,
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> Evaluator::evalIntegerInfixExpression(const std::string &op,
-                                                              std::unique_ptr<Object> &left,
-                                                              std::unique_ptr<Object> &right) {
+std::shared_ptr<Object> Evaluator::evalIntegerInfixExpression(const std::string &op,
+                                                              std::shared_ptr<Object> &left,
+                                                              std::shared_ptr<Object> &right) {
   Integer *leftInteger = dynamic_cast<Integer *>(left.get());
   Integer *rightInteger = dynamic_cast<Integer *>(right.get());
 
   if (op == "+") {
-    return std::move(std::make_unique<Integer>(leftInteger->value + rightInteger->value));
+    return std::make_shared<Integer>(leftInteger->value + rightInteger->value);
   } else if (op == "-") {
-    return std::move(std::make_unique<Integer>(leftInteger->value - rightInteger->value));
+    return std::make_shared<Integer>(leftInteger->value - rightInteger->value);
   } else if (op == "*") {
-    return std::move(std::make_unique<Integer>(leftInteger->value * rightInteger->value));
+    return std::make_shared<Integer>(leftInteger->value * rightInteger->value);
   } else if (op == "/") {
-    return std::move(std::make_unique<Integer>(leftInteger->value / rightInteger->value));
+    return std::make_shared<Integer>(leftInteger->value / rightInteger->value);
   } else if (op == "<") {
-    return std::make_unique<Boolean>(leftInteger->value < rightInteger->value);
+    return leftInteger->value < rightInteger->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   } else if (op == ">") {
-    return std::make_unique<Boolean>(leftInteger->value > rightInteger->value);
+    return leftInteger->value > rightInteger->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   } else if (op == "==") {
-    return std::make_unique<Boolean>(leftInteger->value == rightInteger->value);
+    return leftInteger->value == rightInteger->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   } else if (op == "!=") {
-    return std::make_unique<Boolean>(leftInteger->value != rightInteger->value);
+    return leftInteger->value != rightInteger->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   }
 
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> Evaluator::evalBooleanInfixExpression(const std::string &op,
-                                                              std::unique_ptr<Object> &left,
-                                                              std::unique_ptr<Object> &right) {
+std::shared_ptr<Object> Evaluator::evalBooleanInfixExpression(const std::string &op,
+                                                              std::shared_ptr<Object> &left,
+                                                              std::shared_ptr<Object> &right) {
   Boolean *leftBoolean = dynamic_cast<Boolean *>(left.get());
   Boolean *rightBoolean = dynamic_cast<Boolean *>(right.get());
 
   if (op == "==") {
-    return std::make_unique<Boolean>(leftBoolean->value == rightBoolean->value);
+    return leftBoolean->value == rightBoolean->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   } else if (op == "!=") {
-    return std::make_unique<Boolean>(leftBoolean->value != rightBoolean->value);
+    return leftBoolean->value != rightBoolean->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   }
 
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
-std::unique_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::unique_ptr<Environment> &env) {
+std::shared_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::unique_ptr<Environment> &env) {
   auto condition = eval(ie->condition.get(), env);
 
   if (condition == nullptr) {
@@ -221,26 +224,26 @@ std::unique_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::uniqu
 
   if (result == nullptr && integer != nullptr) {
     if (integer->value != 0) {
-      return std::move(eval(ie->consequence.get(), env));
+      return eval(ie->consequence.get(), env);
     } else {
-      return std::move(eval(ie->alternative.get(), env));
+      return eval(ie->alternative.get(), env);
     }
   } else if (!result->value) {
     if (ie->alternative != nullptr) {
-      return std::move(eval(ie->alternative.get(), env));
+      return eval(ie->alternative.get(), env);
     }
   } else {
-    return std::move(eval(ie->consequence.get(), env));
+    return eval(ie->consequence.get(), env);
   }
 
   return nullptr;
 }
 
-std::unique_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::unique_ptr<Environment> &env) {
-  std::unique_ptr<Object> result{};
+std::shared_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::unique_ptr<Environment> &env) {
+  std::shared_ptr<Object> result{};
 
   for (auto &&statement : bs->statements) {
-    result = std::move(eval(statement.get(), env));
+    result = eval(statement.get(), env);
 
     if (result != nullptr) {
       if (result->type() == RETURN_VALUE_OBJ || result->type() == ERROR_OBJ)
@@ -251,29 +254,29 @@ std::unique_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::u
   return result;
 }
 
-std::unique_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env) {
-  auto result = std::move(env->get(i->value));
+std::shared_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env) {
+  auto result = env->get(i->value);
   if (result == nullptr) {
-    return std::make_unique<Error>("identifier not found: " + i->value);
+    return std::make_shared<Error>("identifier not found: " + i->value);
   }
   return result;
 }
 
-std::unique_ptr<Error> Evaluator::newError(const std::string &s) { return std::make_unique<Error>(s); }
+std::shared_ptr<Error> Evaluator::newError(const std::string &s) { return std::make_shared<Error>(s); }
 
-std::vector<std::unique_ptr<Object>> Evaluator::evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
+std::vector<std::shared_ptr<Object>> Evaluator::evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
                                                               std::unique_ptr<Environment> &env) {
-  std::vector<std::unique_ptr<Object>> results{};
+  std::vector<std::shared_ptr<Object>> results{};
 
   for (auto &&argument : arguments) {
     auto evaluated = eval(argument.get(), env);
-    results.push_back(std::move(evaluated));
+    results.push_back(evaluated);
   }
 
   return results;
 }
 
-std::unique_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::unique_ptr<Object>> &arguments) {
+std::shared_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::shared_ptr<Object>> &arguments) {
   Function *function = dynamic_cast<Function *>(fn);
   if (function == nullptr) {
     return newError("not a function: " + fn->type());

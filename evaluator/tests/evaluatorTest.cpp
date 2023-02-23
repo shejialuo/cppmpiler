@@ -12,19 +12,19 @@
 
 Evaluator evaluator{};
 
-std::unique_ptr<Object> testEval(const std::string &input, std::unique_ptr<Environment> &env);
+std::shared_ptr<Object> testEval(const std::string &input, std::unique_ptr<Environment> &env);
 bool testIntegerObject(Object *object, int64_t expected);
 bool testBooleanObject(Object *object, bool expected);
 bool testNullObject(Object *object);
 
-std::unique_ptr<Object> testEval(const std::string &input) {
+std::shared_ptr<Object> testEval(const std::string &input) {
   Lexer lexer{input};
   Parser parser{&lexer};
 
   auto program = parser.parseProgram();
   auto env = std::make_unique<Environment>();
 
-  return std::move(evaluator.eval(program.get(), env));
+  return evaluator.eval(program.get(), env);
 }
 
 bool testIntegerObject(Object *object, int64_t expected) {
@@ -343,25 +343,25 @@ TEST(Evaluator, TestFunctionObject) {
   }
 }
 
-// TEST(Evaluator, TestFunctionApplication) {
-//   struct TestData {
-//     std::string input;
-//     int64_t expected;
+TEST(Evaluator, TestFunctionApplication) {
+  struct TestData {
+    std::string input;
+    int64_t expected;
 
-//     TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
-//   };
+    TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
+  };
 
-//   std::vector<TestData> tests{
-//       {"let identity = fn(x) { x; }; identity(5);", 5},
-//       {"let identity = fn(x) { return x; }; identity(5);", 5},
-//       {"let double = fn(x) { x * 2; }; double(5);", 10},
-//       {"let add = fn(x, y) { x + y; }; add(5, 5);", 10},
-//       {"let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
-//   };
+  std::vector<TestData> tests{
+      {"let identity = fn(x) { x; }; identity(5);", 5},
+      {"let identity = fn(x) { return x; }; identity(5);", 5},
+      {"let double = fn(x) { x * 2; }; double(5);", 10},
+      {"let add = fn(x, y) { x + y; }; add(5, 5);", 10},
+      {"let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
+  };
 
-//   for (auto &&test : tests) {
-//     if (!testIntegerObject(testEval(test.input).get(), test.expected)) {
-//       FAIL();
-//     }
-//   }
-// }
+  for (auto &&test : tests) {
+    if (!testIntegerObject(testEval(test.input).get(), test.expected)) {
+      FAIL();
+    }
+  }
+}

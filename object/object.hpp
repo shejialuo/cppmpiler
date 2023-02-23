@@ -60,7 +60,7 @@ public:
  */
 class ReturnValue : public Object {
 public:
-  std::unique_ptr<Object> value;
+  std::shared_ptr<Object> value;
 
   ReturnValue() = default;
 
@@ -113,7 +113,7 @@ public:
 class Environment {
 private:
   std::unique_ptr<Environment> *outer;
-  std::unordered_map<std::string, std::unique_ptr<Object>> store{};
+  std::unordered_map<std::string, std::shared_ptr<Object>> store{};
 
 public:
   Environment() = default;
@@ -125,9 +125,9 @@ public:
    * @brief get the binding value
    *
    * @param name the identifier name
-   * @return std::unique_ptr<Object>
+   * @return std::shared_ptr<Object>
    */
-  std::unique_ptr<Object> get(const std::string &name);
+  std::shared_ptr<Object> get(const std::string &name);
 
   /**
    * @brief bind the identifier
@@ -135,7 +135,7 @@ public:
    * @param name the identifier name
    * @param val the new object value
    */
-  void set(const std::string &name, std::unique_ptr<Object> &&val);
+  void set(const std::string &name, std::shared_ptr<Object> &&val);
 };
 
 #endif  // _OBJECT_OBJECT_HPP_
