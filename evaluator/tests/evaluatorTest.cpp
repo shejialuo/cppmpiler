@@ -1,4 +1,3 @@
-#include "environment.hpp"
 #include "evaluator.hpp"
 #include "lexer.hpp"
 #include "object.hpp"
@@ -316,3 +315,53 @@ TEST(Evaluator, TestLetStatements) {
     }
   }
 }
+
+TEST(Evaluator, TestFunctionObject) {
+  std::string input = "fn(x) { x + 2; };";
+
+  auto evaluated = testEval(input);
+
+  Function *function = dynamic_cast<Function *>(evaluated.get());
+  if (function == nullptr) {
+    spdlog::error("object is not Function.");
+    FAIL();
+  }
+
+  if (function->parameters.size() != 1) {
+    spdlog::error("function has wrong parameters.");
+    FAIL();
+  }
+
+  if (function->parameters[0]->getString() != "x") {
+    spdlog::error("parameter is not x");
+    FAIL();
+  }
+
+  if (function->body->getString() != "(x + 2)") {
+    spdlog::error("body is not x + 2");
+    FAIL();
+  }
+}
+
+// TEST(Evaluator, TestFunctionApplication) {
+//   struct TestData {
+//     std::string input;
+//     int64_t expected;
+
+//     TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
+//   };
+
+//   std::vector<TestData> tests{
+//       {"let identity = fn(x) { x; }; identity(5);", 5},
+//       {"let identity = fn(x) { return x; }; identity(5);", 5},
+//       {"let double = fn(x) { x * 2; }; double(5);", 10},
+//       {"let add = fn(x, y) { x + y; }; add(5, 5);", 10},
+//       {"let add = fn(x, y) { x + y; }; add(5 + 5, add(5, 5));", 20},
+//   };
+
+//   for (auto &&test : tests) {
+//     if (!testIntegerObject(testEval(test.input).get(), test.expected)) {
+//       FAIL();
+//     }
+//   }
+// }

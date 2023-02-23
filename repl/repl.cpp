@@ -1,4 +1,3 @@
-#include "environment.hpp"
 #include "evaluator.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"

@@ -1,18 +1,14 @@
-#include "environment.hpp"
-
+#include "ast.hpp"
 #include "object.hpp"
 
 #include <memory>
 
-Environment::Environment() {}
+Environment::Environment(std::unique_ptr<Environment> *o) : outer(o) {}
 
 std::unique_ptr<Object> Environment::get(const std::string &name) {
-  // Here, I will allocate each object with unique_ptr, although this
-  // is bad for performance, but I can make no memory leak. However,
-  // we really should use shared_ptr here. But I don't want the dependency
-  // be terrible.
   if (store.count(name)) {
     auto object = store[name].get();
+    // return &object;
 
     Integer *integer = dynamic_cast<Integer *>(object);
     if (integer != nullptr) {
@@ -23,6 +19,14 @@ std::unique_ptr<Object> Environment::get(const std::string &name) {
     if (boolean != nullptr) {
       return std::make_unique<Boolean>(boolean->value);
     }
+
+    Function *function = dynamic_cast<Function *>(object);
+    if (function != nullptr) {
+      auto result = std::make_unique<Function>();
+    }
+
+  } else if (outer != nullptr) {
+    return (*outer)->get(name);
   }
   return nullptr;
 }

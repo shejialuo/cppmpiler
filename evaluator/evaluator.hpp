@@ -2,7 +2,6 @@
 #define _EVALUATOR_EVALUATOR_HPP_
 
 #include "ast.hpp"
-#include "environment.hpp"
 #include "object.hpp"
 
 #include <memory>
@@ -126,6 +125,25 @@ public:
    * @return std::unique_ptr<Object>
    */
   static std::unique_ptr<Object> evalIdentifier(Identifier *i, std::unique_ptr<Environment> &env);
+
+  /**
+   * @brief eval the call arguments
+   *
+   * @param arguments the call arguments
+   * @param env the environment
+   * @return std::vector<std::unique_ptr<Object>>
+   */
+  static std::vector<std::unique_ptr<Object>> evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
+                                                            std::unique_ptr<Environment> &env);
+
+  /**
+   * @brief Evaluate functions
+   *
+   * @param fn the function pointer
+   * @param arguments the evaluated arguments.
+   * @return std::unique_ptr<Object>
+   */
+  static std::unique_ptr<Object> evalFunctions(Object *fn, std::vector<std::unique_ptr<Object>> &arguments);
 };
 
 #endif  // _EVALUATOR_EVALUATOR_HPP_

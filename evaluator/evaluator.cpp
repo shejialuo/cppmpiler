@@ -7,6 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <utility>
+#include <vector>
 
 constexpr std::string_view INTEGER_OBJ = "INTEGER";
 constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
@@ -77,6 +78,19 @@ std::unique_ptr<Object> Evaluator::eval(Node *node, std::unique_ptr<Environment>
   Identifier *identifier = dynamic_cast<Identifier *>(node);
   if (identifier != nullptr) {
     return evalIdentifier(identifier, env);
+  }
+
+  FunctionLiteral *functionLiteral = dynamic_cast<FunctionLiteral *>(node);
+  if (functionLiteral != nullptr) {
+    auto function = std::make_unique<Function>(functionLiteral->parameters, std::move(functionLiteral->body), env);
+    return std::move(function);
+  }
+
+  CallExpression *callExpression = dynamic_cast<CallExpression *>(node);
+  if (callExpression != nullptr) {
+    auto function = eval(callExpression->function.get(), env);
+    auto arguments = evalArguments(callExpression->arguments, env);
+    return evalFunctions(function.get(), arguments);
   }
 
   return nullptr;
@@ -246,3 +260,37 @@ std::unique_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::unique_ptr
 }
 
 std::unique_ptr<Error> Evaluator::newError(const std::string &s) { return std::make_unique<Error>(s); }
+
+std::vector<std::unique_ptr<Object>> Evaluator::evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
+                                                              std::unique_ptr<Environment> &env) {
+  std::vector<std::unique_ptr<Object>> results{};
+
+  for (auto &&argument : arguments) {
+    auto evaluated = eval(argument.get(), env);
+    results.push_back(std::move(evaluated));
+  }
+
+  return results;
+}
+
+std::unique_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::unique_ptr<Object>> &arguments) {
+  Function *function = dynamic_cast<Function *>(fn);
+  if (function == nullptr) {
+    return newError("not a function: " + fn->type());
+  }
+
+  auto extendedEnv = std::make_unique<Environment>(&function->env);
+
+  int i = 0;
+  for (auto &&parameter : function->parameters) {
+    extendedEnv->set(parameter->value, std::move(arguments[i]));
+  }
+
+  auto evaluated = eval(function->body.get(), extendedEnv);
+
+  ReturnValue *returnValue = dynamic_cast<ReturnValue *>(evaluated.get());
+  if (returnValue != nullptr) {
+    return std::move(returnValue->value);
+  }
+  return std::move(evaluated);
+}
