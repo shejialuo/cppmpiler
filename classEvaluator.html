@@ -71,12 +71,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae408f9dad6da6ff40a598c986af08228"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#ae408f9dad6da6ff40a598c986af08228">eval</a> (<a class="el" href="classNode.html">Node</a> *node, std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:ae408f9dad6da6ff40a598c986af08228"><td class="mdescLeft">&#160;</td><td class="mdescRight">evaluate the node  <a href="classEvaluator.html#ae408f9dad6da6ff40a598c986af08228">More...</a><br /></td></tr>
-<tr class="separator:ae408f9dad6da6ff40a598c986af08228"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a187d8f84dd8dc0c5620ba47dfc874139"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a187d8f84dd8dc0c5620ba47dfc874139">evalProgram</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classStatement.html">Statement</a> &gt;&gt; &amp;statements, std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:a187d8f84dd8dc0c5620ba47dfc874139"><td class="mdescLeft">&#160;</td><td class="mdescRight">iteratively evaluate the program  <a href="classEvaluator.html#a187d8f84dd8dc0c5620ba47dfc874139">More...</a><br /></td></tr>
-<tr class="separator:a187d8f84dd8dc0c5620ba47dfc874139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93c3e966cea82964ebaddee5505d1261"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a93c3e966cea82964ebaddee5505d1261">eval</a> (<a class="el" href="classNode.html">Node</a> *node, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:a93c3e966cea82964ebaddee5505d1261"><td class="mdescLeft">&#160;</td><td class="mdescRight">evaluate the node  <a href="classEvaluator.html#a93c3e966cea82964ebaddee5505d1261">More...</a><br /></td></tr>
+<tr class="separator:a93c3e966cea82964ebaddee5505d1261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58a26510aee6a7f18ebd7647b048e593"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a58a26510aee6a7f18ebd7647b048e593">evalProgram</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classStatement.html">Statement</a> &gt;&gt; &amp;statements, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:a58a26510aee6a7f18ebd7647b048e593"><td class="mdescLeft">&#160;</td><td class="mdescRight">iteratively evaluate the program  <a href="classEvaluator.html#a58a26510aee6a7f18ebd7647b048e593">More...</a><br /></td></tr>
+<tr class="separator:a58a26510aee6a7f18ebd7647b048e593"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ad9d9452eed8e2ab325bca0abd0664a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a0ad9d9452eed8e2ab325bca0abd0664a">evalPrefixExpression</a> (const std::string &amp;op, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
 <tr class="memdesc:a0ad9d9452eed8e2ab325bca0abd0664a"><td class="mdescLeft">&#160;</td><td class="mdescRight">First calculate the right object, and then calculate the prefix operation.  <a href="classEvaluator.html#a0ad9d9452eed8e2ab325bca0abd0664a">More...</a><br /></td></tr>
 <tr class="separator:a0ad9d9452eed8e2ab325bca0abd0664a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -95,28 +95,28 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a78837704c5a4e3a1f2b76a3dc6d029cf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a78837704c5a4e3a1f2b76a3dc6d029cf">evalBooleanInfixExpression</a> (const std::string &amp;op, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
 <tr class="memdesc:a78837704c5a4e3a1f2b76a3dc6d029cf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classBoolean.html" title="Boolean class represents bool.">Boolean</a> infix expression evaluation.  <a href="classEvaluator.html#a78837704c5a4e3a1f2b76a3dc6d029cf">More...</a><br /></td></tr>
 <tr class="separator:a78837704c5a4e3a1f2b76a3dc6d029cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fc14efddaaa01420cf751e91e98f7fc"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a6fc14efddaaa01420cf751e91e98f7fc">evalIfExpression</a> (<a class="el" href="classIfExpression.html">IfExpression</a> *ie, std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:a6fc14efddaaa01420cf751e91e98f7fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the <code><a class="el" href="classIfExpression.html" title="IfExpression contains three important aspects:">IfExpression</a></code>  <a href="classEvaluator.html#a6fc14efddaaa01420cf751e91e98f7fc">More...</a><br /></td></tr>
-<tr class="separator:a6fc14efddaaa01420cf751e91e98f7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5ad4ef9c52b66c4bba8d6e71cb7a2c4"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#af5ad4ef9c52b66c4bba8d6e71cb7a2c4">evalBlockStatement</a> (<a class="el" href="classBlockStatement.html">BlockStatement</a> *bs, std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:af5ad4ef9c52b66c4bba8d6e71cb7a2c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the the block statement.  <a href="classEvaluator.html#af5ad4ef9c52b66c4bba8d6e71cb7a2c4">More...</a><br /></td></tr>
-<tr class="separator:af5ad4ef9c52b66c4bba8d6e71cb7a2c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20f1a9f4e7f79e64bf548fd6d7168829"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a20f1a9f4e7f79e64bf548fd6d7168829">evalIfExpression</a> (<a class="el" href="classIfExpression.html">IfExpression</a> *ie, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:a20f1a9f4e7f79e64bf548fd6d7168829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the <code><a class="el" href="classIfExpression.html" title="IfExpression contains three important aspects:">IfExpression</a></code>  <a href="classEvaluator.html#a20f1a9f4e7f79e64bf548fd6d7168829">More...</a><br /></td></tr>
+<tr class="separator:a20f1a9f4e7f79e64bf548fd6d7168829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e80dce46a99cdabe26d2e5d086e9e08"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a1e80dce46a99cdabe26d2e5d086e9e08">evalBlockStatement</a> (<a class="el" href="classBlockStatement.html">BlockStatement</a> *bs, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:a1e80dce46a99cdabe26d2e5d086e9e08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the the block statement.  <a href="classEvaluator.html#a1e80dce46a99cdabe26d2e5d086e9e08">More...</a><br /></td></tr>
+<tr class="separator:a1e80dce46a99cdabe26d2e5d086e9e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d579acc1c547a77f55de59d58a37453"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classError.html">Error</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a3d579acc1c547a77f55de59d58a37453">newError</a> (const std::string &amp;s)</td></tr>
 <tr class="memdesc:a3d579acc1c547a77f55de59d58a37453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the <a class="el" href="classError.html" title="Error class represents the error.">Error</a> message.  <a href="classEvaluator.html#a3d579acc1c547a77f55de59d58a37453">More...</a><br /></td></tr>
 <tr class="separator:a3d579acc1c547a77f55de59d58a37453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa33266bf54a9637de614e9e4d5efa8f1"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#aa33266bf54a9637de614e9e4d5efa8f1">evalIdentifier</a> (<a class="el" href="classIdentifier.html">Identifier</a> *i, std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:aa33266bf54a9637de614e9e4d5efa8f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the identifier  <a href="classEvaluator.html#aa33266bf54a9637de614e9e4d5efa8f1">More...</a><br /></td></tr>
-<tr class="separator:aa33266bf54a9637de614e9e4d5efa8f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4472f09d3f07f6e894c0b00c38791ae4"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a4472f09d3f07f6e894c0b00c38791ae4">evalArguments</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&gt; &amp;arguments, std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:a4472f09d3f07f6e894c0b00c38791ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the call arguments  <a href="classEvaluator.html#a4472f09d3f07f6e894c0b00c38791ae4">More...</a><br /></td></tr>
-<tr class="separator:a4472f09d3f07f6e894c0b00c38791ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b85ba4264df53e53c674fb78bf187ff"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a4b85ba4264df53e53c674fb78bf187ff">evalIdentifier</a> (<a class="el" href="classIdentifier.html">Identifier</a> *i, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:a4b85ba4264df53e53c674fb78bf187ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the identifier  <a href="classEvaluator.html#a4b85ba4264df53e53c674fb78bf187ff">More...</a><br /></td></tr>
+<tr class="separator:a4b85ba4264df53e53c674fb78bf187ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a652897efbb0af83f36688ccf73cb2326"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a652897efbb0af83f36688ccf73cb2326">evalArguments</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&gt; &amp;arguments, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:a652897efbb0af83f36688ccf73cb2326"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the call arguments  <a href="classEvaluator.html#a652897efbb0af83f36688ccf73cb2326">More...</a><br /></td></tr>
+<tr class="separator:a652897efbb0af83f36688ccf73cb2326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c96520d4b69f1d18e046be110e328e4"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a6c96520d4b69f1d18e046be110e328e4">evalFunctions</a> (<a class="el" href="classObject.html">Object</a> *fn, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
 <tr class="memdesc:a6c96520d4b69f1d18e046be110e328e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate functions.  <a href="classEvaluator.html#a6c96520d4b69f1d18e046be110e328e4">More...</a><br /></td></tr>
 <tr class="separator:a6c96520d4b69f1d18e046be110e328e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae408f9dad6da6ff40a598c986af08228"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae408f9dad6da6ff40a598c986af08228">&#9670;&nbsp;</a></span>eval()</h2>
+<a id="a93c3e966cea82964ebaddee5505d1261"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93c3e966cea82964ebaddee5505d1261">&#9670;&nbsp;</a></span>eval()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +133,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>env</em>&#160;</td>
         </tr>
         <tr>
@@ -161,8 +161,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4472f09d3f07f6e894c0b00c38791ae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4472f09d3f07f6e894c0b00c38791ae4">&#9670;&nbsp;</a></span>evalArguments()</h2>
+<a id="a652897efbb0af83f36688ccf73cb2326"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a652897efbb0af83f36688ccf73cb2326">&#9670;&nbsp;</a></span>evalArguments()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,7 +179,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>env</em>&#160;</td>
         </tr>
         <tr>
@@ -242,8 +242,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af5ad4ef9c52b66c4bba8d6e71cb7a2c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5ad4ef9c52b66c4bba8d6e71cb7a2c4">&#9670;&nbsp;</a></span>evalBlockStatement()</h2>
+<a id="a1e80dce46a99cdabe26d2e5d086e9e08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e80dce46a99cdabe26d2e5d086e9e08">&#9670;&nbsp;</a></span>evalBlockStatement()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +260,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>env</em>&#160;</td>
         </tr>
         <tr>
@@ -387,8 +387,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa33266bf54a9637de614e9e4d5efa8f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa33266bf54a9637de614e9e4d5efa8f1">&#9670;&nbsp;</a></span>evalIdentifier()</h2>
+<a id="a4b85ba4264df53e53c674fb78bf187ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b85ba4264df53e53c674fb78bf187ff">&#9670;&nbsp;</a></span>evalIdentifier()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,7 +405,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>env</em>&#160;</td>
         </tr>
         <tr>
@@ -433,8 +433,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6fc14efddaaa01420cf751e91e98f7fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fc14efddaaa01420cf751e91e98f7fc">&#9670;&nbsp;</a></span>evalIfExpression()</h2>
+<a id="a20f1a9f4e7f79e64bf548fd6d7168829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20f1a9f4e7f79e64bf548fd6d7168829">&#9670;&nbsp;</a></span>evalIfExpression()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -451,7 +451,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>env</em>&#160;</td>
         </tr>
         <tr>
@@ -666,8 +666,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a187d8f84dd8dc0c5620ba47dfc874139"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a187d8f84dd8dc0c5620ba47dfc874139">&#9670;&nbsp;</a></span>evalProgram()</h2>
+<a id="a58a26510aee6a7f18ebd7647b048e593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a26510aee6a7f18ebd7647b048e593">&#9670;&nbsp;</a></span>evalProgram()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -684,7 +684,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>env</em>&#160;</td>
         </tr>
         <tr>
