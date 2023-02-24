@@ -13,6 +13,7 @@ constexpr std::string_view INTEGER_OBJ = "INTEGER";
 constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view ERROR_OBJ = "ERROR";
+constexpr std::string_view STRING_OBJ = "STRING";
 
 std::shared_ptr<Boolean> Evaluator::True = std::make_shared<Boolean>(true);
 std::shared_ptr<Boolean> Evaluator::False = std::make_shared<Boolean>(false);
@@ -96,6 +97,11 @@ std::shared_ptr<Object> Evaluator::eval(Node *node, std::shared_ptr<Environment>
     return evalFunctions(function.get(), arguments);
   }
 
+  StringLiteral *stringLiteral = dynamic_cast<StringLiteral *>(node);
+  if (stringLiteral != nullptr) {
+    return std::make_shared<String>(stringLiteral->value);
+  }
+
   return nullptr;
 }
 
@@ -162,6 +168,8 @@ std::shared_ptr<Object> Evaluator::evalInfixExpression(const std::string &op,
     return std::move(evalIntegerInfixExpression(op, left, right));
   } else if (left->type() == BOOLEAN_OBJ && right->type() == BOOLEAN_OBJ) {
     return std::move(evalBooleanInfixExpression(op, left, right));
+  } else if (left->type() == STRING_OBJ && right->type() == STRING_OBJ) {
+    return std::move(evalStringInfixExpression(op, left, right));
   } else if (left->type() != right->type()) {
     return newError("type mismatch: " + left->type() + " " + op + " " + right->type());
   }
@@ -208,6 +216,19 @@ std::shared_ptr<Object> Evaluator::evalBooleanInfixExpression(const std::string 
   }
 
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
+}
+
+std::shared_ptr<Object> Evaluator::evalStringInfixExpression(const std::string &op,
+                                                             std::shared_ptr<Object> &left,
+                                                             std::shared_ptr<Object> &right) {
+  if (op != "+") {
+    return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
+  }
+
+  String *leftString = dynamic_cast<String *>(left.get());
+  String *rightString = dynamic_cast<String *>(right.get());
+
+  return std::make_shared<String>(leftString->value + rightString->value);
 }
 
 std::shared_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::shared_ptr<Environment> &env) {

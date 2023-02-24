@@ -8,6 +8,7 @@ std::string_view TokenTypes::ILLEGAL{"ILLEGAL"};
 std::string_view TokenTypes::_EOF{"EOF"};
 std::string_view TokenTypes::IDENT{"IDENT"};
 std::string_view TokenTypes::INT{"INT"};
+std::string_view TokenTypes::STRING{"STRING"};
 std::string_view TokenTypes::ASSIGN{"="};
 std::string_view TokenTypes::PLUS{"+"};
 std::string_view TokenTypes::COMMA{","};

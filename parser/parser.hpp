@@ -171,6 +171,13 @@ public:
   std::vector<std::unique_ptr<Expression>> parseCallArguments();
 
   /**
+   * @brief Parse the string literal
+   *
+   * @return std::unique_ptr<StringLiteral>
+   */
+  std::unique_ptr<StringLiteral> parseStringLiteral();
+
+  /**
    * @brief A helper function to tell whether
    * `currentToken == t`
    *

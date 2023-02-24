@@ -6,6 +6,7 @@
 #include <functional>
 #include <iostream>
 #include <string>
+#include <utility>
 
 void Lexer::readChar() {
   if (nextPosition >= input.size()) {
@@ -78,6 +79,10 @@ Token Lexer::nextToken() {
     case '>':
       token.setToken(TokenTypes::GT, ch);
       break;
+    case '"':
+      token.Type = TokenTypes::STRING;
+      token.Literal = std::move(readString());
+      break;
     case 0:
       token.Literal = "";
       token.Type = TokenTypes::_EOF;
@@ -115,6 +120,18 @@ std::string Lexer::consecutiveSubstring(std::function<bool(char)> fn) {
     return "";
   }
 
+  return input.substr(originalPosition, position - originalPosition);
+}
+
+std::string Lexer::readString() {
+  int originalPosition = position + 1;
+
+  while (true) {
+    readChar();
+    if (ch == '"' || ch == 0) {
+      break;
+    }
+  }
   return input.substr(originalPosition, position - originalPosition);
 }
 

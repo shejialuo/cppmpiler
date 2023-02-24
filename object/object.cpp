@@ -10,6 +10,7 @@ constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view FUNCTION_OBJ = "FUNCTION";
 constexpr std::string_view ERROR_OBJ = "ERROR";
+constexpr std::string_view STRING_OBJ = "STRING";
 
 Integer::Integer(int64_t v) : value{v} {}
 std::string Integer::inspect() { return std::to_string(value); }
@@ -25,6 +26,10 @@ ObjectType ReturnValue::type() { return std::string(RETURN_VALUE_OBJ); }
 Error::Error(const std::string &m) : message{m} {}
 std::string Error::inspect() { return "ERROR: " + message; }
 ObjectType Error::type() { return std::string(ERROR_OBJ); }
+
+String::String(const std::string &s) : value{s} {}
+std::string String::inspect() { return value; }
+ObjectType String::type() { return std::string(STRING_OBJ); }
 
 Function::Function(std::vector<std::unique_ptr<Identifier>> &p,
                    std::unique_ptr<BlockStatement> &&b,

@@ -46,6 +46,13 @@ public:
    */
   std::string consecutiveSubstring(std::function<bool(char)> fn);
 
+  /**
+   * @brief read the string.
+   *
+   * @return std::string
+   */
+  std::string readString();
+
   char examineNextChar();
 };
 

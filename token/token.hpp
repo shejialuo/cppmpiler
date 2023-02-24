@@ -17,9 +17,10 @@ struct TokenTypes {
   static std::string_view ILLEGAL;
   static std::string_view _EOF;
 
-  // Identifiers + literals
+  // Identifiers + literals + Strings
   static std::string_view IDENT;
   static std::string_view INT;
+  static std::string_view STRING;
 
   // Operators
   static std::string_view ASSIGN;

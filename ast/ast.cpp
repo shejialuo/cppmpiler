@@ -152,3 +152,8 @@ std::string CallExpression::getString() {
 
   return info;
 }
+
+StringLiteral::StringLiteral(const Token &t, const std::string &s) : token{t}, value{s} {}
+void StringLiteral::expressionNode() {}
+std::string StringLiteral::tokenLiteral() { return token.Literal; }
+std::string StringLiteral::getString() { return token.Literal; }

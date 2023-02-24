@@ -54,6 +54,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerPrefix(std::string(TokenTypes::LPAREN), std::bind(&Parser::ParseGroupedExpression, this));
   registerPrefix(std::string(TokenTypes::IF), std::bind(&Parser::parseIfExpression, this));
   registerPrefix(std::string(TokenTypes::FUNCTION), std::bind(&Parser::parseFunctionLiteral, this));
+  registerPrefix(std::string(TokenTypes::STRING), std::bind(&Parser::parseStringLiteral, this));
 
   registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
@@ -352,6 +353,10 @@ std::vector<std::unique_ptr<Expression>> Parser::parseCallArguments() {
   }
 
   return arguments;
+}
+
+std::unique_ptr<StringLiteral> Parser::parseStringLiteral() {
+  return std::make_unique<StringLiteral>(currentToken, currentToken.Literal);
 }
 
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }

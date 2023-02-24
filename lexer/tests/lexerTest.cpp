@@ -247,3 +247,32 @@ TEST(Lexer, TestEqualAndNotEqual) {
     }
   }
 }
+
+TEST(Lexer, TestStringToken) {
+  std::string input = R"("foobar" "foo bar")";
+
+  std::vector<TestToken> tests{
+      {TokenTypes::STRING, "foobar"},
+      {TokenTypes::STRING, "foo bar"},
+      {TokenTypes::_EOF, ""},
+  };
+
+  Lexer l{input};
+
+  for (int i = 0; i < tests.size(); ++i) {
+    Token token = l.nextToken();
+
+    TestToken &testToken = tests[i];
+
+    if (token.Type != testToken.expectedType) {
+      spdlog::error("test[{}] - token type wrong. expected='{}', got='{}'", i, testToken.expectedType, token.Type);
+      FAIL();
+    }
+
+    if (token.Literal != testToken.expectedLiteral) {
+      spdlog::error(
+          "test[{}] - token literal wrong. expected='{}', got='{}'", i, testToken.expectedLiteral, token.Literal);
+      FAIL();
+    }
+  }
+}

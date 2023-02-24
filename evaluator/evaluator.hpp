@@ -96,6 +96,18 @@ public:
                                                             std::shared_ptr<Object> &right);
 
   /**
+   * @brief String infix expression evaluation
+   *
+   * @param op the infix operator
+   * @param left the left evaluated object
+   * @param right the right evaluated object
+   * @return std::shared_ptr<Object>
+   */
+  static std::shared_ptr<Object> evalStringInfixExpression(const std::string &op,
+                                                           std::shared_ptr<Object> &left,
+                                                           std::shared_ptr<Object> &right);
+
+  /**
    * @brief Evaluate the `IfExpression`
    *
    * @param ie IfExpression

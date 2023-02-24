@@ -896,3 +896,27 @@ TEST(Parser, TestCallExpressionParsing) {
     FAIL();
   }
 }
+
+TEST(Parser, TestStringLiteralExpression) {
+  std::string input = R"("hello world";)";
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+
+  auto program = parser.parseProgram();
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+  StringLiteral *stringLiteral = dynamic_cast<StringLiteral *>(expressionStatement->expression.get());
+  if (stringLiteral == nullptr) {
+    spdlog::error("expression is not StringLiteral");
+    FAIL();
+  }
+
+  if (stringLiteral->value != "hello world") {
+    spdlog::error("stringLiteral->value not 'hello world'. got='{}'", stringLiteral->value);
+    FAIL();
+  }
+}

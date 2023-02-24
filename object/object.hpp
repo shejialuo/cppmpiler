@@ -103,6 +103,21 @@ public:
 };
 
 /**
+ * @brief Represents the string "foobar".
+ *
+ */
+class String : public Object {
+public:
+  std::string value;
+
+  String() = default;
+  String(const std::string &);
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
+/**
  * @brief Environment is used to indicate the current frame
  * environment. It is a scope and all the values associated
  * with this scope is recorded in it. When we meet a new

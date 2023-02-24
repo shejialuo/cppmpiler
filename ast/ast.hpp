@@ -284,4 +284,21 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief StringLiteral represents string
+ *
+ */
+class StringLiteral : public Expression {
+public:
+  Token token;
+  std::string value;
+
+  StringLiteral() = default;
+  StringLiteral(const Token &, const std::string &);
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
 #endif  // _AST_AST_HPP_

@@ -275,6 +275,10 @@ TEST(Evaluator, TestErrorHandling) {
           "foobar",
           "identifier not found: foobar",
       },
+      {
+          R"("Hello" - "World")",
+          "unknown operator: STRING - STRING",
+      },
   };
 
   for (auto &&test : tests) {
@@ -391,6 +395,38 @@ TEST(Evaluator, TestHighOrder2) {
                        let applyFunc = fn(a, b, func) { func(a, b)}; \
                        applyFunc(10, 2, sub)";
   if (!testIntegerObject(testEval(input).get(), 8)) {
+    FAIL();
+  }
+}
+
+TEST(Evaluator, TestStringLiterator) {
+  std::string input = R"("Hello World!")";
+
+  auto evaluated = testEval(input);
+  String *str = dynamic_cast<String *>(evaluated.get());
+  if (str == nullptr) {
+    spdlog::error("object is not String");
+    FAIL();
+  }
+
+  if (str->value != "Hello World!") {
+    spdlog::error("String has wrong value. got='{}'", str->value);
+    FAIL();
+  }
+}
+
+TEST(Evaluator, TestStringConcatenation) {
+  std::string input = R"("Hello" + " " + "World!")";
+
+  auto evaluated = testEval(input);
+  String *str = dynamic_cast<String *>(evaluated.get());
+  if (str == nullptr) {
+    spdlog::error("object is not String");
+    FAIL();
+  }
+
+  if (str->value != "Hello World!") {
+    spdlog::error("String has wrong value. got='{}'", str->value);
     FAIL();
   }
 }
