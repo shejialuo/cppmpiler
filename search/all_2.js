@@ -15,8 +15,9 @@ var searchData=
   ['evalminusoperationexpression_20',['evalMinusOperationExpression',['../classEvaluator.html#a0b32f110b4f13fc639a460c2c551ace2',1,'Evaluator']]],
   ['evalprefixexpression_21',['evalPrefixExpression',['../classEvaluator.html#a0ad9d9452eed8e2ab325bca0abd0664a',1,'Evaluator']]],
   ['evalprogram_22',['evalProgram',['../classEvaluator.html#a58a26510aee6a7f18ebd7647b048e593',1,'Evaluator']]],
-  ['evaluator_23',['Evaluator',['../classEvaluator.html',1,'']]],
-  ['expectpeek_24',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
-  ['expression_25',['Expression',['../classExpression.html',1,'']]],
-  ['expressionstatement_26',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
+  ['evalstringinfixexpression_23',['evalStringInfixExpression',['../classEvaluator.html#a6e8b0f8da089258a00d3101ced5f60d3',1,'Evaluator']]],
+  ['evaluator_24',['Evaluator',['../classEvaluator.html',1,'']]],
+  ['expectpeek_25',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
+  ['expression_26',['Expression',['../classExpression.html',1,'']]],
+  ['expressionstatement_27',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
 ];

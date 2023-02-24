@@ -95,6 +95,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a78837704c5a4e3a1f2b76a3dc6d029cf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a78837704c5a4e3a1f2b76a3dc6d029cf">evalBooleanInfixExpression</a> (const std::string &amp;op, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
 <tr class="memdesc:a78837704c5a4e3a1f2b76a3dc6d029cf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classBoolean.html" title="Boolean class represents bool.">Boolean</a> infix expression evaluation.  <a href="classEvaluator.html#a78837704c5a4e3a1f2b76a3dc6d029cf">More...</a><br /></td></tr>
 <tr class="separator:a78837704c5a4e3a1f2b76a3dc6d029cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e8b0f8da089258a00d3101ced5f60d3"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a6e8b0f8da089258a00d3101ced5f60d3">evalStringInfixExpression</a> (const std::string &amp;op, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
+<tr class="memdesc:a6e8b0f8da089258a00d3101ced5f60d3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classString.html" title="Represents the string &quot;foobar&quot;.">String</a> infix expression evaluation.  <a href="classEvaluator.html#a6e8b0f8da089258a00d3101ced5f60d3">More...</a><br /></td></tr>
+<tr class="separator:a6e8b0f8da089258a00d3101ced5f60d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20f1a9f4e7f79e64bf548fd6d7168829"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a20f1a9f4e7f79e64bf548fd6d7168829">evalIfExpression</a> (<a class="el" href="classIfExpression.html">IfExpression</a> *ie, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
 <tr class="memdesc:a20f1a9f4e7f79e64bf548fd6d7168829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the <code><a class="el" href="classIfExpression.html" title="IfExpression contains three important aspects:">IfExpression</a></code>  <a href="classEvaluator.html#a20f1a9f4e7f79e64bf548fd6d7168829">More...</a><br /></td></tr>
 <tr class="separator:a20f1a9f4e7f79e64bf548fd6d7168829"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -705,6 +708,59 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">statements</td><td></td></tr>
     <tr><td class="paramname">env</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a6e8b0f8da089258a00d3101ced5f60d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e8b0f8da089258a00d3101ced5f60d3">&#9670;&nbsp;</a></span>evalStringInfixExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Evaluator::evalStringInfixExpression </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>op</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>right</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classString.html" title="Represents the string &quot;foobar&quot;.">String</a> infix expression evaluation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op</td><td>the infix operator </td></tr>
+    <tr><td class="paramname">left</td><td>the left evaluated object </td></tr>
+    <tr><td class="paramname">right</td><td>the right evaluated object </td></tr>
   </table>
   </dd>
 </dl>

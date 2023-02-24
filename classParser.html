@@ -132,6 +132,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aa256a39ba42960649bbbd6d4dfbf4da8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aa256a39ba42960649bbbd6d4dfbf4da8">parseCallArguments</a> ()</td></tr>
 <tr class="memdesc:aa256a39ba42960649bbbd6d4dfbf4da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the call arguments.  <a href="classParser.html#aa256a39ba42960649bbbd6d4dfbf4da8">More...</a><br /></td></tr>
 <tr class="separator:aa256a39ba42960649bbbd6d4dfbf4da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd1f69dad2a39ec9ed1a536c33d340a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classStringLiteral.html">StringLiteral</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#aefd1f69dad2a39ec9ed1a536c33d340a">parseStringLiteral</a> ()</td></tr>
+<tr class="memdesc:aefd1f69dad2a39ec9ed1a536c33d340a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the string literal.  <a href="classParser.html#aefd1f69dad2a39ec9ed1a536c33d340a">More...</a><br /></td></tr>
+<tr class="separator:aefd1f69dad2a39ec9ed1a536c33d340a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e0650bac2163108bccae9db68aca464"><td class="memItemLeft" align="right" valign="top"><a id="a8e0650bac2163108bccae9db68aca464"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParser.html#a8e0650bac2163108bccae9db68aca464">currentTokenIs</a> (std::string_view &amp;t)</td></tr>
 <tr class="memdesc:a8e0650bac2163108bccae9db68aca464"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper function to tell whether <code>currentToken == t</code> <br /></td></tr>
@@ -576,6 +579,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>registerInfix</b> (co
 
 <p>Parse the statement. </p>
 <dl class="section return"><dt>Returns</dt><dd>unique_ptr&lt;Statement&gt; </dd></dl>
+
+</div>
+</div>
+<a id="aefd1f69dad2a39ec9ed1a536c33d340a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd1f69dad2a39ec9ed1a536c33d340a">&#9670;&nbsp;</a></span>parseStringLiteral()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classStringLiteral.html">StringLiteral</a> &gt; Parser::parseStringLiteral </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse the string literal. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;StringLiteral&gt; </dd></dl>
 
 </div>
 </div>
