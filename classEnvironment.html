@@ -63,6 +63,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classEnvironment-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Environment Class Reference</div>  </div>
@@ -91,6 +92,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a057196fe8abb7ed80e8a38f11354bf85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEnvironment.html#a057196fe8abb7ed80e8a38f11354bf85">set</a> (const std::string &amp;name, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; val)</td></tr>
 <tr class="memdesc:a057196fe8abb7ed80e8a38f11354bf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the identifier  <a href="classEnvironment.html#a057196fe8abb7ed80e8a38f11354bf85">More...</a><br /></td></tr>
 <tr class="separator:a057196fe8abb7ed80e8a38f11354bf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ad96fe8593b306bcaeea030fcbe13b7be"><td class="memItemLeft" align="right" valign="top"><a id="ad96fe8593b306bcaeea030fcbe13b7be"></a>
+std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>store</b> {}</td></tr>
+<tr class="separator:ad96fe8593b306bcaeea030fcbe13b7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classEnvironment.html" title="Environment is used to indicate the current frame environment. It is a scope and all the values assoc...">Environment</a> is used to indicate the current frame environment. It is a scope and all the values associated with this scope is recorded in it. When we meet a new scope such as functions, we should spawn a new scope, which means that we should create a new environment class. </p>

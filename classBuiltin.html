@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>cppmpiler: Object Class Reference</title>
+<title>cppmpiler: Builtin Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,45 +63,52 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classObject-members.html">List of all members</a>  </div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classBuiltin-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Object Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">Builtin Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Base class to represent the object.  
- <a href="classObject.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="object_8hpp_source.html">object.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Object:</div>
+Inheritance diagram for Builtin:</div>
 <div class="dyncontent">
-<div class="center"><img src="classObject__inherit__graph.png" border="0" usemap="#aObject_inherit__map" alt="Inheritance graph"/></div>
-<map name="aObject_inherit__map" id="aObject_inherit__map">
-<area shape="rect" title="Base class to represent the object." alt="" coords="276,5,340,32"/>
-<area shape="rect" href="classBoolean.html" title="Boolean class represents bool." alt="" coords="5,80,80,107"/>
-<area shape="rect" href="classBuiltin.html" title=" " alt="" coords="104,80,168,107"/>
-<area shape="rect" href="classError.html" title="Error class represents the error." alt="" coords="192,80,245,107"/>
-<area shape="rect" href="classFunction.html" title="Function class represents the function." alt="" coords="269,80,347,107"/>
-<area shape="rect" href="classInteger.html" title="Integer class represents int64_t." alt="" coords="371,80,439,107"/>
-<area shape="rect" href="classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="464,80,565,107"/>
-<area shape="rect" href="classString.html" title="Represents the string &quot;foobar&quot;." alt="" coords="590,80,650,107"/>
+<div class="center"><img src="classBuiltin__inherit__graph.png" border="0" usemap="#aBuiltin_inherit__map" alt="Inheritance graph"/></div>
+<map name="aBuiltin_inherit__map" id="aBuiltin_inherit__map">
+<area shape="rect" title=" " alt="" coords="5,80,69,107"/>
+<area shape="rect" href="classObject.html" title="Base class to represent the object." alt="" coords="5,5,69,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for Builtin:</div>
+<div class="dyncontent">
+<div class="center"><img src="classBuiltin__coll__graph.png" border="0" usemap="#aBuiltin_coll__map" alt="Collaboration graph"/></div>
+<map name="aBuiltin_coll__map" id="aBuiltin_coll__map">
+<area shape="rect" title=" " alt="" coords="5,80,69,107"/>
+<area shape="rect" href="classObject.html" title="Base class to represent the object." alt="" coords="5,5,69,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac8a3a9855fcb3d4cab81972b0970bb27"><td class="memItemLeft" align="right" valign="top"><a id="ac8a3a9855fcb3d4cab81972b0970bb27"></a>
-virtual ObjectType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> ()=0</td></tr>
-<tr class="separator:ac8a3a9855fcb3d4cab81972b0970bb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35321c97ffc1e1ba13fec9800f3f57da"><td class="memItemLeft" align="right" valign="top"><a id="a35321c97ffc1e1ba13fec9800f3f57da"></a>
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>inspect</b> ()=0</td></tr>
-<tr class="separator:a35321c97ffc1e1ba13fec9800f3f57da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7f10e4a91506585d27cfd03e2a2c1f8"><td class="memItemLeft" align="right" valign="top"><a id="aa7f10e4a91506585d27cfd03e2a2c1f8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Builtin</b> (BuiltinFunction f)</td></tr>
+<tr class="separator:aa7f10e4a91506585d27cfd03e2a2c1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a647d1d5ea16d1a215e3d36a29e2d54"><td class="memItemLeft" align="right" valign="top"><a id="a1a647d1d5ea16d1a215e3d36a29e2d54"></a>
+ObjectType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () override</td></tr>
+<tr class="separator:a1a647d1d5ea16d1a215e3d36a29e2d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68f51617609a5f81217b7780c20a9228"><td class="memItemLeft" align="right" valign="top"><a id="a68f51617609a5f81217b7780c20a9228"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>inspect</b> () override</td></tr>
+<tr class="separator:a68f51617609a5f81217b7780c20a9228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:aa844c17633874dd989797c5220453fa2"><td class="memItemLeft" align="right" valign="top"><a id="aa844c17633874dd989797c5220453fa2"></a>
+BuiltinFunction&#160;</td><td class="memItemRight" valign="bottom"><b>fn</b></td></tr>
+<tr class="separator:aa844c17633874dd989797c5220453fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base class to represent the object. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>object/<a class="el" href="object_8hpp_source.html">object.hpp</a></li>
+<li>object/object.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
