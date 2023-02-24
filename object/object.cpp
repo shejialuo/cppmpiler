@@ -11,6 +11,7 @@ constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view FUNCTION_OBJ = "FUNCTION";
 constexpr std::string_view ERROR_OBJ = "ERROR";
 constexpr std::string_view STRING_OBJ = "STRING";
+constexpr std::string_view BUILTIN_OBJ = "BUILTIN";
 
 Integer::Integer(int64_t v) : value{v} {}
 std::string Integer::inspect() { return std::to_string(value); }
@@ -31,7 +32,7 @@ String::String(const std::string &s) : value{s} {}
 std::string String::inspect() { return value; }
 ObjectType String::type() { return std::string(STRING_OBJ); }
 
-Function::Function(std::vector<std::unique_ptr<Identifier>> &p,
+Function::Function(std::vector<std::unique_ptr<Identifier>> &&p,
                    std::unique_ptr<BlockStatement> &&b,
                    std::shared_ptr<Environment> e) {
   parameters = std::move(p);
@@ -58,3 +59,7 @@ std::string Function::inspect() {
   return info;
 }
 ObjectType Function::type() { return std::string(FUNCTION_OBJ); }
+
+Builtin::Builtin(BuiltinFunction f) : fn{f} {}
+std::string Builtin::inspect() { return "builtin function"; }
+ObjectType Builtin::type() { return std::string(BUILTIN_OBJ); }

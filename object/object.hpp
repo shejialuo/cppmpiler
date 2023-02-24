@@ -2,16 +2,20 @@
 #define _OBJECT_OBJECT_HPP_
 
 class Environment;
+class Object;
 
 #include "ast.hpp"
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 using ObjectType = std::string;
+
+using BuiltinFunction = std::function<std::shared_ptr<Object>(std::vector<std::shared_ptr<Object>> &)>;
 
 /**
  * @brief Base class to represent the object
@@ -76,10 +80,10 @@ class Function : public Object {
 public:
   std::vector<std::unique_ptr<Identifier>> parameters;
   std::unique_ptr<BlockStatement> body;
-  std::shared_ptr<Environment> env;
+  std::weak_ptr<Environment> env;
 
   Function() = default;
-  Function(std::vector<std::unique_ptr<Identifier>> &p,
+  Function(std::vector<std::unique_ptr<Identifier>> &&p,
            std::unique_ptr<BlockStatement> &&b,
            std::shared_ptr<Environment> e);
 
@@ -117,6 +121,16 @@ public:
   std::string inspect() override;
 };
 
+class Builtin : public Object {
+public:
+  BuiltinFunction fn;
+
+  Builtin(BuiltinFunction f);
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
 /**
  * @brief Environment is used to indicate the current frame
  * environment. It is a scope and all the values associated
@@ -128,9 +142,9 @@ public:
 class Environment {
 private:
   std::shared_ptr<Environment> outer;
-  std::unordered_map<std::string, std::shared_ptr<Object>> store{};
 
 public:
+  std::unordered_map<std::string, std::shared_ptr<Object>> store{};
   Environment() = default;
   Environment(std::shared_ptr<Environment> o);
   Environment(const Environment &) = delete;

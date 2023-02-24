@@ -5,12 +5,16 @@
 #include "object.hpp"
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 class Evaluator {
 private:
   static std::shared_ptr<Boolean> True;
   static std::shared_ptr<Boolean> False;
+
+  static std::vector<std::shared_ptr<Environment>> environments;
+  static std::unordered_map<std::string, std::shared_ptr<Builtin>> builtins;
 
 public:
   /**
@@ -160,6 +164,14 @@ public:
    * @return std::shared_ptr<Object>
    */
   static std::shared_ptr<Object> evalFunctions(Object *fn, std::vector<std::shared_ptr<Object>> &arguments);
+
+  /**
+   * @brief The built function len to calculate the string length
+   *
+   * @param arguments the arguments
+   * @return std::shared_ptr<Object>;
+   */
+  static std::shared_ptr<Object> len(std::vector<std::shared_ptr<Object>> &arguments);
 };
 
 #endif  // _EVALUATOR_EVALUATOR_HPP_

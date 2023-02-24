@@ -6,6 +6,8 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -17,6 +19,11 @@ constexpr std::string_view STRING_OBJ = "STRING";
 
 std::shared_ptr<Boolean> Evaluator::True = std::make_shared<Boolean>(true);
 std::shared_ptr<Boolean> Evaluator::False = std::make_shared<Boolean>(false);
+std::vector<std::shared_ptr<Environment>> Evaluator::environments = {};
+
+std::unordered_map<std::string, std::shared_ptr<Builtin>> Evaluator::builtins = {
+    {"len", std::make_shared<Builtin>(len)},
+};
 
 std::shared_ptr<Object> Evaluator::eval(Node *node, std::shared_ptr<Environment> &env) {
   Program *program = dynamic_cast<Program *>(node);
@@ -86,7 +93,8 @@ std::shared_ptr<Object> Evaluator::eval(Node *node, std::shared_ptr<Environment>
 
   FunctionLiteral *functionLiteral = dynamic_cast<FunctionLiteral *>(node);
   if (functionLiteral != nullptr) {
-    auto function = std::make_shared<Function>(functionLiteral->parameters, std::move(functionLiteral->body), env);
+    auto function =
+        std::make_shared<Function>(std::move(functionLiteral->parameters), std::move(functionLiteral->body), env);
     return function;
   }
 
@@ -278,6 +286,10 @@ std::shared_ptr<Object> Evaluator::evalBlockStatement(BlockStatement *bs, std::s
 std::shared_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::shared_ptr<Environment> &env) {
   auto result = env->get(i->value);
   if (result == nullptr) {
+    auto builtin = builtins[i->value];
+    if (builtin != nullptr) {
+      return builtin;
+    }
     return std::make_shared<Error>("identifier not found: " + i->value);
   }
   return result;
@@ -300,10 +312,14 @@ std::vector<std::shared_ptr<Object>> Evaluator::evalArguments(std::vector<std::u
 std::shared_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::shared_ptr<Object>> &arguments) {
   Function *function = dynamic_cast<Function *>(fn);
   if (function == nullptr) {
+    Builtin *builtin = dynamic_cast<Builtin *>(fn);
+    if (builtin != nullptr) {
+      return builtin->fn(arguments);
+    }
     return newError("not a function: " + fn->type());
   }
 
-  auto extendedEnv = std::make_shared<Environment>(function->env);
+  auto extendedEnv = std::make_shared<Environment>(function->env.lock());
 
   int i = 0;
   for (auto &&parameter : function->parameters) {
@@ -312,9 +328,26 @@ std::shared_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::sh
 
   auto evaluated = eval(function->body.get(), extendedEnv);
 
+  // Here, we must push this ptr into the environ vector, because we use
+  // weak_ptr for function, we should keep its lifetime.
+  environments.push_back(extendedEnv);
+
   ReturnValue *returnValue = dynamic_cast<ReturnValue *>(evaluated.get());
   if (returnValue != nullptr) {
     return returnValue->value;
   }
   return evaluated;
+}
+
+std::shared_ptr<Object> Evaluator::len(std::vector<std::shared_ptr<Object>> &arguments) {
+  if (arguments.size() != 1) {
+    return newError("wrong number of arguments. got=" + std::to_string(arguments.size()) + ", want=1");
+  }
+
+  String *str = dynamic_cast<String *>(arguments[0].get());
+  if (str == nullptr) {
+    return newError("argument to len not supported, got " + arguments[0]->type());
+  }
+
+  return std::make_shared<Integer>(str->value.size());
 }

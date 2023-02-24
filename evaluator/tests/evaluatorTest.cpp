@@ -430,3 +430,55 @@ TEST(Evaluator, TestStringConcatenation) {
     FAIL();
   }
 }
+
+TEST(Evaluator, TestBuiltinLenCorrect) {
+  struct TestData {
+    std::string input;
+    int64_t expected;
+
+    TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
+  };
+
+  std::vector<TestData> tests{
+      {R"(len(""))", 0},
+      {R"(len("four"))", 4},
+      {R"(len("hello world"))", 11},
+  };
+
+  for (auto &&test : tests) {
+    auto evaluated = testEval(test.input);
+
+    if (!testIntegerObject(evaluated.get(), test.expected)) {
+      FAIL();
+    }
+  }
+}
+
+TEST(Evaluator, TestBuiltinLenError) {
+  struct TestData {
+    std::string input;
+    std::string error;
+
+    TestData(const std::string &s, const std::string &e) : input{s}, error{e} {}
+  };
+
+  std::vector<TestData> tests{
+      {R"(len(1))", "argument to len not supported, got INTEGER"},
+      {R"(len("one", "two"))", "wrong number of arguments. got=2, want=1"},
+  };
+
+  for (auto &&test : tests) {
+    auto evaluated = testEval(test.input);
+
+    Error *err = dynamic_cast<Error *>(evaluated.get());
+    if (err == nullptr) {
+      spdlog::error("object is not Error");
+      FAIL();
+    }
+
+    if (err->message != test.error) {
+      spdlog::error("wrong error message. expected={}, got={}", test.error, err->message);
+      FAIL();
+    }
+  }
+}
