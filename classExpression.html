@@ -78,17 +78,19 @@ Inheritance diagram for Expression:</div>
 <div class="dyncontent">
 <div class="center"><img src="classExpression__inherit__graph.png" border="0" usemap="#aExpression_inherit__map" alt="Inheritance graph"/></div>
 <map name="aExpression_inherit__map" id="aExpression_inherit__map">
-<area shape="rect" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="109,208,203,235"/>
-<area shape="rect" href="classBooleanExpression.html" title="represent the boolean value" alt="" coords="251,5,397,32"/>
-<area shape="rect" href="classCallExpression.html" title="This class represents the call for example add(a + b, 5, 4)" alt="" coords="265,56,383,83"/>
-<area shape="rect" href="classFunctionLiteral.html" title="This class represents the functional literal." alt="" coords="265,107,383,133"/>
-<area shape="rect" href="classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="284,157,364,184"/>
-<area shape="rect" href="classIfExpression.html" title="IfExpression contains three important aspects:" alt="" coords="273,208,375,235"/>
-<area shape="rect" href="classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="263,259,385,285"/>
-<area shape="rect" href="classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="269,309,379,336"/>
-<area shape="rect" href="classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="259,360,389,387"/>
-<area shape="rect" href="classStringLiteral.html" title="StringLiteral represents string." alt="" coords="273,411,375,437"/>
-<area shape="rect" href="classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="5,208,61,235"/>
+<area shape="rect" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="109,259,203,285"/>
+<area shape="rect" href="classArrayLiteral.html" title="Represent array literal such as [1, 2, 3 + 3, fn(x) {x}, add(2, 2)]." alt="" coords="275,5,373,32"/>
+<area shape="rect" href="classBooleanExpression.html" title="represent the boolean value" alt="" coords="251,56,397,83"/>
+<area shape="rect" href="classCallExpression.html" title="This class represents the call for example add(a + b, 5, 4)" alt="" coords="265,107,383,133"/>
+<area shape="rect" href="classFunctionLiteral.html" title="This class represents the functional literal." alt="" coords="265,157,383,184"/>
+<area shape="rect" href="classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="284,208,364,235"/>
+<area shape="rect" href="classIfExpression.html" title="IfExpression contains three important aspects:" alt="" coords="273,259,375,285"/>
+<area shape="rect" href="classIndexExpression.html" title="Represent the index operation a[3]. &lt;expression&gt;[expression]." alt="" coords="259,309,389,336"/>
+<area shape="rect" href="classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="263,360,385,387"/>
+<area shape="rect" href="classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="269,411,379,437"/>
+<area shape="rect" href="classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="259,461,389,488"/>
+<area shape="rect" href="classStringLiteral.html" title="StringLiteral represents string." alt="" coords="273,512,375,539"/>
+<area shape="rect" href="classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="5,259,61,285"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -144,7 +146,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>expressionNod
 
 <p>Implements <a class="el" href="classNode.html#aee067e23a3532796095c148b0e84b9ce">Node</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classStringLiteral.html#abac95c5614fe10eea9ef739eca824606">StringLiteral</a>, <a class="el" href="classCallExpression.html#a028d76bd572f2c6b7543f4a84ce8849f">CallExpression</a>, <a class="el" href="classFunctionLiteral.html#a690b07a8b649fc92ff4bffa34ca31bff">FunctionLiteral</a>, <a class="el" href="classIfExpression.html#ace8b6a4d7e7a10b6957ce61615520bc6">IfExpression</a>, <a class="el" href="classBooleanExpression.html#ad203a40cfab65f789673e7a521ef9a28">BooleanExpression</a>, <a class="el" href="classInfixExpression.html#a6fd3606a8ca4d8875852ae4a66c0b28c">InfixExpression</a>, <a class="el" href="classPrefixExpression.html#a6aaa8f54521e05d062688870cf0ad64a">PrefixExpression</a>, <a class="el" href="classIntegerLiteral.html#ab990402b161491d9f4975599a43e623a">IntegerLiteral</a>, and <a class="el" href="classIdentifier.html#a05e406668f1990175b993623720f048f">Identifier</a>.</p>
+<p>Reimplemented in <a class="el" href="classIndexExpression.html#a9cf98a694a3737577e24e6dc0720331e">IndexExpression</a>, <a class="el" href="classArrayLiteral.html#a1715765546f4261d2cdfe0fe548cbe65">ArrayLiteral</a>, <a class="el" href="classStringLiteral.html#abac95c5614fe10eea9ef739eca824606">StringLiteral</a>, <a class="el" href="classCallExpression.html#a028d76bd572f2c6b7543f4a84ce8849f">CallExpression</a>, <a class="el" href="classFunctionLiteral.html#a690b07a8b649fc92ff4bffa34ca31bff">FunctionLiteral</a>, <a class="el" href="classIfExpression.html#ace8b6a4d7e7a10b6957ce61615520bc6">IfExpression</a>, <a class="el" href="classBooleanExpression.html#ad203a40cfab65f789673e7a521ef9a28">BooleanExpression</a>, <a class="el" href="classInfixExpression.html#a6fd3606a8ca4d8875852ae4a66c0b28c">InfixExpression</a>, <a class="el" href="classPrefixExpression.html#a6aaa8f54521e05d062688870cf0ad64a">PrefixExpression</a>, <a class="el" href="classIntegerLiteral.html#ab990402b161491d9f4975599a43e623a">IntegerLiteral</a>, and <a class="el" href="classIdentifier.html#a05e406668f1990175b993623720f048f">Identifier</a>.</p>
 
 </div>
 </div>
@@ -176,7 +178,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>expressionNod
 
 <p>Implements <a class="el" href="classNode.html#a9c6b5c24f678c651d4d2b71b518b7eac">Node</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classStringLiteral.html#a3932dc9c0b117a723c82515a7d9f5aa3">StringLiteral</a>, <a class="el" href="classCallExpression.html#aac082077174008065259ee857ef2d356">CallExpression</a>, <a class="el" href="classFunctionLiteral.html#a1050959447d5608b0e8c427406ce4732">FunctionLiteral</a>, <a class="el" href="classIfExpression.html#a963e71edfb76b2e8c4222aecc4159f69">IfExpression</a>, <a class="el" href="classBooleanExpression.html#ab2f2b53431ce5a2e48884546ad6ff497">BooleanExpression</a>, <a class="el" href="classInfixExpression.html#a0b3b65d4c10fa9514afcd82864cc265e">InfixExpression</a>, <a class="el" href="classPrefixExpression.html#ac10e7593f65c3b593ecd53394781ef34">PrefixExpression</a>, <a class="el" href="classIntegerLiteral.html#a3fff8a4847d01f62d1bb8beabfcb80bb">IntegerLiteral</a>, and <a class="el" href="classIdentifier.html#a56a3b1f44a4bc74b147187402ed462de">Identifier</a>.</p>
+<p>Reimplemented in <a class="el" href="classIndexExpression.html#a96252fc2b782498914b228a4f425a0e8">IndexExpression</a>, <a class="el" href="classArrayLiteral.html#a942f85b4def760c7586952cfb51c8d9e">ArrayLiteral</a>, <a class="el" href="classStringLiteral.html#a3932dc9c0b117a723c82515a7d9f5aa3">StringLiteral</a>, <a class="el" href="classCallExpression.html#aac082077174008065259ee857ef2d356">CallExpression</a>, <a class="el" href="classFunctionLiteral.html#a1050959447d5608b0e8c427406ce4732">FunctionLiteral</a>, <a class="el" href="classIfExpression.html#a963e71edfb76b2e8c4222aecc4159f69">IfExpression</a>, <a class="el" href="classBooleanExpression.html#ab2f2b53431ce5a2e48884546ad6ff497">BooleanExpression</a>, <a class="el" href="classInfixExpression.html#a0b3b65d4c10fa9514afcd82864cc265e">InfixExpression</a>, <a class="el" href="classPrefixExpression.html#ac10e7593f65c3b593ecd53394781ef34">PrefixExpression</a>, <a class="el" href="classIntegerLiteral.html#a3fff8a4847d01f62d1bb8beabfcb80bb">IntegerLiteral</a>, and <a class="el" href="classIdentifier.html#a56a3b1f44a4bc74b147187402ed462de">Identifier</a>.</p>
 
 </div>
 </div>

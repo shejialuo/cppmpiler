@@ -1,13 +1,15 @@
 <map id="Expression" name="Expression">
-<area shape="rect" id="node1" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="109,208,203,235"/>
-<area shape="rect" id="node3" href="$classBooleanExpression.html" title="represent the boolean value" alt="" coords="251,5,397,32"/>
-<area shape="rect" id="node4" href="$classCallExpression.html" title="This class represents the call for example add(a + b, 5, 4)" alt="" coords="265,56,383,83"/>
-<area shape="rect" id="node5" href="$classFunctionLiteral.html" title="This class represents the functional literal." alt="" coords="265,107,383,133"/>
-<area shape="rect" id="node6" href="$classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="284,157,364,184"/>
-<area shape="rect" id="node7" href="$classIfExpression.html" title="IfExpression contains three important aspects:" alt="" coords="273,208,375,235"/>
-<area shape="rect" id="node8" href="$classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="263,259,385,285"/>
-<area shape="rect" id="node9" href="$classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="269,309,379,336"/>
-<area shape="rect" id="node10" href="$classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="259,360,389,387"/>
-<area shape="rect" id="node11" href="$classStringLiteral.html" title="StringLiteral represents string." alt="" coords="273,411,375,437"/>
-<area shape="rect" id="node2" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="5,208,61,235"/>
+<area shape="rect" id="node1" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="109,259,203,285"/>
+<area shape="rect" id="node3" href="$classArrayLiteral.html" title="Represent array literal such as [1, 2, 3 + 3, fn(x) {x}, add(2, 2)]." alt="" coords="275,5,373,32"/>
+<area shape="rect" id="node4" href="$classBooleanExpression.html" title="represent the boolean value" alt="" coords="251,56,397,83"/>
+<area shape="rect" id="node5" href="$classCallExpression.html" title="This class represents the call for example add(a + b, 5, 4)" alt="" coords="265,107,383,133"/>
+<area shape="rect" id="node6" href="$classFunctionLiteral.html" title="This class represents the functional literal." alt="" coords="265,157,383,184"/>
+<area shape="rect" id="node7" href="$classIdentifier.html" title="Identifier class. It is an expression. It is inherited from Expression class." alt="" coords="284,208,364,235"/>
+<area shape="rect" id="node8" href="$classIfExpression.html" title="IfExpression contains three important aspects:" alt="" coords="273,259,375,285"/>
+<area shape="rect" id="node9" href="$classIndexExpression.html" title="Represent the index operation a[3]. &lt;expression&gt;[expression]." alt="" coords="259,309,389,336"/>
+<area shape="rect" id="node10" href="$classInfixExpression.html" title="InfixExpression is an expression which represents &lt;expression&gt;&lt;infix operator&gt;&lt;expression&gt;" alt="" coords="263,360,385,387"/>
+<area shape="rect" id="node11" href="$classIntegerLiteral.html" title="IntegerLiteral is an expression which represents the 5." alt="" coords="269,411,379,437"/>
+<area shape="rect" id="node12" href="$classPrefixExpression.html" title="PrefixExpression is an expression which represents &lt;prefix operator&gt;&lt;expression&gt;;" alt="" coords="259,461,389,488"/>
+<area shape="rect" id="node13" href="$classStringLiteral.html" title="StringLiteral represents string." alt="" coords="273,512,375,539"/>
+<area shape="rect" id="node2" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="5,259,61,285"/>
 </map>

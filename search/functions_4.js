@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['newerror_148',['newError',['../classEvaluator.html#a3d579acc1c547a77f55de59d58a37453',1,'Evaluator']]],
-  ['nexttoken_149',['nextToken',['../classLexer.html#ad70ae308f841161587a0407daaeea480',1,'Lexer::nextToken()'],['../classParser.html#a324a5bb61c9dfc645300a92aecd6fe69',1,'Parser::nextToken()']]]
+  ['last_164',['last',['../classEvaluator.html#a75b8ee15b3c63752360b266ae20b6ab9',1,'Evaluator']]],
+  ['len_165',['len',['../classEvaluator.html#a4f4e1bce6e2320a574cb73074448219a',1,'Evaluator']]]
 ];

@@ -1,0 +1,5 @@
+<map id="ArrayLiteral" name="ArrayLiteral">
+<area shape="rect" id="node1" title="Represent array literal such as [1, 2, 3 + 3, fn(x) {x}, add(2, 2)]." alt="" coords="5,155,104,181"/>
+<area shape="rect" id="node2" href="$classExpression.html" title="Represent the expression, for example, let a = 3. a is the expression and also, 3 is the expression...." alt="" coords="8,80,101,107"/>
+<area shape="rect" id="node3" href="$classNode.html" title="Every node in the AST has to implement this abstract class." alt="" coords="27,5,83,32"/>
+</map>

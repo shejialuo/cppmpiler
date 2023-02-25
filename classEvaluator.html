@@ -110,15 +110,34 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a4b85ba4264df53e53c674fb78bf187ff"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a4b85ba4264df53e53c674fb78bf187ff">evalIdentifier</a> (<a class="el" href="classIdentifier.html">Identifier</a> *i, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
 <tr class="memdesc:a4b85ba4264df53e53c674fb78bf187ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the identifier  <a href="classEvaluator.html#a4b85ba4264df53e53c674fb78bf187ff">More...</a><br /></td></tr>
 <tr class="separator:a4b85ba4264df53e53c674fb78bf187ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a652897efbb0af83f36688ccf73cb2326"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a652897efbb0af83f36688ccf73cb2326">evalArguments</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&gt; &amp;arguments, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
-<tr class="memdesc:a652897efbb0af83f36688ccf73cb2326"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the call arguments  <a href="classEvaluator.html#a652897efbb0af83f36688ccf73cb2326">More...</a><br /></td></tr>
-<tr class="separator:a652897efbb0af83f36688ccf73cb2326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb776c51550c9edbcc2e7b85e411dc0"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a3fb776c51550c9edbcc2e7b85e411dc0">evalIndexExpression</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; index)</td></tr>
+<tr class="memdesc:a3fb776c51550c9edbcc2e7b85e411dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the index  <a href="classEvaluator.html#a3fb776c51550c9edbcc2e7b85e411dc0">More...</a><br /></td></tr>
+<tr class="separator:a3fb776c51550c9edbcc2e7b85e411dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45602636a66104bcc927b915c016f43e"><td class="memItemLeft" align="right" valign="top"><a id="a45602636a66104bcc927b915c016f43e"></a>
+static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a45602636a66104bcc927b915c016f43e">evalArrayIndexExpression</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; index)</td></tr>
+<tr class="memdesc:a45602636a66104bcc927b915c016f43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">should be called by <code>evalIndexExpression</code> <br /></td></tr>
+<tr class="separator:a45602636a66104bcc927b915c016f43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd7ee73d87e47122e4b3fa97eda79ad0"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#acd7ee73d87e47122e4b3fa97eda79ad0">evalExpressions</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&gt; &amp;arguments, std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;env)</td></tr>
+<tr class="memdesc:acd7ee73d87e47122e4b3fa97eda79ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">eval the vector of expressions  <a href="classEvaluator.html#acd7ee73d87e47122e4b3fa97eda79ad0">More...</a><br /></td></tr>
+<tr class="separator:acd7ee73d87e47122e4b3fa97eda79ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c96520d4b69f1d18e046be110e328e4"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a6c96520d4b69f1d18e046be110e328e4">evalFunctions</a> (<a class="el" href="classObject.html">Object</a> *fn, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
 <tr class="memdesc:a6c96520d4b69f1d18e046be110e328e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate functions.  <a href="classEvaluator.html#a6c96520d4b69f1d18e046be110e328e4">More...</a><br /></td></tr>
 <tr class="separator:a6c96520d4b69f1d18e046be110e328e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f4e1bce6e2320a574cb73074448219a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a4f4e1bce6e2320a574cb73074448219a">len</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
 <tr class="memdesc:a4f4e1bce6e2320a574cb73074448219a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The built function len to calculate the string length.  <a href="classEvaluator.html#a4f4e1bce6e2320a574cb73074448219a">More...</a><br /></td></tr>
 <tr class="separator:a4f4e1bce6e2320a574cb73074448219a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a059d3e213212c3aaa46b9910f0b1e6aa"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a059d3e213212c3aaa46b9910f0b1e6aa">first</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
+<tr class="memdesc:a059d3e213212c3aaa46b9910f0b1e6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The built function to get the first element of the array.  <a href="classEvaluator.html#a059d3e213212c3aaa46b9910f0b1e6aa">More...</a><br /></td></tr>
+<tr class="separator:a059d3e213212c3aaa46b9910f0b1e6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75b8ee15b3c63752360b266ae20b6ab9"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a75b8ee15b3c63752360b266ae20b6ab9">last</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
+<tr class="memdesc:a75b8ee15b3c63752360b266ae20b6ab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The built function to get the last element of the array.  <a href="classEvaluator.html#a75b8ee15b3c63752360b266ae20b6ab9">More...</a><br /></td></tr>
+<tr class="separator:a75b8ee15b3c63752360b266ae20b6ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc36ff61ad4acbac96002808e821ae20"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#adc36ff61ad4acbac96002808e821ae20">rest</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
+<tr class="memdesc:adc36ff61ad4acbac96002808e821ae20"><td class="mdescLeft">&#160;</td><td class="mdescRight">The built function to drop the first element of the array.  <a href="classEvaluator.html#adc36ff61ad4acbac96002808e821ae20">More...</a><br /></td></tr>
+<tr class="separator:adc36ff61ad4acbac96002808e821ae20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a890e8e4dbbb7b4f5143ad8154131fd87"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvaluator.html#a890e8e4dbbb7b4f5143ad8154131fd87">push</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;arguments)</td></tr>
+<tr class="memdesc:a890e8e4dbbb7b4f5143ad8154131fd87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a new element to the a and get the b.  <a href="classEvaluator.html#a890e8e4dbbb7b4f5143ad8154131fd87">More...</a><br /></td></tr>
+<tr class="separator:a890e8e4dbbb7b4f5143ad8154131fd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a93c3e966cea82964ebaddee5505d1261"></a>
@@ -164,52 +183,6 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
-
-</div>
-</div>
-<a id="a652897efbb0af83f36688ccf73cb2326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a652897efbb0af83f36688ccf73cb2326">&#9670;&nbsp;</a></span>evalArguments()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt; Evaluator::evalArguments </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>arguments</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>env</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>eval the call arguments </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">arguments</td><td>the call arguments </td></tr>
-    <tr><td class="paramname">env</td><td>the environment </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::shared_ptr&lt;Object&gt;&gt; </dd></dl>
 
 </div>
 </div>
@@ -347,6 +320,52 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acd7ee73d87e47122e4b3fa97eda79ad0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd7ee73d87e47122e4b3fa97eda79ad0">&#9670;&nbsp;</a></span>evalExpressions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt; Evaluator::evalExpressions </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classExpression.html">Expression</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>arguments</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classEnvironment.html">Environment</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>env</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>eval the vector of expressions </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arguments</td><td>the expressions </td></tr>
+    <tr><td class="paramname">env</td><td>the environment </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::shared_ptr&lt;Object&gt;&gt; </dd></dl>
+
+</div>
+</div>
 <a id="a6c96520d4b69f1d18e046be110e328e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c96520d4b69f1d18e046be110e328e4">&#9670;&nbsp;</a></span>evalFunctions()</h2>
 
@@ -478,6 +497,52 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">ie</td><td><a class="el" href="classIfExpression.html" title="IfExpression contains three important aspects:">IfExpression</a> </td></tr>
     <tr><td class="paramname">en</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a3fb776c51550c9edbcc2e7b85e411dc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb776c51550c9edbcc2e7b85e411dc0">&#9670;&nbsp;</a></span>evalIndexExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Evaluator::evalIndexExpression </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>eval the index </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">left</td><td>the left identifier </td></tr>
+    <tr><td class="paramname">index</td><td>the index expression </td></tr>
   </table>
   </dd>
 </dl>
@@ -771,6 +836,76 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a059d3e213212c3aaa46b9910f0b1e6aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a059d3e213212c3aaa46b9910f0b1e6aa">&#9670;&nbsp;</a></span>first()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Evaluator::first </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>arguments</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The built function to get the first element of the array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arguments</td><td>the arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a75b8ee15b3c63752360b266ae20b6ab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75b8ee15b3c63752360b266ae20b6ab9">&#9670;&nbsp;</a></span>last()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Evaluator::last </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>arguments</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The built function to get the last element of the array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arguments</td><td>the arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
 <a id="a4f4e1bce6e2320a574cb73074448219a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4f4e1bce6e2320a574cb73074448219a">&#9670;&nbsp;</a></span>len()</h2>
 
@@ -838,6 +973,76 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Error&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a890e8e4dbbb7b4f5143ad8154131fd87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a890e8e4dbbb7b4f5143ad8154131fd87">&#9670;&nbsp;</a></span>push()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Evaluator::push </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>arguments</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Push a new element to the a and get the b. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arguments</td><td>the arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="adc36ff61ad4acbac96002808e821ae20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc36ff61ad4acbac96002808e821ae20">&#9670;&nbsp;</a></span>rest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; Evaluator::rest </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>arguments</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The built function to drop the first element of the array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arguments</td><td>the arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
 
 </div>
 </div>

@@ -1,10 +1,11 @@
 <map id="Object" name="Object">
-<area shape="rect" id="node1" title="Base class to represent the object." alt="" coords="276,5,340,32"/>
-<area shape="rect" id="node2" href="$classBoolean.html" title="Boolean class represents bool." alt="" coords="5,80,80,107"/>
-<area shape="rect" id="node3" href="$classBuiltin.html" title=" " alt="" coords="104,80,168,107"/>
-<area shape="rect" id="node4" href="$classError.html" title="Error class represents the error." alt="" coords="192,80,245,107"/>
-<area shape="rect" id="node5" href="$classFunction.html" title="Function class represents the function." alt="" coords="269,80,347,107"/>
-<area shape="rect" id="node6" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="371,80,439,107"/>
-<area shape="rect" id="node7" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="464,80,565,107"/>
-<area shape="rect" id="node8" href="$classString.html" title="Represents the string &quot;foobar&quot;." alt="" coords="590,80,650,107"/>
+<area shape="rect" id="node1" title="Base class to represent the object." alt="" coords="313,5,377,32"/>
+<area shape="rect" id="node2" href="$classArray.html" title="Array." alt="" coords="5,80,63,107"/>
+<area shape="rect" id="node3" href="$classBoolean.html" title="Boolean class represents bool." alt="" coords="87,80,162,107"/>
+<area shape="rect" id="node4" href="$classBuiltin.html" title=" " alt="" coords="186,80,250,107"/>
+<area shape="rect" id="node5" href="$classError.html" title="Error class represents the error." alt="" coords="274,80,327,107"/>
+<area shape="rect" id="node6" href="$classFunction.html" title="Function class represents the function." alt="" coords="351,80,429,107"/>
+<area shape="rect" id="node7" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="453,80,521,107"/>
+<area shape="rect" id="node8" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="546,80,647,107"/>
+<area shape="rect" id="node9" href="$classString.html" title="Represents the string &quot;foobar&quot;." alt="" coords="672,80,732,107"/>
 </map>
