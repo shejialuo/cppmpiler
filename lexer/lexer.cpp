@@ -43,6 +43,12 @@ Token Lexer::nextToken() {
     case ')':
       token.setToken(TokenTypes::RPAREN, ch);
       break;
+    case '[':
+      token.setToken(TokenTypes::LBRACKET, ch);
+      break;
+    case ']':
+      token.setToken(TokenTypes::RBRACKET, ch);
+      break;
     case ',':
       token.setToken(TokenTypes::COMMA, ch);
       break;

@@ -482,3 +482,58 @@ TEST(Evaluator, TestBuiltinLenError) {
     }
   }
 }
+
+TEST(Evaluator, TestArrayLiterals) {
+  std::string input{"[1, 2 * 2, 3 + 3]"};
+
+  auto evaluated = testEval(input);
+
+  Array *array = dynamic_cast<Array *>(evaluated.get());
+  if (array == nullptr) {
+    spdlog::error("object is not Array");
+    FAIL();
+  }
+
+  if (array->elements.size() != 3) {
+    spdlog::error("array has wrong number of elements. got={}", array->elements.size());
+    FAIL();
+  }
+
+  if (!testIntegerObject(array->elements[0].get(), 1)) {
+    FAIL();
+  }
+
+  if (!testIntegerObject(array->elements[1].get(), 4)) {
+    FAIL();
+  }
+
+  if (!testIntegerObject(array->elements[2].get(), 6)) {
+    FAIL();
+  }
+}
+
+TEST(Evaluator, TestArrayIndexExpressions) {
+  struct TestData {
+    std::string input;
+    int64_t expected;
+
+    TestData(const std::string &s, int64_t v) : input{s}, expected{v} {}
+  };
+
+  std::vector<TestData> tests{
+      {"[1,2,3][0]", 1},
+      {"[1,2,3][1]", 2},
+      {"[1,2,3][2]", 3},
+      {"let i = 0; [1][i];", 1},
+      {"[1,2,3][1+1];", 3},
+      {"let myArray = [1,2,3]; myArray[2];", 3},
+      {"let myArray = [1,2,3]; let i = myArray[0]; myArray[i]", 2},
+      {"let myArray = [1,2,3]; myArray[0] + myArray[1] + myArray[2];", 6},
+  };
+
+  for (auto &&test : tests) {
+    if (!testIntegerObject(testEval(test.input).get(), test.expected)) {
+      FAIL();
+    }
+  }
+}

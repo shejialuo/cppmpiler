@@ -164,11 +164,11 @@ public:
   std::unique_ptr<CallExpression> parseCallExpression(std::unique_ptr<Expression> function);
 
   /**
-   * @brief Parse the call arguments
+   * @brief Parse the list, such as [1, 2, 3] or call arguments call(1,2,3)
    *
    * @return std::vector<std::unique_ptr<Expression>>
    */
-  std::vector<std::unique_ptr<Expression>> parseCallArguments();
+  std::vector<std::unique_ptr<Expression>> parseExpressionList(std::string_view &end);
 
   /**
    * @brief Parse the string literal
@@ -176,6 +176,20 @@ public:
    * @return std::unique_ptr<StringLiteral>
    */
   std::unique_ptr<StringLiteral> parseStringLiteral();
+
+  /**
+   * @brief Parse the array literal.
+   *
+   * @return std::unique_ptr<ArrayLiteral>
+   */
+  std::unique_ptr<ArrayLiteral> parseArrayLiteral();
+
+  /**
+   * @brief Parse the index expression
+   *
+   * @return std::unique_ptr<IndexExpression>
+   */
+  std::unique_ptr<IndexExpression> parseIndexExpression(std::unique_ptr<Expression> left);
 
   /**
    * @brief A helper function to tell whether

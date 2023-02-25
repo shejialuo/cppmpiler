@@ -16,6 +16,7 @@ constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
 constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
 constexpr std::string_view ERROR_OBJ = "ERROR";
 constexpr std::string_view STRING_OBJ = "STRING";
+constexpr std::string_view ARRAY_OBJ = "ARRAY";
 
 std::shared_ptr<Boolean> Evaluator::True = std::make_shared<Boolean>(true);
 std::shared_ptr<Boolean> Evaluator::False = std::make_shared<Boolean>(false);
@@ -23,6 +24,10 @@ std::vector<std::shared_ptr<Environment>> Evaluator::environments = {};
 
 std::unordered_map<std::string, std::shared_ptr<Builtin>> Evaluator::builtins = {
     {"len", std::make_shared<Builtin>(len)},
+    {"first", std::make_shared<Builtin>(first)},
+    {"last", std::make_shared<Builtin>(last)},
+    {"rest", std::make_shared<Builtin>(rest)},
+    {"push", std::make_shared<Builtin>(push)},
 };
 
 std::shared_ptr<Object> Evaluator::eval(Node *node, std::shared_ptr<Environment> &env) {
@@ -101,13 +106,28 @@ std::shared_ptr<Object> Evaluator::eval(Node *node, std::shared_ptr<Environment>
   CallExpression *callExpression = dynamic_cast<CallExpression *>(node);
   if (callExpression != nullptr) {
     auto function = eval(callExpression->function.get(), env);
-    auto arguments = evalArguments(callExpression->arguments, env);
+    auto arguments = evalExpressions(callExpression->arguments, env);
     return evalFunctions(function.get(), arguments);
   }
 
   StringLiteral *stringLiteral = dynamic_cast<StringLiteral *>(node);
   if (stringLiteral != nullptr) {
     return std::make_shared<String>(stringLiteral->value);
+  }
+
+  ArrayLiteral *arrayLiteral = dynamic_cast<ArrayLiteral *>(node);
+  if (arrayLiteral != nullptr) {
+    auto elements = evalExpressions(arrayLiteral->elements, env);
+    auto result = std::make_shared<Array>();
+    result->elements = std::move(elements);
+    return result;
+  }
+
+  IndexExpression *indexExpression = dynamic_cast<IndexExpression *>(node);
+  if (indexExpression != nullptr) {
+    auto left = eval(indexExpression->left.get(), env);
+    auto index = eval(indexExpression->index.get(), env);
+    return evalIndexExpression(left, index);
   }
 
   return nullptr;
@@ -207,7 +227,6 @@ std::shared_ptr<Object> Evaluator::evalIntegerInfixExpression(const std::string 
   } else if (op == "!=") {
     return leftInteger->value != rightInteger->value ? std::shared_ptr<Boolean>(True) : std::shared_ptr<Boolean>(False);
   }
-
   return newError("unknown operator: " + left->type() + " " + op + " " + right->type());
 }
 
@@ -297,8 +316,8 @@ std::shared_ptr<Object> Evaluator::evalIdentifier(Identifier *i, std::shared_ptr
 
 std::shared_ptr<Error> Evaluator::newError(const std::string &s) { return std::make_shared<Error>(s); }
 
-std::vector<std::shared_ptr<Object>> Evaluator::evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
-                                                              std::shared_ptr<Environment> &env) {
+std::vector<std::shared_ptr<Object>> Evaluator::evalExpressions(std::vector<std::unique_ptr<Expression>> &arguments,
+                                                                std::shared_ptr<Environment> &env) {
   std::vector<std::shared_ptr<Object>> results{};
 
   for (auto &&argument : arguments) {
@@ -339,6 +358,27 @@ std::shared_ptr<Object> Evaluator::evalFunctions(Object *fn, std::vector<std::sh
   return evaluated;
 }
 
+std::shared_ptr<Object> Evaluator::evalIndexExpression(std::shared_ptr<Object> left, std::shared_ptr<Object> index) {
+  if (left->type() == ARRAY_OBJ && index->type() == INTEGER_OBJ) {
+    return evalArrayIndexExpression(left, index);
+  }
+
+  return newError("index operator not supported: " + left->type());
+}
+
+std::shared_ptr<Object> Evaluator::evalArrayIndexExpression(std::shared_ptr<Object> left,
+                                                            std::shared_ptr<Object> index) {
+  Array *array = dynamic_cast<Array *>(left.get());
+
+  Integer *integer = dynamic_cast<Integer *>(index.get());
+
+  if (integer->value < 0 || integer->value > array->elements.size() - 1) {
+    return nullptr;
+  }
+
+  return array->elements[integer->value];
+}
+
 std::shared_ptr<Object> Evaluator::len(std::vector<std::shared_ptr<Object>> &arguments) {
   if (arguments.size() != 1) {
     return newError("wrong number of arguments. got=" + std::to_string(arguments.size()) + ", want=1");
@@ -346,8 +386,86 @@ std::shared_ptr<Object> Evaluator::len(std::vector<std::shared_ptr<Object>> &arg
 
   String *str = dynamic_cast<String *>(arguments[0].get());
   if (str == nullptr) {
+    Array *array = dynamic_cast<Array *>(arguments[0].get());
+    if (array != nullptr) {
+      return std::make_shared<Integer>(array->elements.size());
+    }
     return newError("argument to len not supported, got " + arguments[0]->type());
   }
 
   return std::make_shared<Integer>(str->value.size());
+}
+
+std::shared_ptr<Object> Evaluator::first(std::vector<std::shared_ptr<Object>> &arguments) {
+  if (arguments.size() != 1) {
+    return newError("wrong number of arguments. got=" + std::to_string(arguments.size()) + ", want=1");
+  }
+
+  if (arguments[0]->type() != ARRAY_OBJ) {
+    return newError("argument to first must be ARRAY");
+  }
+
+  Array *array = dynamic_cast<Array *>(arguments[0].get());
+  if (array->elements.size() > 0) {
+    return array->elements[0];
+  }
+  return nullptr;
+}
+
+std::shared_ptr<Object> Evaluator::last(std::vector<std::shared_ptr<Object>> &arguments) {
+  if (arguments.size() != 1) {
+    return newError("wrong number of arguments. got=" + std::to_string(arguments.size()) + ", want=1");
+  }
+
+  if (arguments[0]->type() != ARRAY_OBJ) {
+    return newError("argument to first must be ARRAY");
+  }
+
+  Array *array = dynamic_cast<Array *>(arguments[0].get());
+  if (array->elements.size() > 0) {
+    return array->elements[array->elements.size() - 1];
+  }
+  return nullptr;
+}
+
+std::shared_ptr<Object> Evaluator::rest(std::vector<std::shared_ptr<Object>> &arguments) {
+  if (arguments.size() != 1) {
+    return newError("wrong number of arguments. got=" + std::to_string(arguments.size()) + ", want=1");
+  }
+
+  if (arguments[0]->type() != ARRAY_OBJ) {
+    return newError("argument to first must be ARRAY");
+  }
+
+  Array *array = dynamic_cast<Array *>(arguments[0].get());
+  int length = array->elements.size();
+  if (length > 0) {
+    auto result = std::make_shared<Array>();
+    for (int i = 1; i < length; ++i) {
+      result->elements.push_back(array->elements[i]);
+    }
+    return result;
+  }
+
+  return nullptr;
+}
+
+std::shared_ptr<Object> Evaluator::push(std::vector<std::shared_ptr<Object>> &arguments) {
+  if (arguments.size() != 2) {
+    return newError("wrong number of arguments. got=" + std::to_string(arguments.size()) + ", want=1");
+  }
+
+  if (arguments[0]->type() != ARRAY_OBJ) {
+    return newError("argument to first must be ARRAY");
+  }
+
+  Array *array = dynamic_cast<Array *>(arguments[0].get());
+  int length = array->elements.size();
+
+  auto result = std::make_shared<Array>();
+  for (int i = 0; i < length; ++i) {
+    result->elements.push_back(array->elements[i]);
+  }
+  result->elements.push_back(arguments[1]);
+  return result;
 }

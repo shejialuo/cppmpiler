@@ -301,4 +301,41 @@ public:
   std::string getString() override;
 };
 
+/**
+ * @brief Represent array literal such as
+ * [1, 2, 3 + 3, fn(x) {x}, add(2, 2)]
+ *
+ */
+class ArrayLiteral : public Expression {
+public:
+  Token token;
+  std::vector<std::unique_ptr<Expression>> elements;
+
+  ArrayLiteral() = default;
+  ArrayLiteral(const Token &);
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
+/**
+ * @brief Represent the index operation a[3].
+ * <expression>[expression]
+ *
+ */
+class IndexExpression : public Expression {
+public:
+  Token token;
+  std::unique_ptr<Expression> left;
+  std::unique_ptr<Expression> index;
+
+  IndexExpression() = default;
+  IndexExpression(const Token &);
+
+  void expressionNode() override;
+  std::string tokenLiteral() override;
+  std::string getString() override;
+};
+
 #endif  // _AST_AST_HPP_

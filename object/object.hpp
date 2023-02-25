@@ -132,6 +132,20 @@ public:
 };
 
 /**
+ * @brief Array
+ *
+ */
+class Array : public Object {
+public:
+  std::vector<std::shared_ptr<Object>> elements;
+
+  Array() = default;
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
+/**
  * @brief Environment is used to indicate the current frame
  * environment. It is a scope and all the values associated
  * with this scope is recorded in it. When we meet a new

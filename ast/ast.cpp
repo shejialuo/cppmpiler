@@ -157,3 +157,30 @@ StringLiteral::StringLiteral(const Token &t, const std::string &s) : token{t}, v
 void StringLiteral::expressionNode() {}
 std::string StringLiteral::tokenLiteral() { return token.Literal; }
 std::string StringLiteral::getString() { return token.Literal; }
+
+ArrayLiteral::ArrayLiteral(const Token &t) : token{t} {}
+void ArrayLiteral::expressionNode() {}
+std::string ArrayLiteral::tokenLiteral() { return token.Literal; }
+std::string ArrayLiteral::getString() {
+  std::string info{};
+
+  info += "[";
+
+  int i = 0;
+  for (; i < elements.size() - 1; ++i) {
+    info += elements[i]->getString() + ", ";
+  }
+
+  info += elements[i]->getString() + "]";
+
+  return info;
+}
+
+IndexExpression::IndexExpression(const Token &t) : token{t} {}
+void IndexExpression::expressionNode() {}
+std::string IndexExpression::tokenLiteral() { return token.Literal; }
+std::string IndexExpression::getString() {
+  std::string info = "(" + left->getString() + "[" + index->getString() + "])";
+
+  return info;
+}

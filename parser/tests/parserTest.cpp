@@ -656,6 +656,14 @@ TEST(Parser, TestOperatorPrecedenceParsing) {
           "add(a + b + c * d / f + g);",
           "add((((a + b) + ((c * d) / f)) + g))",
       },
+      {
+          "a * [1, 2, 3, 4][b * c] * d",
+          "((a * ([1, 2, 3, 4][(b * c)])) * d)",
+      },
+      {
+          "add(a * b[2], b[1], 2 * [1, 2][1])",
+          "add((a * (b[2])), (b[1]), (2 * ([1, 2][1])))",
+      },
   };
 
   for (auto &&test : tests) {
@@ -917,6 +925,69 @@ TEST(Parser, TestStringLiteralExpression) {
 
   if (stringLiteral->value != "hello world") {
     spdlog::error("stringLiteral->value not 'hello world'. got='{}'", stringLiteral->value);
+    FAIL();
+  }
+}
+
+TEST(Parser, TestParsingArrayLiteral) {
+  std::string input = "[1, 2 * 2, 3 + 3];";
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+
+  auto program = parser.parseProgram();
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+  ArrayLiteral *arrayLiteral = dynamic_cast<ArrayLiteral *>(expressionStatement->expression.get());
+  if (arrayLiteral == nullptr) {
+    spdlog::error("expression is not ArrayLiteral");
+    FAIL();
+  }
+
+  if (arrayLiteral->elements.size() != 3) {
+    spdlog::error("arrayLiteral->elements size not 3. got={}", arrayLiteral->elements.size());
+    FAIL();
+  }
+
+  if (!testIntegerLiteral(arrayLiteral->elements[0].get(), 1)) {
+    FAIL();
+  }
+
+  if (!testInfixExpression(arrayLiteral->elements[1].get(), 2, "*", 2)) {
+    FAIL();
+  }
+
+  if (!testInfixExpression(arrayLiteral->elements[2].get(), 3, "+", 3)) {
+    FAIL();
+  }
+}
+
+TEST(Parser, TestParsingIndexExpressions) {
+  std::string input = "myArray[1+1];";
+
+  Lexer lexer{input};
+  Parser parser{&lexer};
+
+  auto program = parser.parseProgram();
+  if (!checkParseErrors(parser)) {
+    FAIL();
+  }
+
+  ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(program->statements[0].get());
+  IndexExpression *indexExpression = dynamic_cast<IndexExpression *>(expressionStatement->expression.get());
+  if (indexExpression == nullptr) {
+    spdlog::error("expression is not IndexExpression");
+    FAIL();
+  }
+
+  if (!testIdentifier(indexExpression->left.get(), "myArray")) {
+    FAIL();
+  }
+
+  if (!testInfixExpression(indexExpression->index.get(), 1, "+", 1)) {
     FAIL();
   }
 }

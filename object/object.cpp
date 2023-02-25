@@ -12,6 +12,7 @@ constexpr std::string_view FUNCTION_OBJ = "FUNCTION";
 constexpr std::string_view ERROR_OBJ = "ERROR";
 constexpr std::string_view STRING_OBJ = "STRING";
 constexpr std::string_view BUILTIN_OBJ = "BUILTIN";
+constexpr std::string_view ARRAY_OBJ = "ARRAY";
 
 Integer::Integer(int64_t v) : value{v} {}
 std::string Integer::inspect() { return std::to_string(value); }
@@ -63,3 +64,16 @@ ObjectType Function::type() { return std::string(FUNCTION_OBJ); }
 Builtin::Builtin(BuiltinFunction f) : fn{f} {}
 std::string Builtin::inspect() { return "builtin function"; }
 ObjectType Builtin::type() { return std::string(BUILTIN_OBJ); }
+
+std::string Array::inspect() {
+  std::string info = "[";
+
+  int i = 0;
+  for (; i < elements.size() - 1; ++i) {
+    info += elements[i]->inspect() + ", ";
+  }
+
+  info += elements[i]->inspect() + "]";
+  return info;
+}
+ObjectType Array::type() { return std::string(ARRAY_OBJ); }

@@ -147,14 +147,29 @@ public:
   static std::shared_ptr<Object> evalIdentifier(Identifier *i, std::shared_ptr<Environment> &env);
 
   /**
-   * @brief eval the call arguments
+   * @brief eval the index
    *
-   * @param arguments the call arguments
+   * @param left the left identifier
+   * @param index the index expression
+   * @return std::shared_ptr<Object>
+   */
+  static std::shared_ptr<Object> evalIndexExpression(std::shared_ptr<Object> left, std::shared_ptr<Object> index);
+
+  /**
+   * @brief should be called by `evalIndexExpression`
+   *
+   */
+  static std::shared_ptr<Object> evalArrayIndexExpression(std::shared_ptr<Object> left, std::shared_ptr<Object> index);
+
+  /**
+   * @brief eval the vector of expressions
+   *
+   * @param arguments the expressions
    * @param env the environment
    * @return std::vector<std::shared_ptr<Object>>
    */
-  static std::vector<std::shared_ptr<Object>> evalArguments(std::vector<std::unique_ptr<Expression>> &arguments,
-                                                            std::shared_ptr<Environment> &env);
+  static std::vector<std::shared_ptr<Object>> evalExpressions(std::vector<std::unique_ptr<Expression>> &arguments,
+                                                              std::shared_ptr<Environment> &env);
 
   /**
    * @brief Evaluate functions
@@ -172,6 +187,38 @@ public:
    * @return std::shared_ptr<Object>;
    */
   static std::shared_ptr<Object> len(std::vector<std::shared_ptr<Object>> &arguments);
+
+  /**
+   * @brief The built function to get the first element of the array
+   *
+   * @param arguments the arguments
+   * @return std::shared_ptr<Object>
+   */
+  static std::shared_ptr<Object> first(std::vector<std::shared_ptr<Object>> &arguments);
+
+  /**
+   * @brief The built function to get the last element of the array
+   *
+   * @param arguments the arguments
+   * @return std::shared_ptr<Object>
+   */
+  static std::shared_ptr<Object> last(std::vector<std::shared_ptr<Object>> &arguments);
+
+  /**
+   * @brief The built function to drop the first element of the array
+   *
+   * @param arguments the arguments
+   * @return std::shared_ptr<Object>
+   */
+  static std::shared_ptr<Object> rest(std::vector<std::shared_ptr<Object>> &arguments);
+
+  /**
+   * @brief Push a new element to the a and get the b.
+   *
+   * @param arguments the arguments
+   * @return std::shared_ptr<Object>
+   */
+  static std::shared_ptr<Object> push(std::vector<std::shared_ptr<Object>> &arguments);
 };
 
 #endif  // _EVALUATOR_EVALUATOR_HPP_

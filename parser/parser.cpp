@@ -24,6 +24,7 @@ enum class Precedence {
   PRODUCT,      // *
   PREFIX,       // -X or !x
   CALL,         // myFunction(X)
+  INDEX,        // []
 };
 
 Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
@@ -41,6 +42,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
       {std::string(TokenTypes::SLASH), Precedence::PRODUCT},
       {std::string(TokenTypes::ASTERISK), Precedence::PRODUCT},
       {std::string(TokenTypes::LPAREN), Precedence::CALL},
+      {std::string(TokenTypes::LBRACKET), Precedence::INDEX},
   };
 
   using std::placeholders::_1;
@@ -55,6 +57,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerPrefix(std::string(TokenTypes::IF), std::bind(&Parser::parseIfExpression, this));
   registerPrefix(std::string(TokenTypes::FUNCTION), std::bind(&Parser::parseFunctionLiteral, this));
   registerPrefix(std::string(TokenTypes::STRING), std::bind(&Parser::parseStringLiteral, this));
+  registerPrefix(std::string(TokenTypes::LBRACKET), std::bind(&Parser::parseArrayLiteral, this));
 
   registerInfix(std::string(TokenTypes::PLUS), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::MINUS), std::bind(&Parser::parseInfixExpression, this, _1));
@@ -65,6 +68,7 @@ Parser::Parser(Lexer *l) : lexer{l}, prefixParseFns{}, infixParseFns{} {
   registerInfix(std::string(TokenTypes::LT), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::GT), std::bind(&Parser::parseInfixExpression, this, _1));
   registerInfix(std::string(TokenTypes::LPAREN), std::bind(&Parser::parseCallExpression, this, _1));
+  registerInfix(std::string(TokenTypes::LBRACKET), std::bind(&Parser::parseIndexExpression, this, _1));
 }
 
 void Parser::nextToken() {
@@ -326,15 +330,15 @@ std::unique_ptr<CallExpression> Parser::parseCallExpression(std::unique_ptr<Expr
 
   callExpression->function = std::move(function);
 
-  callExpression->arguments = std::move(parseCallArguments());
+  callExpression->arguments = std::move(parseExpressionList(TokenTypes::RPAREN));
 
   return callExpression;
 }
 
-std::vector<std::unique_ptr<Expression>> Parser::parseCallArguments() {
+std::vector<std::unique_ptr<Expression>> Parser::parseExpressionList(std::string_view &end) {
   std::vector<std::unique_ptr<Expression>> arguments;
 
-  if (peekTokenIs(TokenTypes::RPAREN)) {
+  if (peekTokenIs(end)) {
     nextToken();
     return arguments;
   }
@@ -348,7 +352,7 @@ std::vector<std::unique_ptr<Expression>> Parser::parseCallArguments() {
     arguments.push_back(std::move(parseExpression(Precedence::LOWEST)));
   }
 
-  if (!expectPeek(TokenTypes::RPAREN)) {
+  if (!expectPeek(end)) {
     return {};
   }
 
@@ -357,6 +361,28 @@ std::vector<std::unique_ptr<Expression>> Parser::parseCallArguments() {
 
 std::unique_ptr<StringLiteral> Parser::parseStringLiteral() {
   return std::make_unique<StringLiteral>(currentToken, currentToken.Literal);
+}
+
+std::unique_ptr<ArrayLiteral> Parser::parseArrayLiteral() {
+  auto array = std::make_unique<ArrayLiteral>(currentToken);
+
+  array->elements = parseExpressionList(TokenTypes::RBRACKET);
+
+  return array;
+}
+
+std::unique_ptr<IndexExpression> Parser::parseIndexExpression(std::unique_ptr<Expression> left) {
+  auto indexExpression = std::make_unique<IndexExpression>(currentToken);
+  indexExpression->left = std::move(left);
+
+  nextToken();
+
+  indexExpression->index = parseExpression(Precedence::LOWEST);
+  if (!expectPeek(TokenTypes::RBRACKET)) {
+    return nullptr;
+  }
+
+  return indexExpression;
 }
 
 bool Parser::currentTokenIs(std::string_view &t) { return currentToken.Type == t; }
