@@ -76,6 +76,7 @@ add_subdirectory(./ast)
 add_subdirectory(./parser)
 add_subdirectory(./object)
 add_subdirectory(./evaluator)
+add_subdirectory(./code)
 
 add_executable(cppmpiler main.cpp)
 target_include_directories(cppmpiler PRIVATE ./repl)
