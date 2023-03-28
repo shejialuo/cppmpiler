@@ -1,11 +1,6 @@
 var searchData=
 [
-  ['testinfixdata_132',['TestInfixData',['../structTestInfixData.html',1,'']]],
-  ['testletstatementdata_133',['TestLetStatementData',['../structTestLetStatementData.html',1,'']]],
-  ['testprecedencedata_134',['TestPrecedenceData',['../structTestPrecedenceData.html',1,'']]],
-  ['testprefixdata_135',['TestPrefixData',['../structTestPrefixData.html',1,'']]],
-  ['testreturndata_136',['TestReturnData',['../structTestReturnData.html',1,'']]],
-  ['testtoken_137',['TestToken',['../structTestToken.html',1,'']]],
-  ['token_138',['Token',['../structToken.html',1,'']]],
-  ['tokentypes_139',['TokenTypes',['../structTokenTypes.html',1,'']]]
+  ['statement_135',['Statement',['../classStatement.html',1,'']]],
+  ['string_136',['String',['../classString.html',1,'']]],
+  ['stringliteral_137',['StringLiteral',['../classStringLiteral.html',1,'']]]
 ];

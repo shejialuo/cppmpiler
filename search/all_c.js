@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['set_86',['set',['../classEnvironment.html#a057196fe8abb7ed80e8a38f11354bf85',1,'Environment']]],
-  ['setidentifiers_87',['setIdentifiers',['../structToken.html#a183db540b6af6aa62306d893eafa9f1c',1,'Token']]],
-  ['statement_88',['Statement',['../classStatement.html',1,'']]],
-  ['string_89',['String',['../classString.html',1,'']]],
-  ['stringliteral_90',['StringLiteral',['../classStringLiteral.html',1,'']]]
+  ['readchar_84',['readChar',['../classLexer.html#af2c10bc1588bc371d87c0b3c096dfe5f',1,'Lexer']]],
+  ['readstring_85',['readString',['../classLexer.html#a91e3b1b45647e8492fe380aa794caf36',1,'Lexer']]],
+  ['rest_86',['rest',['../classEvaluator.html#adc36ff61ad4acbac96002808e821ae20',1,'Evaluator']]],
+  ['returnstatement_87',['ReturnStatement',['../classReturnStatement.html',1,'']]],
+  ['returnvalue_88',['ReturnValue',['../classReturnValue.html',1,'']]]
 ];
