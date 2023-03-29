@@ -15,6 +15,8 @@ jobs:
           - "repl"
           - "ast"
           - "code"
+          - "compiler"
+          - "vm"
     steps:
       - uses: actions/checkout@v3
       - name: Run clang-format style check for C/C++/Protobuf programs.
