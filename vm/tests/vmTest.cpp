@@ -23,6 +23,7 @@ bool testExpectedObject(const T &expected, Object *actual);
 
 std::unique_ptr<Program> parse(const std::string &input);
 bool testIntegerObject(int expected, Object *actual);
+bool testBooleanObject(bool expected, Object *actual);
 
 std::unique_ptr<Program> parse(const std::string &input) {
   Lexer lexer{input};
@@ -34,6 +35,8 @@ template <typename T>
 bool testExpectedObject(const T &expected, Object *actual) {
   if constexpr (std::is_same_v<int, T>) {
     return testIntegerObject(expected, actual);
+  } else if constexpr (std::is_same_v<bool, T>) {
+    return testBooleanObject(expected, actual);
   }
   return false;
 }
@@ -47,6 +50,21 @@ bool testIntegerObject(int expected, Object *actual) {
 
   if (integer->value != expected) {
     spdlog::error("object has wrong value. want={}, got={}", expected, integer->value);
+    return false;
+  }
+
+  return true;
+}
+
+bool testBooleanObject(bool expected, Object *actual) {
+  auto boolean = dynamic_cast<const Boolean *>(actual);
+  if (boolean == nullptr) {
+    spdlog::error("object is not Boolean. got={}", actual->type());
+    return false;
+  }
+
+  if (boolean->value != expected) {
+    spdlog::error("object has wrong value. want={}, got={}", expected, boolean->value);
     return false;
   }
 
@@ -67,6 +85,44 @@ TEST(VM, TestIntegerArithmetic) {
       {"5 * 2 + 10", 20},
       {"5 + 2 * 10", 25},
       {"5 * (2 + 10)", 60},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
+
+TEST(VM, TestBooleanExpressions) {
+  std::vector<vmTestCase<bool>> tests{
+      {"true", true},
+      {"false", false},
+      {"1 < 2", true},
+      {"1 > 2", false},
+      {"1 < 1", false},
+      {"1 > 1", false},
+      {"1 == 1", true},
+      {"1 != 1", false},
+      {"1 == 2", false},
+      {"1 != 2", true},
+      {"true == true", true},
+      {"false == false", true},
+      {"true == false", false},
+      {"true != false", true},
+      {"false != true", true},
+      {"(1 < 2) == true", true},
+      {"(1 < 2) == false", false},
+      {"(1 > 2) == true", false},
+      {"(1 > 2) == false", true},
   };
 
   for (auto &&test : tests) {

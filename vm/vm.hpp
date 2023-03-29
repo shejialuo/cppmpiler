@@ -70,6 +70,25 @@ public:
   void executeBinaryIntegerOperation(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
 
   /**
+   * @brief execute the comparison such as equal, not equal, greater than, less than
+   *
+   * @param op
+   */
+  void executeComparision(const Opcode &op);
+
+  /**
+   * @brief execute the integer comparison such as equal, not equal, greater than, less than
+   *
+   */
+  void executeIntegerComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
+
+  /**
+   * @brief execute the boolean comparison such as equal, not equal
+   *
+   */
+  void executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
+
+  /**
    * @brief For test only get last popped
    *
    */

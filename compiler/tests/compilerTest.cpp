@@ -160,3 +160,93 @@ TEST(Compiler, TestIntegerArithmetic) {
     EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
   }
 }
+
+TEST(Compiler, TestBooleanExpressions) {
+  std::vector<CompilerTestCase<int>> tests{
+      {
+          "true",
+          {},
+          {
+              Code::make(Ops::OpTrue, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "false",
+          {},
+          {
+              Code::make(Ops::OpFalse, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1 > 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpGreaterThan, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1 < 2",
+          {2, 1},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpGreaterThan, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1 == 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpEqual, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1 != 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpNotEqual, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "true == false",
+          {},
+          {
+              Code::make(Ops::OpTrue, {}),
+              Code::make(Ops::OpFalse, {}),
+              Code::make(Ops::OpEqual, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "true != false",
+          {},
+          {
+              Code::make(Ops::OpTrue, {}),
+              Code::make(Ops::OpFalse, {}),
+              Code::make(Ops::OpNotEqual, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}

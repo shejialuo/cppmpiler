@@ -34,6 +34,16 @@ void VM::run() {
       executeBinaryOperation(op);
     } else if (op == Ops::OpPop) {
       lastPopped = pop();
+    } else if (op == Ops::OpTrue) {
+      std::unique_ptr<Object> object = std::make_unique<Boolean>(true);
+      push(object);
+    } else if (op == Ops::OpFalse) {
+      std::unique_ptr<Object> object = std::make_unique<Boolean>(false);
+      push(object);
+    } else if (op == Ops::OpEqual || op == Ops::OpNotEqual || op == Ops::OpGreaterThan) {
+      executeComparision(op);
+    } else {
+      spdlog::error("unknown opcode: {}", op);
     }
   }
 }
@@ -91,6 +101,59 @@ void VM::executeBinaryIntegerOperation(const Opcode &op,
   }
 
   std::unique_ptr<Object> resultObject = std::make_unique<Integer>(result);
+  push(resultObject);
+}
+
+void VM::executeComparision(const Opcode &op) {
+  auto right = pop();
+  auto left = pop();
+  auto leftType = left->type();
+  auto rightType = right->type();
+
+  if (leftType == INTEGER_OBJ && rightType == INTEGER_OBJ) {
+    executeIntegerComparision(op, left, right);
+  } else if (leftType == BOOLEAN_OBJ && rightType == BOOLEAN_OBJ) {
+    executeBooleanComparision(op, left, right);
+  } else {
+    spdlog::error("unsupported types for binary operation: {} {}", leftType, rightType);
+  }
+}
+
+void VM::executeIntegerComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right) {
+  Integer *rightInteger = dynamic_cast<Integer *>(right.get());
+  Integer *leftInteger = dynamic_cast<Integer *>(left.get());
+
+  bool result{};
+  if (op == Ops::OpEqual) {
+    result = leftInteger->value == rightInteger->value;
+  } else if (op == Ops::OpNotEqual) {
+    result = leftInteger->value != rightInteger->value;
+  } else if (op == Ops::OpGreaterThan) {
+    result = leftInteger->value > rightInteger->value;
+  } else {
+    spdlog::error("unknown operator for integers: {}", op);
+    return;
+  }
+
+  std::unique_ptr<Object> resultObject = std::make_unique<Boolean>(result);
+  push(resultObject);
+}
+
+void VM::executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right) {
+  Boolean *rightBoolean = dynamic_cast<Boolean *>(right.get());
+  Boolean *leftBoolean = dynamic_cast<Boolean *>(left.get());
+
+  bool result{};
+  if (op == Ops::OpEqual) {
+    result = leftBoolean->value == rightBoolean->value;
+  } else if (op == Ops::OpNotEqual) {
+    result = leftBoolean->value != rightBoolean->value;
+  } else {
+    spdlog::error("unknown operator for booleans: {}", op);
+    return;
+  }
+
+  std::unique_ptr<Object> resultObject = std::make_unique<Boolean>(result);
   push(resultObject);
 }
 

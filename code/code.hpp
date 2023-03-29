@@ -37,6 +37,11 @@ struct Ops {
   static const Opcode OpSub;
   static const Opcode OpMul;
   static const Opcode OpDiv;
+  static const Opcode OpTrue;
+  static const Opcode OpFalse;
+  static const Opcode OpEqual;
+  static const Opcode OpNotEqual;
+  static const Opcode OpGreaterThan;
 };
 
 /**
