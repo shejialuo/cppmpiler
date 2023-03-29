@@ -22,6 +22,15 @@ void VM::run() {
       ip += 2;
 
       push(constants[index]);
+    } else if (op == Ops::OpAdd) {
+      auto right = pop();
+      auto left = pop();
+
+      Integer *rightInteger = dynamic_cast<Integer *>(right.get());
+      Integer *leftInteger = dynamic_cast<Integer *>(left.get());
+
+      std::unique_ptr<Object> result = std::make_unique<Integer>(leftInteger->value + rightInteger->value);
+      push(result);
     }
   }
 }
@@ -33,4 +42,14 @@ void VM::push(std::unique_ptr<Object> &object) {
 
   stack[sp] = std::move(object);
   sp++;
+}
+
+std::unique_ptr<Object> VM::pop() {
+  if (sp == 0) {
+    throw std::runtime_error("stack underflow");
+  }
+
+  auto object = std::move(stack[sp - 1]);
+  sp--;
+  return object;
 }

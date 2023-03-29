@@ -23,6 +23,18 @@ cmake ..
 make -j12
 ```
 
+## Run
+
+There are tow modes:
+
++ `i`: interpreter
++ `c`: compiler
+
+```sh
+./cppmpiler i # run with interpreter mode
+./cppmpiler c # run with compiler mode
+```
+
 ## Documentation
 
 You could look at [docs](https://shejialuo.github.io/cppmpiler/) for documentation.

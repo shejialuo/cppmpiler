@@ -8,12 +8,17 @@
 #include <vector>
 
 const Opcode Ops::OpConstant{0};
+const Opcode Ops::OpAdd{1};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
     {
         Ops::OpConstant,
         Definition{"OpConstant", {2}},
+    },
+    {
+        Ops::OpAdd,
+        Definition{"OpAdd", {}},
     },
 };
 
@@ -101,6 +106,8 @@ std::string Code::getString(Instructions &instruction) {
     if (operands.size() != operandCount) {
       info += "ERROR: operand length " + std::to_string(operands.size()) + " does not match defined " +
               std::to_string(operandCount) = "";
+    } else if (operandCount == 0) {
+      info += definition.name;
     } else if (operandCount == 1) {
       info += definition.name + " " + std::to_string(operands[0]);
     } else {

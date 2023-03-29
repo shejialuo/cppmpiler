@@ -46,7 +46,7 @@ bool testIntegerObject(int expected, Object *actual) {
   }
 
   if (integer->value != expected) {
-    spdlog::error("object has wrong value. want={}\ngot={}\n", expected, integer->value);
+    spdlog::error("object has wrong value. want={}, got={}", expected, integer->value);
     return false;
   }
 
@@ -57,8 +57,7 @@ TEST(VM, TestIntegerArithmetic) {
   std::vector<vmTestCase<int>> tests{
       {"1", 1},
       {"2", 2},
-      {"1;2;3", 3},
-
+      {"1 + 2", 3},
   };
 
   for (auto &&test : tests) {
@@ -72,6 +71,6 @@ TEST(VM, TestIntegerArithmetic) {
 
     auto stackElem = vm.stackTop();
 
-    testExpectedObject(test.expected, stackElem);
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem));
   }
 }

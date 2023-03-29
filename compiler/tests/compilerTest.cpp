@@ -68,13 +68,13 @@ bool testInstructions(std::vector<Instructions> &expected, const Instructions &a
   auto expectedInstructions = concatInstructions(expected);
 
   if (actual.size() != expectedInstructions.size()) {
-    spdlog::error("wrong instructions length.\nwant={}\ngot={}\n", expectedInstructions.size(), actual.size());
+    spdlog::error("wrong instructions length. want={}, got={}", expectedInstructions.size(), actual.size());
     return false;
   }
 
   for (size_t i = 0; i < actual.size(); i++) {
     if (actual[i] != expectedInstructions[i]) {
-      spdlog::error("wrong instruction at {}.\nwant={}\ngot={}\n", i, expectedInstructions[i], actual[i]);
+      spdlog::error("wrong instruction at {}. want={}, got={}", i, expectedInstructions[i], actual[i]);
       return false;
     }
   }
@@ -90,7 +90,7 @@ bool testIntegerObject(int expected, Object *actual) {
   }
 
   if (integer->value != expected) {
-    spdlog::error("object has wrong value. want={}\ngot={}\n", expected, integer->value);
+    spdlog::error("object has wrong value. want={}, got={}", expected, integer->value);
     return false;
   }
 
@@ -99,7 +99,15 @@ bool testIntegerObject(int expected, Object *actual) {
 
 TEST(Compiler, TestIntegerArithmetic) {
   std::vector<CompilerTestCase<int>> tests{
-      {"1 + 2", {1, 2}, {Code::make(Ops::OpConstant, {0}), Code::make(Ops::OpConstant, {1})}},
+      {
+          "1 + 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpAdd, {}),
+          },
+      },
   };
 
   for (auto &&test : tests) {

@@ -5,6 +5,12 @@
  * @brief start the repl loop
  *
  */
-void start();
+void startInterpreter();
+
+/**
+ * @brief start the repl loop
+ *
+ */
+void startCompiler();
 
 #endif  // _REPL_REPL_HPP_

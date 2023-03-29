@@ -41,6 +41,13 @@ public:
    *
    */
   void push(std::unique_ptr<Object> &object);
+
+  /**
+   * @brief pop the object from the stack
+   *
+   * @return std::unique_ptr<Object>
+   */
+  std::unique_ptr<Object> pop();
 };
 
 #endif  // _VM_VM_HPP_

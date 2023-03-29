@@ -24,6 +24,10 @@ void Compiler::compile(Node *node) {
   if (infixExpression != nullptr) {
     compile(infixExpression->left.get());
     compile(infixExpression->right.get());
+
+    if (infixExpression->_operator == "+") {
+      emit(Ops::OpAdd, {});
+    }
   }
 
   IntegerLiteral *integerLiteral = dynamic_cast<IntegerLiteral *>(node);
