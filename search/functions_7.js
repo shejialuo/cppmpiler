@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['readchar_199',['readChar',['../classLexer.html#af2c10bc1588bc371d87c0b3c096dfe5f',1,'Lexer']]],
-  ['readstring_200',['readString',['../classLexer.html#a91e3b1b45647e8492fe380aa794caf36',1,'Lexer']]],
-  ['rest_201',['rest',['../classEvaluator.html#adc36ff61ad4acbac96002808e821ae20',1,'Evaluator']]]
+  ['newerror_199',['newError',['../classEvaluator.html#a3d579acc1c547a77f55de59d58a37453',1,'Evaluator']]],
+  ['nexttoken_200',['nextToken',['../classLexer.html#ad70ae308f841161587a0407daaeea480',1,'Lexer::nextToken()'],['../classParser.html#a324a5bb61c9dfc645300a92aecd6fe69',1,'Parser::nextToken()']]]
 ];

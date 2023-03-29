@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['consecutivesubstring_146',['consecutiveSubstring',['../classLexer.html#ab225d53df2be0240db97d01089e03d70',1,'Lexer']]],
-  ['currentprecedence_147',['currentPrecedence',['../classParser.html#aaecd833b159163ac36d8763989c4f1cf',1,'Parser']]],
-  ['currenttokenis_148',['currentTokenIs',['../classParser.html#a8e0650bac2163108bccae9db68aca464',1,'Parser']]]
+  ['addconstant_166',['addConstant',['../classCompiler.html#af09d01b65c4b90293f17da5d368b7ee4',1,'Compiler']]],
+  ['addinstruction_167',['addInstruction',['../classCompiler.html#aeb8cbcec2c4f67a0b29d1a3df6a80a06',1,'Compiler']]]
 ];

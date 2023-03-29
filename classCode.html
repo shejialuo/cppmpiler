@@ -76,13 +76,123 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a922a3f8e0a07f091f7e08658b14253aa"><td class="memItemLeft" align="right" valign="top"><a id="a922a3f8e0a07f091f7e08658b14253aa"></a>
-static Instructions&#160;</td><td class="memItemRight" valign="bottom"><b>make</b> (const Opcode &amp;op, const std::vector&lt; int &gt; &amp;operands)</td></tr>
+<tr class="memitem:a922a3f8e0a07f091f7e08658b14253aa"><td class="memItemLeft" align="right" valign="top">static Instructions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCode.html#a922a3f8e0a07f091f7e08658b14253aa">make</a> (const Opcode &amp;op, const std::vector&lt; int &gt; &amp;operands)</td></tr>
+<tr class="memdesc:a922a3f8e0a07f091f7e08658b14253aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a new instruction.  <a href="classCode.html#a922a3f8e0a07f091f7e08658b14253aa">More...</a><br /></td></tr>
 <tr class="separator:a922a3f8e0a07f091f7e08658b14253aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac777acd449d1b3bdc2bbe6a64bb81e92"><td class="memItemLeft" align="right" valign="top">static std::pair&lt; std::vector&lt; int &gt;, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCode.html#ac777acd449d1b3bdc2bbe6a64bb81e92">readOperands</a> (const <a class="el" href="structDefinition.html">Definition</a> &amp;definition, const Instructions &amp;instructions, int curPos)</td></tr>
+<tr class="memdesc:ac777acd449d1b3bdc2bbe6a64bb81e92"><td class="mdescLeft">&#160;</td><td class="mdescRight">reverse operation of the <code>Make</code>. Get the operands and the bytes read  <a href="classCode.html#ac777acd449d1b3bdc2bbe6a64bb81e92">More...</a><br /></td></tr>
+<tr class="separator:ac777acd449d1b3bdc2bbe6a64bb81e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fe37745f317e76ccfda114c68f9ef3a"><td class="memItemLeft" align="right" valign="top"><a id="a9fe37745f317e76ccfda114c68f9ef3a"></a>
+static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCode.html#a9fe37745f317e76ccfda114c68f9ef3a">getString</a> (Instructions &amp;instruction)</td></tr>
+<tr class="memdesc:a9fe37745f317e76ccfda114c68f9ef3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the string representation of the instruction. <br /></td></tr>
+<tr class="separator:a9fe37745f317e76ccfda114c68f9ef3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc8339b9f376d46717235cdda330a739"><td class="memItemLeft" align="right" valign="top"><a id="afc8339b9f376d46717235cdda330a739"></a>
+static const std::unordered_map&lt; Opcode, <a class="el" href="structDefinition.html">Definition</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCode.html#afc8339b9f376d46717235cdda330a739">getDefinition</a> ()</td></tr>
+<tr class="memdesc:afc8339b9f376d46717235cdda330a739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function get the definition. <br /></td></tr>
+<tr class="separator:afc8339b9f376d46717235cdda330a739"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classCode.html" title="Code class is a just wrapper.">Code</a> class is a just wrapper. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a922a3f8e0a07f091f7e08658b14253aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a922a3f8e0a07f091f7e08658b14253aa">&#9670;&nbsp;</a></span>make()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Instructions Code::make </td>
+          <td>(</td>
+          <td class="paramtype">const Opcode &amp;&#160;</td>
+          <td class="paramname"><em>op</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>operands</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make a new instruction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op</td><td>the operator </td></tr>
+    <tr><td class="paramname">operands</td><td>the operands </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac777acd449d1b3bdc2bbe6a64bb81e92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac777acd449d1b3bdc2bbe6a64bb81e92">&#9670;&nbsp;</a></span>readOperands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; std::vector&lt; int &gt;, int &gt; Code::readOperands </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structDefinition.html">Definition</a> &amp;&#160;</td>
+          <td class="paramname"><em>definition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Instructions &amp;&#160;</td>
+          <td class="paramname"><em>instructions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>curPos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>reverse operation of the <code>Make</code>. Get the operands and the bytes read </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">definition</td><td></td></tr>
+    <tr><td class="paramname">instructions</td><td>the instructions which holds operators and operands </td></tr>
+    <tr><td class="paramname">curPos</td><td>the current position </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::pair&lt;std::vector&lt;int&gt;, int&gt; </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>code/<a class="el" href="code_8hpp_source.html">code.hpp</a></li>
 <li>code/code.cpp</li>
 </ul>
