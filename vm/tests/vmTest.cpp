@@ -58,6 +58,15 @@ TEST(VM, TestIntegerArithmetic) {
       {"1", 1},
       {"2", 2},
       {"1 + 2", 3},
+      {"1 - 2", -1},
+      {"1 * 2", 2},
+      {"4 / 2", 2},
+      {"50 / 2 * 2 + 10 - 5", 55},
+      {"5 + 5 + 5 + 5 - 10", 10},
+      {"2 * 2 * 2 * 2 * 2", 32},
+      {"5 * 2 + 10", 20},
+      {"5 + 2 * 10", 25},
+      {"5 * (2 + 10)", 60},
   };
 
   for (auto &&test : tests) {
@@ -69,8 +78,8 @@ TEST(VM, TestIntegerArithmetic) {
     VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
     vm.run();
 
-    auto stackElem = vm.stackTop();
+    auto stackElem = vm.lastPoppedStackElem();
 
-    EXPECT_TRUE(testExpectedObject(test.expected, stackElem));
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }

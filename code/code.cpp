@@ -9,6 +9,10 @@
 
 const Opcode Ops::OpConstant{0};
 const Opcode Ops::OpAdd{1};
+const Opcode Ops::OpPop{2};
+const Opcode Ops::OpSub{3};
+const Opcode Ops::OpMul{4};
+const Opcode Ops::OpDiv{5};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -19,6 +23,22 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
     {
         Ops::OpAdd,
         Definition{"OpAdd", {}},
+    },
+    {
+        Ops::OpPop,
+        Definition{"OpPop", {}},
+    },
+    {
+        Ops::OpSub,
+        Definition{"OpSub", {}},
+    },
+    {
+        Ops::OpMul,
+        Definition{"OpMul", {}},
+    },
+    {
+        Ops::OpDiv,
+        Definition{"OpDiv", {}},
     },
 };
 

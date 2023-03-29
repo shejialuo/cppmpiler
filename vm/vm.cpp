@@ -2,9 +2,17 @@
 
 #include "code.hpp"
 #include "object.hpp"
+#include "spdlog/spdlog.h"
 
 #include <memory>
 #include <stdexcept>
+
+constexpr std::string_view INTEGER_OBJ = "INTEGER";
+constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
+constexpr std::string_view RETURN_VALUE_OBJ = "RETURN_VALUE";
+constexpr std::string_view ERROR_OBJ = "ERROR";
+constexpr std::string_view STRING_OBJ = "STRING";
+constexpr std::string_view ARRAY_OBJ = "ARRAY";
 
 Object *VM::stackTop() {
   if (sp == 0) {
@@ -22,15 +30,10 @@ void VM::run() {
       ip += 2;
 
       push(constants[index]);
-    } else if (op == Ops::OpAdd) {
-      auto right = pop();
-      auto left = pop();
-
-      Integer *rightInteger = dynamic_cast<Integer *>(right.get());
-      Integer *leftInteger = dynamic_cast<Integer *>(left.get());
-
-      std::unique_ptr<Object> result = std::make_unique<Integer>(leftInteger->value + rightInteger->value);
-      push(result);
+    } else if (op == Ops::OpAdd || op == Ops::OpSub || op == Ops::OpMul || op == Ops::OpDiv) {
+      executeBinaryOperation(op);
+    } else if (op == Ops::OpPop) {
+      lastPopped = pop();
     }
   }
 }
@@ -53,3 +56,42 @@ std::unique_ptr<Object> VM::pop() {
   sp--;
   return object;
 }
+
+void VM::executeBinaryOperation(const Opcode &op) {
+  auto right = pop();
+  auto left = pop();
+  auto leftType = left->type();
+  auto rightType = right->type();
+
+  if (leftType == INTEGER_OBJ && rightType == INTEGER_OBJ) {
+    executeBinaryIntegerOperation(op, left, right);
+  } else {
+    spdlog::error("unsupported types for binary operation: {} {}", leftType, rightType);
+  }
+}
+
+void VM::executeBinaryIntegerOperation(const Opcode &op,
+                                       std::unique_ptr<Object> &left,
+                                       std::unique_ptr<Object> &right) {
+  Integer *rightInteger = dynamic_cast<Integer *>(right.get());
+  Integer *leftInteger = dynamic_cast<Integer *>(left.get());
+
+  int result{};
+  if (op == Ops::OpAdd) {
+    result = leftInteger->value + rightInteger->value;
+  } else if (op == Ops::OpSub) {
+    result = leftInteger->value - rightInteger->value;
+  } else if (op == Ops::OpMul) {
+    result = leftInteger->value * rightInteger->value;
+  } else if (op == Ops::OpDiv) {
+    result = leftInteger->value / rightInteger->value;
+  } else {
+    spdlog::error("unknown operator for integers: {}", op);
+    return;
+  }
+
+  std::unique_ptr<Object> resultObject = std::make_unique<Integer>(result);
+  push(resultObject);
+}
+
+std::unique_ptr<Object> VM::lastPoppedStackElem() { return std::move(lastPopped); }

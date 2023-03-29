@@ -106,6 +106,47 @@ TEST(Compiler, TestIntegerArithmetic) {
               Code::make(Ops::OpConstant, {0}),
               Code::make(Ops::OpConstant, {1}),
               Code::make(Ops::OpAdd, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1; 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpPop, {}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1 - 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpSub, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "1 * 2",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpMul, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          " 2 / 1",
+          {2, 1},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpDiv, {}),
+              Code::make(Ops::OpPop, {}),
           },
       },
   };

@@ -11,6 +11,10 @@
 constexpr int StackSize = 2048;
 
 class VM {
+private:
+  // For test only
+  std::unique_ptr<Object> lastPopped;
+
 public:
   std::vector<std::unique_ptr<Object>> constants;
   Instructions instructions;
@@ -48,6 +52,28 @@ public:
    * @return std::unique_ptr<Object>
    */
   std::unique_ptr<Object> pop();
+
+  /**
+   * @brief execute the binary operation
+   *
+   * @param op the operator
+   */
+  void executeBinaryOperation(const Opcode &op);
+
+  /**
+   * @brief execute the integer operator such as add, sub, mul, div
+   *
+   * @param op the operator
+   * @param left the left object
+   * @param right the right object
+   */
+  void executeBinaryIntegerOperation(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
+
+  /**
+   * @brief For test only get last popped
+   *
+   */
+  std::unique_ptr<Object> lastPoppedStackElem();
 };
 
 #endif  // _VM_VM_HPP_

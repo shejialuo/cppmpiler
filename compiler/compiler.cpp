@@ -18,6 +18,7 @@ void Compiler::compile(Node *node) {
   ExpressionStatement *expressionStatement = dynamic_cast<ExpressionStatement *>(node);
   if (expressionStatement != nullptr) {
     compile(expressionStatement->expression.get());
+    emit(Ops::OpPop, {});
   }
 
   InfixExpression *infixExpression = dynamic_cast<InfixExpression *>(node);
@@ -27,6 +28,12 @@ void Compiler::compile(Node *node) {
 
     if (infixExpression->_operator == "+") {
       emit(Ops::OpAdd, {});
+    } else if (infixExpression->_operator == "-") {
+      emit(Ops::OpSub, {});
+    } else if (infixExpression->_operator == "*") {
+      emit(Ops::OpMul, {});
+    } else if (infixExpression->_operator == "/") {
+      emit(Ops::OpDiv, {});
     }
   }
 

@@ -67,7 +67,7 @@ void startCompiler() {
 
     machine.run();
 
-    auto top = machine.stackTop();
+    auto top = machine.lastPoppedStackElem();
     std::cout << top->inspect() << "\n";
   }
 }

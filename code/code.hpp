@@ -33,6 +33,10 @@ using Opcode = std::byte;
 struct Ops {
   static const Opcode OpConstant;
   static const Opcode OpAdd;
+  static const Opcode OpPop;
+  static const Opcode OpSub;
+  static const Opcode OpMul;
+  static const Opcode OpDiv;
 };
 
 /**
