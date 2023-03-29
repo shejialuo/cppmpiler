@@ -99,13 +99,16 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classVM.html#ae3743d27f798753f65caa01f88859d5b">run</a>();</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classVM.html#a9d724a2ab2aef78cf977e5b0b6401726">push</a>(std::unique_ptr&lt;Object&gt; &amp;<span class="keywordtype">object</span>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// _VM_VM_HPP_</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  std::unique_ptr&lt;Object&gt; <a class="code" href="classVM.html#a76a9cba6578c2500a8fcd3a875285ff4">pop</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// _VM_VM_HPP_</span></div>
 <div class="ttc" id="aclassObject_html"><div class="ttname"><a href="classObject.html">Object</a></div><div class="ttdoc">Base class to represent the object.</div><div class="ttdef"><b>Definition:</b> object.hpp:24</div></div>
 <div class="ttc" id="aclassVM_html"><div class="ttname"><a href="classVM.html">VM</a></div><div class="ttdef"><b>Definition:</b> vm.hpp:13</div></div>
 <div class="ttc" id="aclassVM_html_a6d22502ab9c3a713d1ffd6fad3ba181b"><div class="ttname"><a href="classVM.html#a6d22502ab9c3a713d1ffd6fad3ba181b">VM::stackTop</a></div><div class="ttdeci">Object * stackTop()</div><div class="ttdoc">get the top stack object</div><div class="ttdef"><b>Definition:</b> vm.cpp:9</div></div>
-<div class="ttc" id="aclassVM_html_a9d724a2ab2aef78cf977e5b0b6401726"><div class="ttname"><a href="classVM.html#a9d724a2ab2aef78cf977e5b0b6401726">VM::push</a></div><div class="ttdeci">void push(std::unique_ptr&lt; Object &gt; &amp;object)</div><div class="ttdoc">push the object to the stack</div><div class="ttdef"><b>Definition:</b> vm.cpp:29</div></div>
+<div class="ttc" id="aclassVM_html_a76a9cba6578c2500a8fcd3a875285ff4"><div class="ttname"><a href="classVM.html#a76a9cba6578c2500a8fcd3a875285ff4">VM::pop</a></div><div class="ttdeci">std::unique_ptr&lt; Object &gt; pop()</div><div class="ttdoc">pop the object from the stack</div><div class="ttdef"><b>Definition:</b> vm.cpp:47</div></div>
+<div class="ttc" id="aclassVM_html_a9d724a2ab2aef78cf977e5b0b6401726"><div class="ttname"><a href="classVM.html#a9d724a2ab2aef78cf977e5b0b6401726">VM::push</a></div><div class="ttdeci">void push(std::unique_ptr&lt; Object &gt; &amp;object)</div><div class="ttdoc">push the object to the stack</div><div class="ttdef"><b>Definition:</b> vm.cpp:38</div></div>
 <div class="ttc" id="aclassVM_html_ae3743d27f798753f65caa01f88859d5b"><div class="ttname"><a href="classVM.html#ae3743d27f798753f65caa01f88859d5b">VM::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">start the vm</div><div class="ttdef"><b>Definition:</b> vm.cpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

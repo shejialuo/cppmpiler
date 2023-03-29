@@ -25,7 +25,8 @@ var searchData=
   ['peekerror_88',['peekError',['../classParser.html#a9f854409833fa0eeb8b0b153cf244a78',1,'Parser']]],
   ['peekprecedence_89',['peekPrecedence',['../classParser.html#af20f523fa6430caf6b30d6a197390a6a',1,'Parser']]],
   ['peektokenis_90',['peekTokenIs',['../classParser.html#a4b927bb66a67384dfc157ad193f036a4',1,'Parser']]],
-  ['prefixexpression_91',['PrefixExpression',['../classPrefixExpression.html',1,'']]],
-  ['program_92',['Program',['../classProgram.html',1,'']]],
-  ['push_93',['push',['../classEvaluator.html#a890e8e4dbbb7b4f5143ad8154131fd87',1,'Evaluator::push()'],['../classVM.html#a9d724a2ab2aef78cf977e5b0b6401726',1,'VM::push()']]]
+  ['pop_91',['pop',['../classVM.html#a76a9cba6578c2500a8fcd3a875285ff4',1,'VM']]],
+  ['prefixexpression_92',['PrefixExpression',['../classPrefixExpression.html',1,'']]],
+  ['program_93',['Program',['../classProgram.html',1,'']]],
+  ['push_94',['push',['../classEvaluator.html#a890e8e4dbbb7b4f5143ad8154131fd87',1,'Evaluator::push()'],['../classVM.html#a9d724a2ab2aef78cf977e5b0b6401726',1,'VM::push()']]]
 ];
