@@ -42,6 +42,8 @@ struct Ops {
   static const Opcode OpEqual;
   static const Opcode OpNotEqual;
   static const Opcode OpGreaterThan;
+  static const Opcode OpMinus;
+  static const Opcode OpBang;
 };
 
 /**

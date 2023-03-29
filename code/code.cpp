@@ -18,6 +18,8 @@ const Opcode Ops::OpFalse{7};
 const Opcode Ops::OpEqual{8};
 const Opcode Ops::OpNotEqual{9};
 const Opcode Ops::OpGreaterThan{10};
+const Opcode Ops::OpMinus{11};
+const Opcode Ops::OpBang{12};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -64,6 +66,14 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
     {
         Ops::OpGreaterThan,
         Definition{"OpGreaterThan", {}},
+    },
+    {
+        Ops::OpMinus,
+        Definition{"OpMinus", {}},
+    },
+    {
+        Ops::OpBang,
+        Definition{"OpBang", {}},
     },
 };
 

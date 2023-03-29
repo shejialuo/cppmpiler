@@ -149,6 +149,15 @@ TEST(Compiler, TestIntegerArithmetic) {
               Code::make(Ops::OpPop, {}),
           },
       },
+      {
+          "-1",
+          {1},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpMinus, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
   };
 
   for (auto &&test : tests) {
@@ -236,6 +245,15 @@ TEST(Compiler, TestBooleanExpressions) {
               Code::make(Ops::OpTrue, {}),
               Code::make(Ops::OpFalse, {}),
               Code::make(Ops::OpNotEqual, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "!true",
+          {},
+          {
+              Code::make(Ops::OpTrue, {}),
+              Code::make(Ops::OpBang, {}),
               Code::make(Ops::OpPop, {}),
           },
       },

@@ -42,6 +42,10 @@ void VM::run() {
       push(object);
     } else if (op == Ops::OpEqual || op == Ops::OpNotEqual || op == Ops::OpGreaterThan) {
       executeComparision(op);
+    } else if (op == Ops::OpBang) {
+      executeBangOperator();
+    } else if (op == Ops::OpMinus) {
+      executeMinusOperator();
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
@@ -155,6 +159,30 @@ void VM::executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &le
 
   std::unique_ptr<Object> resultObject = std::make_unique<Boolean>(result);
   push(resultObject);
+}
+
+void VM::executeBangOperator() {
+  auto operand = pop();
+  if (operand->type() == BOOLEAN_OBJ) {
+    auto boolean = dynamic_cast<Boolean *>(operand.get());
+    std::unique_ptr<Object> result = std::make_unique<Boolean>(!boolean->value);
+    push(result);
+  } else {
+    std::unique_ptr<Object> result = std::make_unique<Boolean>(false);
+    push(result);
+  }
+}
+
+void VM::executeMinusOperator() {
+  auto operand = pop();
+
+  if (operand->type() == INTEGER_OBJ) {
+    auto integer = dynamic_cast<Integer *>(operand.get());
+    std::unique_ptr<Object> result = std::make_unique<Integer>(-integer->value);
+    push(result);
+  } else {
+    spdlog::error("unsupported type for negation: {}", operand->type());
+  }
 }
 
 std::unique_ptr<Object> VM::lastPoppedStackElem() { return std::move(lastPopped); }

@@ -66,6 +66,17 @@ void Compiler::compile(Node *node) {
       emit(Ops::OpFalse, {});
     }
   }
+
+  PrefixExpression *prefixExpression = dynamic_cast<PrefixExpression *>(node);
+  if (prefixExpression != nullptr) {
+    compile(prefixExpression->right.get());
+
+    if (prefixExpression->_operator == "!") {
+      emit(Ops::OpBang, {});
+    } else if (prefixExpression->_operator == "-") {
+      emit(Ops::OpMinus, {});
+    }
+  }
 }
 
 int Compiler::addConstant(std::unique_ptr<Integer> &object) {

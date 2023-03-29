@@ -89,6 +89,18 @@ public:
   void executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
 
   /**
+   * @brief execute the bang operator, get the value from the stack
+   *
+   */
+  void executeBangOperator();
+
+  /**
+   * @brief execute the minus operator, get the value from the stack
+   *
+   */
+  void executeMinusOperator();
+
+  /**
    * @brief For test only get last popped
    *
    */
