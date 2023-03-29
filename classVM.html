@@ -92,6 +92,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a76a9cba6578c2500a8fcd3a875285ff4"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a76a9cba6578c2500a8fcd3a875285ff4">pop</a> ()</td></tr>
 <tr class="memdesc:a76a9cba6578c2500a8fcd3a875285ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">pop the object from the stack  <a href="classVM.html#a76a9cba6578c2500a8fcd3a875285ff4">More...</a><br /></td></tr>
 <tr class="separator:a76a9cba6578c2500a8fcd3a875285ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000736760362a2e7a47d18f2dad07458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a000736760362a2e7a47d18f2dad07458">executeBinaryOperation</a> (const Opcode &amp;op)</td></tr>
+<tr class="memdesc:a000736760362a2e7a47d18f2dad07458"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the binary operation  <a href="classVM.html#a000736760362a2e7a47d18f2dad07458">More...</a><br /></td></tr>
+<tr class="separator:a000736760362a2e7a47d18f2dad07458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ab6c6174606b250a88e03f9addeee03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a4ab6c6174606b250a88e03f9addeee03">executeBinaryIntegerOperation</a> (const Opcode &amp;op, std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
+<tr class="memdesc:a4ab6c6174606b250a88e03f9addeee03"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the integer operator such as add, sub, mul, div  <a href="classVM.html#a4ab6c6174606b250a88e03f9addeee03">More...</a><br /></td></tr>
+<tr class="separator:a4ab6c6174606b250a88e03f9addeee03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31baf8108639985e1f09e1c654d97f5e"><td class="memItemLeft" align="right" valign="top"><a id="a31baf8108639985e1f09e1c654d97f5e"></a>
+std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a31baf8108639985e1f09e1c654d97f5e">lastPoppedStackElem</a> ()</td></tr>
+<tr class="memdesc:a31baf8108639985e1f09e1c654d97f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">For test only get last popped. <br /></td></tr>
+<tr class="separator:a31baf8108639985e1f09e1c654d97f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -109,6 +119,76 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
 <tr class="separator:afc6daf19f5367e20129009a35b4c7cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4ab6c6174606b250a88e03f9addeee03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ab6c6174606b250a88e03f9addeee03">&#9670;&nbsp;</a></span>executeBinaryIntegerOperation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::executeBinaryIntegerOperation </td>
+          <td>(</td>
+          <td class="paramtype">const Opcode &amp;&#160;</td>
+          <td class="paramname"><em>op</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>right</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the integer operator such as add, sub, mul, div </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op</td><td>the operator </td></tr>
+    <tr><td class="paramname">left</td><td>the left object </td></tr>
+    <tr><td class="paramname">right</td><td>the right object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a000736760362a2e7a47d18f2dad07458"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a000736760362a2e7a47d18f2dad07458">&#9670;&nbsp;</a></span>executeBinaryOperation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::executeBinaryOperation </td>
+          <td>(</td>
+          <td class="paramtype">const Opcode &amp;&#160;</td>
+          <td class="paramname"><em>op</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the binary operation </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op</td><td>the operator </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a76a9cba6578c2500a8fcd3a875285ff4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a76a9cba6578c2500a8fcd3a875285ff4">&#9670;&nbsp;</a></span>pop()</h2>
 

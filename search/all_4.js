@@ -20,7 +20,9 @@ var searchData=
   ['evalprogram_36',['evalProgram',['../classEvaluator.html#a58a26510aee6a7f18ebd7647b048e593',1,'Evaluator']]],
   ['evalstringinfixexpression_37',['evalStringInfixExpression',['../classEvaluator.html#a6e8b0f8da089258a00d3101ced5f60d3',1,'Evaluator']]],
   ['evaluator_38',['Evaluator',['../classEvaluator.html',1,'']]],
-  ['expectpeek_39',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
-  ['expression_40',['Expression',['../classExpression.html',1,'']]],
-  ['expressionstatement_41',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
+  ['executebinaryintegeroperation_39',['executeBinaryIntegerOperation',['../classVM.html#a4ab6c6174606b250a88e03f9addeee03',1,'VM']]],
+  ['executebinaryoperation_40',['executeBinaryOperation',['../classVM.html#a000736760362a2e7a47d18f2dad07458',1,'VM']]],
+  ['expectpeek_41',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
+  ['expression_42',['Expression',['../classExpression.html',1,'']]],
+  ['expressionstatement_43',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
 ];
