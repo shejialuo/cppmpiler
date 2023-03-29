@@ -22,7 +22,10 @@ var searchData=
   ['evaluator_38',['Evaluator',['../classEvaluator.html',1,'']]],
   ['executebinaryintegeroperation_39',['executeBinaryIntegerOperation',['../classVM.html#a4ab6c6174606b250a88e03f9addeee03',1,'VM']]],
   ['executebinaryoperation_40',['executeBinaryOperation',['../classVM.html#a000736760362a2e7a47d18f2dad07458',1,'VM']]],
-  ['expectpeek_41',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
-  ['expression_42',['Expression',['../classExpression.html',1,'']]],
-  ['expressionstatement_43',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
+  ['executebooleancomparision_41',['executeBooleanComparision',['../classVM.html#a09e339ac6783bd53e0c598fbb0252825',1,'VM']]],
+  ['executecomparision_42',['executeComparision',['../classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e',1,'VM']]],
+  ['executeintegercomparision_43',['executeIntegerComparision',['../classVM.html#a233e277b6cb8b0070b97e56fd04c618c',1,'VM']]],
+  ['expectpeek_44',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
+  ['expression_45',['Expression',['../classExpression.html',1,'']]],
+  ['expressionstatement_46',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
 ];
