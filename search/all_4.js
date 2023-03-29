@@ -20,12 +20,14 @@ var searchData=
   ['evalprogram_36',['evalProgram',['../classEvaluator.html#a58a26510aee6a7f18ebd7647b048e593',1,'Evaluator']]],
   ['evalstringinfixexpression_37',['evalStringInfixExpression',['../classEvaluator.html#a6e8b0f8da089258a00d3101ced5f60d3',1,'Evaluator']]],
   ['evaluator_38',['Evaluator',['../classEvaluator.html',1,'']]],
-  ['executebinaryintegeroperation_39',['executeBinaryIntegerOperation',['../classVM.html#a4ab6c6174606b250a88e03f9addeee03',1,'VM']]],
-  ['executebinaryoperation_40',['executeBinaryOperation',['../classVM.html#a000736760362a2e7a47d18f2dad07458',1,'VM']]],
-  ['executebooleancomparision_41',['executeBooleanComparision',['../classVM.html#a09e339ac6783bd53e0c598fbb0252825',1,'VM']]],
-  ['executecomparision_42',['executeComparision',['../classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e',1,'VM']]],
-  ['executeintegercomparision_43',['executeIntegerComparision',['../classVM.html#a233e277b6cb8b0070b97e56fd04c618c',1,'VM']]],
-  ['expectpeek_44',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
-  ['expression_45',['Expression',['../classExpression.html',1,'']]],
-  ['expressionstatement_46',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
+  ['executebangoperator_39',['executeBangOperator',['../classVM.html#a33067e92ca436de42943e626de0ef1d6',1,'VM']]],
+  ['executebinaryintegeroperation_40',['executeBinaryIntegerOperation',['../classVM.html#a4ab6c6174606b250a88e03f9addeee03',1,'VM']]],
+  ['executebinaryoperation_41',['executeBinaryOperation',['../classVM.html#a000736760362a2e7a47d18f2dad07458',1,'VM']]],
+  ['executebooleancomparision_42',['executeBooleanComparision',['../classVM.html#a09e339ac6783bd53e0c598fbb0252825',1,'VM']]],
+  ['executecomparision_43',['executeComparision',['../classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e',1,'VM']]],
+  ['executeintegercomparision_44',['executeIntegerComparision',['../classVM.html#a233e277b6cb8b0070b97e56fd04c618c',1,'VM']]],
+  ['executeminusoperator_45',['executeMinusOperator',['../classVM.html#ad39181eafafc9050221bb45c003e5ee2',1,'VM']]],
+  ['expectpeek_46',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
+  ['expression_47',['Expression',['../classExpression.html',1,'']]],
+  ['expressionstatement_48',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
 ];
