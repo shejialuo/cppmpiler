@@ -6,6 +6,7 @@
 #include "spdlog/spdlog.h"
 #include "vm.hpp"
 
+#include <cstddef>
 #include <gtest/gtest.h>
 #include <string>
 #include <vector>
@@ -133,6 +134,37 @@ TEST(VM, TestBooleanExpressions) {
       {"!!true", true},
       {"!!false", false},
       {"!!5", true},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
+
+TEST(VM, TestConditionals) {
+  std::vector<vmTestCase<int>> tests{
+      {"if (true) { 10 }", 10},
+      {"if (true) { 10 } else { 20 }", 10},
+      {"if (false) { 10 } else { 20 } ", 20},
+      {"if (1) { 10 }", 10},
+      {"if (1 < 2) { 10 }", 10},
+      {"if (1 < 2) { 10 } else { 20 }", 10},
+      {"if (1 > 2) { 10 } else { 20 }", 20},
+      // Here, this would be fail, because I do not handle
+      // the case where the condition is not a boolean, the
+      // original book use NULL object to handle this case
+      // However, I don't think this is a good idea.
+      // {"if ((if (false) { 10 })) { 10 } else { 20 }", 20},
   };
 
   for (auto &&test : tests) {

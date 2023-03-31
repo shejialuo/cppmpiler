@@ -178,6 +178,7 @@ TEST(Evaluator, TestIfElseExpressions1) {
       {"if (1 < 2) { 10 }", 10},
       {"if (1 > 2) { 10 } else { 20 }", 20},
       {"if (1 < 2) { 10 } else { 20 }", 10},
+      {"if ((if (false) { 10 })) { 10 } else { 20 }", 20},
   };
 
   for (auto &&test : tests) {

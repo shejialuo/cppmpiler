@@ -278,7 +278,7 @@ TEST(Compiler, TestConditionals) {
               // 0000
               Code::make(Ops::OpTrue, {}),
               // 0001
-              Code::make(Ops::OpJumpNotTruthy, {7}),
+              Code::make(Ops::OpJumpNotTruthy, {8}),
               // 0004
               Code::make(Ops::OpConstant, {0}),
               // 0007

@@ -262,7 +262,11 @@ std::shared_ptr<Object> Evaluator::evalIfExpression(IfExpression *ie, std::share
   auto condition = eval(ie->condition.get(), env);
 
   if (condition == nullptr) {
-    return nullptr;
+    // Here, if the condition is nullptr, means it is falsy.
+    // Corner case.
+    if (ie->alternative != nullptr) {
+      return eval(ie->alternative.get(), env);
+    }
   }
 
   Boolean *result = dynamic_cast<Boolean *>(condition.get());

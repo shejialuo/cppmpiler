@@ -46,6 +46,22 @@ void VM::run() {
       executeBangOperator();
     } else if (op == Ops::OpMinus) {
       executeMinusOperator();
+    } else if (op == Ops::OpJump) {
+      int position = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      // We should jump to the position - 1 because the for loop will increment it
+      ip = position - 1;
+    } else if (op == Ops::OpJumpNotTruthy) {
+      int position = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+
+      // Go to the if branch
+      ip += 2;
+
+      auto condition = pop();
+      if (!isTruthy(condition)) {
+        // Go to the else branch
+        ip = position - 1;
+      }
+
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
@@ -186,3 +202,12 @@ void VM::executeMinusOperator() {
 }
 
 std::unique_ptr<Object> VM::lastPoppedStackElem() { return std::move(lastPopped); }
+
+bool VM::isTruthy(std::unique_ptr<Object> &object) {
+  if (object->type() == BOOLEAN_OBJ) {
+    auto boolean = dynamic_cast<Boolean *>(object.get());
+    return boolean->value;
+  }
+
+  return true;
+}

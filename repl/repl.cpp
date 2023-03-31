@@ -68,6 +68,11 @@ void startCompiler() {
     machine.run();
 
     auto top = machine.lastPoppedStackElem();
-    std::cout << top->inspect() << "\n";
+
+    // There would be a situation when top is nullptr, we could evaluate
+    // something useless, for example `if (1 > 2) { 10 }`.
+    if (top != nullptr) {
+      std::cout << top->inspect() << "\n";
+    }
   }
 }

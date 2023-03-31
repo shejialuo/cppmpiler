@@ -105,6 +105,12 @@ public:
    *
    */
   std::unique_ptr<Object> lastPoppedStackElem();
+
+  /**
+   * @brief get the boolean value from the object
+   *
+   */
+  bool isTruthy(std::unique_ptr<Object> &object);
 };
 
 #endif  // _VM_VM_HPP_

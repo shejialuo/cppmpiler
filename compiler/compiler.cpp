@@ -101,7 +101,15 @@ void Compiler::compile(Node *node) {
     if (ifExpression->alternative == nullptr) {
       // get the consequence position
       int afterConsequencePosition = bytecode.instructions.size();
-      changeOperand(jumpNotTruthyPosition, afterConsequencePosition);
+      //! Pay attention
+      // Here, we change the value to be 1, it may seem strange, but
+      // it is because we need to jump over the `OpPop` instruction.
+      // So we need to add 1 to the position. And I don't think using
+      // NULL object is a good idea. We don't need this, why not just
+      // jump over the region. Although there may be situations
+      // let a = if (false) {10}, we use nullptr to represent it.
+      // This is the same as the way I deal with interpreter
+      changeOperand(jumpNotTruthyPosition, afterConsequencePosition + 1);
     } else {
       // If there is an alternative branch, we need to emit a `OpJump`
       // instruction to jump over the alternative branch. Actually it is not
