@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['set_260',['set',['../classEnvironment.html#a057196fe8abb7ed80e8a38f11354bf85',1,'Environment']]],
-  ['setidentifiers_261',['setIdentifiers',['../structToken.html#a183db540b6af6aa62306d893eafa9f1c',1,'Token']]],
-  ['setlastinstruction_262',['setLastInstruction',['../classCompiler.html#a85e428924ed8741d524707b2a2fe7a4d',1,'Compiler']]],
-  ['stacktop_263',['stackTop',['../classVM.html#a6d22502ab9c3a713d1ffd6fad3ba181b',1,'VM']]]
+  ['readchar_255',['readChar',['../classLexer.html#af2c10bc1588bc371d87c0b3c096dfe5f',1,'Lexer']]],
+  ['readoperands_256',['readOperands',['../classCode.html#ac777acd449d1b3bdc2bbe6a64bb81e92',1,'Code']]],
+  ['readstring_257',['readString',['../classLexer.html#a91e3b1b45647e8492fe380aa794caf36',1,'Lexer']]],
+  ['removelastpop_258',['removeLastPop',['../classCompiler.html#a7e006174d79b35d41ad555df2d55231c',1,'Compiler']]],
+  ['replaceinstruction_259',['replaceInstruction',['../classCompiler.html#a5fe3745b972916edaa8b346cbf185542',1,'Compiler']]],
+  ['rest_260',['rest',['../classEvaluator.html#adc36ff61ad4acbac96002808e821ae20',1,'Evaluator']]],
+  ['run_261',['run',['../classVM.html#ae3743d27f798753f65caa01f88859d5b',1,'VM']]]
 ];
