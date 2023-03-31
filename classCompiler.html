@@ -86,6 +86,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeb8cbcec2c4f67a0b29d1a3df6a80a06"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#aeb8cbcec2c4f67a0b29d1a3df6a80a06">addInstruction</a> (Instructions &amp;instructions)</td></tr>
 <tr class="memdesc:aeb8cbcec2c4f67a0b29d1a3df6a80a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">add the instruction, return the instruction length  <a href="classCompiler.html#aeb8cbcec2c4f67a0b29d1a3df6a80a06">More...</a><br /></td></tr>
 <tr class="separator:aeb8cbcec2c4f67a0b29d1a3df6a80a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e428924ed8741d524707b2a2fe7a4d"><td class="memItemLeft" align="right" valign="top"><a id="a85e428924ed8741d524707b2a2fe7a4d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a85e428924ed8741d524707b2a2fe7a4d">setLastInstruction</a> (const Opcode &amp;op, int pos)</td></tr>
+<tr class="memdesc:a85e428924ed8741d524707b2a2fe7a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Last Instruction object. <br /></td></tr>
+<tr class="separator:a85e428924ed8741d524707b2a2fe7a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95db22ed4fe3e4134aa8d9ebf39e0624"><td class="memItemLeft" align="right" valign="top"><a id="a95db22ed4fe3e4134aa8d9ebf39e0624"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a95db22ed4fe3e4134aa8d9ebf39e0624">lastInstructionIsPop</a> () const</td></tr>
+<tr class="memdesc:a95db22ed4fe3e4134aa8d9ebf39e0624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the last instruction op is pop. <br /></td></tr>
+<tr class="separator:a95db22ed4fe3e4134aa8d9ebf39e0624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e006174d79b35d41ad555df2d55231c"><td class="memItemLeft" align="right" valign="top"><a id="a7e006174d79b35d41ad555df2d55231c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a7e006174d79b35d41ad555df2d55231c">removeLastPop</a> ()</td></tr>
+<tr class="memdesc:a7e006174d79b35d41ad555df2d55231c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the last pop instruction. <br /></td></tr>
+<tr class="separator:a7e006174d79b35d41ad555df2d55231c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe3745b972916edaa8b346cbf185542"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a5fe3745b972916edaa8b346cbf185542">replaceInstruction</a> (int pos, const Instructions &amp;instruction)</td></tr>
+<tr class="memdesc:a5fe3745b972916edaa8b346cbf185542"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the instruction at pos with instructions.  <a href="classCompiler.html#a5fe3745b972916edaa8b346cbf185542">More...</a><br /></td></tr>
+<tr class="separator:a5fe3745b972916edaa8b346cbf185542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2801a9e98b0ccc02065c7d5dc9b3d0bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a2801a9e98b0ccc02065c7d5dc9b3d0bb">changeOperand</a> (int pos, int operand)</td></tr>
+<tr class="memdesc:a2801a9e98b0ccc02065c7d5dc9b3d0bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the operand at pos with operand.  <a href="classCompiler.html#a2801a9e98b0ccc02065c7d5dc9b3d0bb">More...</a><br /></td></tr>
+<tr class="separator:a2801a9e98b0ccc02065c7d5dc9b3d0bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22a69c84dc79e20e687cc8e69ebd8161"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structBytecode.html">Bytecode</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a22a69c84dc79e20e687cc8e69ebd8161">getBytecode</a> ()</td></tr>
 <tr class="memdesc:a22a69c84dc79e20e687cc8e69ebd8161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current bytecode, and the bytecode in the class should not use anymore.  <a href="classCompiler.html#a22a69c84dc79e20e687cc8e69ebd8161">More...</a><br /></td></tr>
 <tr class="separator:a22a69c84dc79e20e687cc8e69ebd8161"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,6 +160,43 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="a2801a9e98b0ccc02065c7d5dc9b3d0bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2801a9e98b0ccc02065c7d5dc9b3d0bb">&#9670;&nbsp;</a></span>changeOperand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Compiler::changeOperand </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>operand</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Change the operand at pos with operand. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the instruction postion </td></tr>
+    <tr><td class="paramname">operand</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -234,6 +289,43 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the current bytecode, and the bytecode in the class should not use anymore. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structBytecode.html">Bytecode</a> </dd></dl>
+
+</div>
+</div>
+<a id="a5fe3745b972916edaa8b346cbf185542"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fe3745b972916edaa8b346cbf185542">&#9670;&nbsp;</a></span>replaceInstruction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Compiler::replaceInstruction </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Instructions &amp;&#160;</td>
+          <td class="paramname"><em>instruction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replace the instruction at pos with instructions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>the instruction position </td></tr>
+    <tr><td class="paramname">instructions</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
