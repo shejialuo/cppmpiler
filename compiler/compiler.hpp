@@ -18,9 +18,20 @@ struct Bytecode {
   Bytecode(Bytecode &&b) = delete;
 };
 
+struct EmittedInstruction {
+  Opcode op;
+  int position;
+
+  EmittedInstruction() = default;
+  EmittedInstruction(const EmittedInstruction &b) = delete;
+  EmittedInstruction(const Opcode &op_, int p) : op{op_}, position{p} {}
+};
+
 class Compiler {
 private:
   Bytecode bytecode;
+  EmittedInstruction lastInstruction{};
+  EmittedInstruction previousInstruction{};
 
 public:
   Compiler() = default;
@@ -58,6 +69,40 @@ public:
    * @return int
    */
   int addInstruction(Instructions &instructions);
+
+  /**
+   * @brief Set the Last Instruction object
+   *
+   */
+  void setLastInstruction(const Opcode &op, int pos);
+
+  /**
+   * @brief Return whether the last instruction op is pop
+   *
+   */
+  inline bool lastInstructionIsPop() const { return lastInstruction.op == Ops::OpPop; }
+
+  /**
+   * @brief Remove the last pop instruction
+   *
+   */
+  void removeLastPop();
+
+  /**
+   * @brief Replace the instruction at pos with instructions
+   *
+   * @param pos the instruction position
+   * @param instructions
+   */
+  void replaceInstruction(int pos, const Instructions &instruction);
+
+  /**
+   * @brief Change the operand at pos with operand
+   *
+   * @param pos the instruction postion
+   * @param operand
+   */
+  void changeOperand(int pos, int operand);
 
   /**
    * @brief Return the current bytecode, and the bytecode

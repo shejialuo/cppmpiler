@@ -268,3 +268,57 @@ TEST(Compiler, TestBooleanExpressions) {
     EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
   }
 }
+
+TEST(Compiler, TestConditionals) {
+  std::vector<CompilerTestCase<int>> tests{
+      {
+          "if (true) { 10 }; 3333;",
+          {10, 3333},
+          {
+              // 0000
+              Code::make(Ops::OpTrue, {}),
+              // 0001
+              Code::make(Ops::OpJumpNotTruthy, {7}),
+              // 0004
+              Code::make(Ops::OpConstant, {0}),
+              // 0007
+              Code::make(Ops::OpPop, {}),
+              // 0008
+              Code::make(Ops::OpConstant, {1}),
+              // 0011
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "if (true) { 10 } else { 20 }; 3333;",
+          {10, 20, 3333},
+          {
+              // 0000
+              Code::make(Ops::OpTrue, {}),
+              // 0001
+              Code::make(Ops::OpJumpNotTruthy, {10}),
+              // 0004
+              Code::make(Ops::OpConstant, {0}),
+              // 0007
+              Code::make(Ops::OpJump, {13}),
+              // 0010
+              Code::make(Ops::OpConstant, {1}),
+              // 0013
+              Code::make(Ops::OpPop, {}),
+              // 0014
+              Code::make(Ops::OpConstant, {2}),
+              // 0017
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}

@@ -77,6 +77,57 @@ void Compiler::compile(Node *node) {
       emit(Ops::OpMinus, {});
     }
   }
+
+  IfExpression *ifExpression = dynamic_cast<IfExpression *>(node);
+  if (ifExpression != nullptr) {
+    // For `IfExpression`, we need to handle the length of the
+    // `consequence` and `alternative` blocks. So the question
+    // is to change the operand of the `OpJumpNotTruthy` instruction.
+    // and we will call `changeOperand` to do this.
+
+    compile(ifExpression->condition.get());
+
+    // emit a jump instruction with a placeholder operand
+    int jumpNotTruthyPosition = emit(Ops::OpJumpNotTruthy, {9999});
+
+    compile(ifExpression->consequence.get());
+
+    if (lastInstructionIsPop()) {
+      // remove the `OpPop` instruction in a block statement
+      removeLastPop();
+    }
+
+    // If there is no else branch, we can set the `OpJumpNotTruthy` operand
+    if (ifExpression->alternative == nullptr) {
+      // get the consequence position
+      int afterConsequencePosition = bytecode.instructions.size();
+      changeOperand(jumpNotTruthyPosition, afterConsequencePosition);
+    } else {
+      // If there is an alternative branch, we need to emit a `OpJump`
+      // instruction to jump over the alternative branch. Actually it is not
+      // difficult, it is the same idea.
+      int jumpPosition = emit(Ops::OpJump, {9999});
+
+      int afterConsequencePosition = bytecode.instructions.size();
+      changeOperand(jumpNotTruthyPosition, afterConsequencePosition);
+
+      compile(ifExpression->alternative.get());
+
+      if (lastInstructionIsPop()) {
+        removeLastPop();
+      }
+
+      int afterAlternativePosition = bytecode.instructions.size();
+      changeOperand(jumpPosition, afterAlternativePosition);
+    }
+  }
+
+  BlockStatement *blockStatement = dynamic_cast<BlockStatement *>(node);
+  if (blockStatement != nullptr) {
+    for (auto &&statement : blockStatement->statements) {
+      compile(statement.get());
+    }
+  }
 }
 
 int Compiler::addConstant(std::unique_ptr<Integer> &object) {
@@ -86,7 +137,11 @@ int Compiler::addConstant(std::unique_ptr<Integer> &object) {
 
 int Compiler::emit(const Opcode &op, const std::vector<int> &operands) {
   auto instruction = Code::make(op, operands);
-  return addInstruction(instruction);
+
+  int pos = addInstruction(instruction);
+  setLastInstruction(op, pos);
+
+  return pos;
 }
 
 int Compiler::addInstruction(Instructions &instructions) {
@@ -97,4 +152,33 @@ int Compiler::addInstruction(Instructions &instructions) {
   }
 
   return posNewInstruction;
+}
+
+void Compiler::setLastInstruction(const Opcode &op, int pos) {
+  previousInstruction.op = lastInstruction.op;
+  previousInstruction.position = lastInstruction.position;
+
+  lastInstruction.op = op;
+  lastInstruction.position = pos;
+}
+
+void Compiler::removeLastPop() {
+  bytecode.instructions.erase(bytecode.instructions.begin() + lastInstruction.position);
+
+  lastInstruction.op = previousInstruction.op;
+  lastInstruction.position = previousInstruction.position;
+}
+
+void Compiler::replaceInstruction(int pos, const Instructions &instruction) {
+  // The size must be the same
+  for (int i = 0; i < instruction.size(); i++) {
+    bytecode.instructions[pos + i] = instruction[i];
+  }
+}
+
+void Compiler::changeOperand(int pos, int operand) {
+  auto op = Opcode(bytecode.instructions[pos]);
+  auto newInstruction = Code::make(op, {operand});
+
+  replaceInstruction(pos, newInstruction);
 }
