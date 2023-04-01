@@ -38,6 +38,8 @@ bool testExpectedObject(const T &expected, Object *actual) {
     return testIntegerObject(expected, actual);
   } else if constexpr (std::is_same_v<bool, T>) {
     return testBooleanObject(expected, actual);
+  } else if constexpr (std::is_same_v<std::string, T>) {
+    return testStringObject(expected, actual);
   }
   return false;
 }
@@ -66,6 +68,21 @@ bool testBooleanObject(bool expected, Object *actual) {
 
   if (boolean->value != expected) {
     spdlog::error("object has wrong value. want={}, got={}", expected, boolean->value);
+    return false;
+  }
+
+  return true;
+}
+
+bool testStringObject(const std::string &expected, Object *actual) {
+  auto string = dynamic_cast<const String *>(actual);
+  if (string == nullptr) {
+    spdlog::error("object is not String. got={}", actual->type());
+    return false;
+  }
+
+  if (string->value != expected) {
+    spdlog::error("object has wrong value. want={}, got={}", expected, string->value);
     return false;
   }
 
@@ -187,6 +204,28 @@ TEST(VM, TestGlobalLetStatements) {
       {"let one = 1; one", 1},
       {"let one = 1; let two = 2; one + two", 3},
       {"let one = 1; let two = one + one; one + two", 3},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
+
+TEST(VM, TestStringExpressions) {
+  std::vector<vmTestCase<std::string>> tests{
+      {"\"monkey\"", "monkey"},
+      {"\"mon\" + \"key\"", "monkey"},
+      {"\"mon\" + \"key\" + \"banana\"", "monkeybanana"},
   };
 
   for (auto &&test : tests) {

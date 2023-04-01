@@ -28,6 +28,7 @@ std::unique_ptr<Program> parse(const std::string &input);
 Instructions concatInstructions(std::vector<Instructions> &instructions);
 bool testInstructions(const Instructions &expected, const Instructions &actual);
 bool testIntegerObject(int expected, Object *actual);
+bool testStringObject(const std::string &expected, Object *actual);
 
 template <typename T>
 bool testConstants(std::vector<T> &expected, std::vector<std::shared_ptr<Object>> &actual);
@@ -42,6 +43,10 @@ bool testConstants(std::vector<T> &expected, std::vector<std::shared_ptr<Object>
   for (size_t i = 0; i < actual.size(); i++) {
     if constexpr (std::is_same_v<int, T>) {
       if (!testIntegerObject(expected[i], actual[i].get())) {
+        return false;
+      }
+    } else if constexpr (std::is_same_v<std::string, T>) {
+      if (!testStringObject(expected[i], actual[i].get())) {
         return false;
       }
     }
@@ -91,6 +96,21 @@ bool testIntegerObject(int expected, Object *actual) {
 
   if (integer->value != expected) {
     spdlog::error("object has wrong value. want={}, got={}", expected, integer->value);
+    return false;
+  }
+
+  return true;
+}
+
+bool testStringObject(const std::string &expected, Object *actual) {
+  auto str = dynamic_cast<const String *>(actual);
+  if (str == nullptr) {
+    spdlog::error("object is not String. got={}", actual->type());
+    return false;
+  }
+
+  if (str->value != expected) {
+    spdlog::error("object has wrong value. want={}, got={}", expected, str->value);
     return false;
   }
 
@@ -358,6 +378,38 @@ TEST(Compiler, TestGlobalLetStatements) {
           },
       },
   };
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}
+
+TEST(Compiler, TestStringExpressions) {
+  std::vector<CompilerTestCase<std::string>> tests{
+      {
+          R"("monkey")",
+          {"monkey"},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          R"("mon" + "key")",
+          {"mon", "key"},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpAdd, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
   for (auto &&test : tests) {
     auto program = parse(test.input);
     Compiler compiler;

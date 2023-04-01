@@ -57,7 +57,7 @@ void Compiler::compile(Node *node) {
 
   IntegerLiteral *integerLiteral = dynamic_cast<IntegerLiteral *>(node);
   if (integerLiteral != nullptr) {
-    auto integer = std::make_unique<Integer>(integerLiteral->value);
+    std::unique_ptr<Object> integer = std::make_unique<Integer>(integerLiteral->value);
     // Here, we push the index for the constant, not the number itself.
     emit(Ops::OpConstant, {addConstant(integer)});
   }
@@ -159,9 +159,15 @@ void Compiler::compile(Node *node) {
 
     emit(Ops::OpGetGlobal, {symbol.value().get().index});
   }
+
+  StringLiteral *stringLiteral = dynamic_cast<StringLiteral *>(node);
+  if (stringLiteral != nullptr) {
+    std::unique_ptr<Object> string = std::make_unique<String>(stringLiteral->value);
+    emit(Ops::OpConstant, {addConstant(string)});
+  }
 }
 
-int Compiler::addConstant(std::unique_ptr<Integer> &object) {
+int Compiler::addConstant(std::unique_ptr<Object> &object) {
   bytecode.constants.emplace_back(std::move(object));
   return bytecode.constants.size() - 1;
 }

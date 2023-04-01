@@ -56,7 +56,7 @@ public:
    * @param object
    * @return int
    */
-  int addConstant(std::unique_ptr<Integer> &object);
+  int addConstant(std::unique_ptr<Object> &object);
 
   /**
    * @brief emit the instruction, return the instruction length

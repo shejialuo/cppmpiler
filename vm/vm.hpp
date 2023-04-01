@@ -88,6 +88,15 @@ public:
   void executeBinaryIntegerOperation(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right);
 
   /**
+   * @brief execute the string operator such as add
+   *
+   * @param op the operator
+   * @param left the left object
+   * @param right the right object
+   */
+  void executeBinaryStringOperation(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right);
+
+  /**
    * @brief execute the comparison such as equal, not equal, greater than, less than
    *
    * @param op

@@ -104,6 +104,8 @@ void VM::executeBinaryOperation(const Opcode &op) {
 
   if (leftType == INTEGER_OBJ && rightType == INTEGER_OBJ) {
     executeBinaryIntegerOperation(op, left, right);
+  } else if (leftType == STRING_OBJ && rightType == STRING_OBJ) {
+    executeBinaryStringOperation(op, left, right);
   } else {
     spdlog::error("unsupported types for binary operation: {} {}", leftType, rightType);
   }
@@ -131,6 +133,19 @@ void VM::executeBinaryIntegerOperation(const Opcode &op,
 
   std::shared_ptr<Object> resultObject = std::make_shared<Integer>(result);
   push(resultObject);
+}
+
+void VM::executeBinaryStringOperation(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right) {
+  String *rightString = dynamic_cast<String *>(right.get());
+  String *leftString = dynamic_cast<String *>(left.get());
+
+  if (op == Ops::OpAdd) {
+    std::string result = leftString->value + rightString->value;
+    std::shared_ptr<Object> resultObject = std::make_shared<String>(result);
+    push(resultObject);
+  } else {
+    spdlog::error("unknown operator for strings: {}", op);
+  }
 }
 
 void VM::executeComparision(const Opcode &op) {
