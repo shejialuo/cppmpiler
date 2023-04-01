@@ -24,11 +24,12 @@ var searchData=
   ['executebangoperator_41',['executeBangOperator',['../classVM.html#a33067e92ca436de42943e626de0ef1d6',1,'VM']]],
   ['executebinaryintegeroperation_42',['executeBinaryIntegerOperation',['../classVM.html#a637055df636e0d0cf3a8cb3d2e967c26',1,'VM']]],
   ['executebinaryoperation_43',['executeBinaryOperation',['../classVM.html#a000736760362a2e7a47d18f2dad07458',1,'VM']]],
-  ['executebooleancomparision_44',['executeBooleanComparision',['../classVM.html#a9392d5d0e3c83adfb989de9237e05740',1,'VM']]],
-  ['executecomparision_45',['executeComparision',['../classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e',1,'VM']]],
-  ['executeintegercomparision_46',['executeIntegerComparision',['../classVM.html#ae2fcc9b4c4e1421ead67e54d3be0288d',1,'VM']]],
-  ['executeminusoperator_47',['executeMinusOperator',['../classVM.html#ad39181eafafc9050221bb45c003e5ee2',1,'VM']]],
-  ['expectpeek_48',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
-  ['expression_49',['Expression',['../classExpression.html',1,'']]],
-  ['expressionstatement_50',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
+  ['executebinarystringoperation_44',['executeBinaryStringOperation',['../classVM.html#a3964a327a5b85714eed68190508b019d',1,'VM']]],
+  ['executebooleancomparision_45',['executeBooleanComparision',['../classVM.html#a9392d5d0e3c83adfb989de9237e05740',1,'VM']]],
+  ['executecomparision_46',['executeComparision',['../classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e',1,'VM']]],
+  ['executeintegercomparision_47',['executeIntegerComparision',['../classVM.html#ae2fcc9b4c4e1421ead67e54d3be0288d',1,'VM']]],
+  ['executeminusoperator_48',['executeMinusOperator',['../classVM.html#ad39181eafafc9050221bb45c003e5ee2',1,'VM']]],
+  ['expectpeek_49',['expectPeek',['../classParser.html#a79a9e700e11bfa12c818c5e9ddc999d2',1,'Parser']]],
+  ['expression_50',['Expression',['../classExpression.html',1,'']]],
+  ['expressionstatement_51',['ExpressionStatement',['../classExpressionStatement.html',1,'']]]
 ];

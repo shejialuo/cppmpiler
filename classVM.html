@@ -101,6 +101,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a637055df636e0d0cf3a8cb3d2e967c26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a637055df636e0d0cf3a8cb3d2e967c26">executeBinaryIntegerOperation</a> (const Opcode &amp;op, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
 <tr class="memdesc:a637055df636e0d0cf3a8cb3d2e967c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the integer operator such as add, sub, mul, div  <a href="classVM.html#a637055df636e0d0cf3a8cb3d2e967c26">More...</a><br /></td></tr>
 <tr class="separator:a637055df636e0d0cf3a8cb3d2e967c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3964a327a5b85714eed68190508b019d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a3964a327a5b85714eed68190508b019d">executeBinaryStringOperation</a> (const Opcode &amp;op, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;right)</td></tr>
+<tr class="memdesc:a3964a327a5b85714eed68190508b019d"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the string operator such as add  <a href="classVM.html#a3964a327a5b85714eed68190508b019d">More...</a><br /></td></tr>
+<tr class="separator:a3964a327a5b85714eed68190508b019d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a3c4d7180f5fd9cca696fba46b3980e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e">executeComparision</a> (const Opcode &amp;op)</td></tr>
 <tr class="memdesc:a8a3c4d7180f5fd9cca696fba46b3980e"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the comparison such as equal, not equal, greater than, less than  <a href="classVM.html#a8a3c4d7180f5fd9cca696fba46b3980e">More...</a><br /></td></tr>
 <tr class="separator:a8a3c4d7180f5fd9cca696fba46b3980e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +215,50 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">op</td><td>the operator </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3964a327a5b85714eed68190508b019d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3964a327a5b85714eed68190508b019d">&#9670;&nbsp;</a></span>executeBinaryStringOperation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::executeBinaryStringOperation </td>
+          <td>(</td>
+          <td class="paramtype">const Opcode &amp;&#160;</td>
+          <td class="paramname"><em>op</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>right</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the string operator such as add </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op</td><td>the operator </td></tr>
+    <tr><td class="paramname">left</td><td>the left object </td></tr>
+    <tr><td class="paramname">right</td><td>the right object </td></tr>
   </table>
   </dd>
 </dl>
