@@ -6,5 +6,7 @@ var searchData=
   ['stacktop_119',['stackTop',['../classVM.html#a6d22502ab9c3a713d1ffd6fad3ba181b',1,'VM']]],
   ['statement_120',['Statement',['../classStatement.html',1,'']]],
   ['string_121',['String',['../classString.html',1,'']]],
-  ['stringliteral_122',['StringLiteral',['../classStringLiteral.html',1,'']]]
+  ['stringliteral_122',['StringLiteral',['../classStringLiteral.html',1,'']]],
+  ['symbol_123',['Symbol',['../structSymbol.html',1,'']]],
+  ['symboltable_124',['SymbolTable',['../classSymbolTable.html',1,'']]]
 ];
