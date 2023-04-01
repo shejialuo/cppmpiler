@@ -30,10 +30,10 @@ bool testInstructions(const Instructions &expected, const Instructions &actual);
 bool testIntegerObject(int expected, Object *actual);
 
 template <typename T>
-bool testConstants(std::vector<T> &expected, std::vector<std::unique_ptr<Object>> &actual);
+bool testConstants(std::vector<T> &expected, std::vector<std::shared_ptr<Object>> &actual);
 
 template <typename T>
-bool testConstants(std::vector<T> &expected, std::vector<std::unique_ptr<Object>> &actual) {
+bool testConstants(std::vector<T> &expected, std::vector<std::shared_ptr<Object>> &actual) {
   if (actual.size() != expected.size()) {
     spdlog::error("wrong number of constants. got={}, want={}", actual.size(), expected.size());
     return false;
@@ -313,6 +313,51 @@ TEST(Compiler, TestConditionals) {
       },
   };
 
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}
+
+TEST(Compiler, TestGlobalLetStatements) {
+  std::vector<CompilerTestCase<int>> tests{
+      {
+          "let one = 1; let two = 2;",
+          {1, 2},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpSetGlobal, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpSetGlobal, {1}),
+          },
+      },
+      {
+          "let one = 1; one;",
+          {1},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpSetGlobal, {0}),
+              Code::make(Ops::OpGetGlobal, {0}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "let one = 1; let two = one; two;",
+          {1},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpSetGlobal, {0}),
+              Code::make(Ops::OpGetGlobal, {0}),
+              Code::make(Ops::OpSetGlobal, {1}),
+              Code::make(Ops::OpGetGlobal, {1}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
   for (auto &&test : tests) {
     auto program = parse(test.input);
     Compiler compiler;

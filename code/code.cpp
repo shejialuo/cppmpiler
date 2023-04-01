@@ -22,6 +22,8 @@ const Opcode Ops::OpMinus{11};
 const Opcode Ops::OpBang{12};
 const Opcode Ops::OpJumpNotTruthy{13};
 const Opcode Ops::OpJump{14};
+const Opcode Ops::OpGetGlobal{15};
+const Opcode Ops::OpSetGlobal{16};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -84,6 +86,14 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
     {
         Ops::OpJump,
         Definition{"OpJump", {2}},
+    },
+    {
+        Ops::OpGetGlobal,
+        Definition{"OpGetGlobal", {2}},
+    },
+    {
+        Ops::OpSetGlobal,
+        Definition{"OpSetGlobal", {2}},
     },
 };
 

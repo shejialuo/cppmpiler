@@ -3,8 +3,12 @@
 #include "ast.hpp"
 #include "code.hpp"
 #include "object.hpp"
+#include "spdlog/spdlog.h"
+#include "symbolTable.hpp"
 
 #include <memory>
+
+Compiler::Compiler() { symbolTable = std::make_shared<SymbolTable>(); }
 
 void Compiler::compile(Node *node) {
   Program *program = dynamic_cast<Program *>(node);
@@ -135,6 +139,25 @@ void Compiler::compile(Node *node) {
     for (auto &&statement : blockStatement->statements) {
       compile(statement.get());
     }
+  }
+
+  LetStatement *letStatement = dynamic_cast<LetStatement *>(node);
+  if (letStatement != nullptr) {
+    compile(letStatement->value.get());
+
+    Symbol &symbol = symbolTable->define(letStatement->name->value);
+    emit(Ops::OpSetGlobal, {symbol.index});
+  }
+
+  Identifier *identifier = dynamic_cast<Identifier *>(node);
+  if (identifier != nullptr) {
+    auto symbol = symbolTable->resolve(identifier->value);
+    if (!symbol.has_value()) {
+      spdlog::error("identifier not found: {}", identifier->value);
+      return;
+    }
+
+    emit(Ops::OpGetGlobal, {symbol.value().get().index});
   }
 }
 

@@ -181,3 +181,25 @@ TEST(VM, TestConditionals) {
     EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }
+
+TEST(VM, TestGlobalLetStatements) {
+  std::vector<vmTestCase<int>> tests{
+      {"let one = 1; one", 1},
+      {"let one = 1; let two = 2; one + two", 3},
+      {"let one = 1; let two = one + one; one + two", 3},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}

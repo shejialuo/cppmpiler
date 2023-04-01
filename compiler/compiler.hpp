@@ -4,6 +4,7 @@
 #include "ast.hpp"
 #include "code.hpp"
 #include "object.hpp"
+#include "symbolTable.hpp"
 
 #include <cstddef>
 #include <memory>
@@ -11,7 +12,7 @@
 
 struct Bytecode {
   Instructions instructions;
-  std::vector<std::unique_ptr<Object>> constants;
+  std::vector<std::shared_ptr<Object>> constants;
 
   Bytecode() = default;
   Bytecode(const Bytecode &b) = delete;
@@ -32,9 +33,13 @@ private:
   Bytecode bytecode;
   EmittedInstruction lastInstruction{};
   EmittedInstruction previousInstruction{};
+  std::shared_ptr<SymbolTable> symbolTable;
 
 public:
-  Compiler() = default;
+  Compiler();
+  Compiler(std::vector<std::shared_ptr<Object>> &constants, std::shared_ptr<SymbolTable> &table) : symbolTable{table} {
+    bytecode.constants = constants;
+  }
   Compiler(const Bytecode &b) = delete;
 
   /**

@@ -3,7 +3,9 @@
 #include "compiler.hpp"
 #include "evaluator.hpp"
 #include "lexer.hpp"
+#include "object.hpp"
 #include "parser.hpp"
+#include "symbolTable.hpp"
 #include "token.hpp"
 #include "vm.hpp"
 
@@ -44,6 +46,11 @@ void startInterpreter() {
 
 void startCompiler() {
   std::string line{};
+
+  std::vector<std::shared_ptr<Object>> constants{};
+  auto globals = std::make_shared<std::vector<std::shared_ptr<Object>>>(65536);
+  auto symbolTable = std::make_shared<SymbolTable>();
+
   while (true) {
     std::cout << PROMPT;
     if (!std::getline(std::cin, line)) {
@@ -60,10 +67,12 @@ void startCompiler() {
       continue;
     }
 
-    Compiler compiler{};
+    Compiler compiler{constants, symbolTable};
     compiler.compile(program.get());
 
-    VM machine{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    constants = compiler.getBytecode().constants;
+
+    VM machine{std::move(compiler.getBytecode().constants), globals, std::move(compiler.getBytecode().instructions)};
 
     machine.run();
 

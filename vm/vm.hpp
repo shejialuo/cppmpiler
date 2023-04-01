@@ -4,28 +4,46 @@
 #include "code.hpp"
 #include "object.hpp"
 
+#include <algorithm>
 #include <memory>
 #include <optional>
 #include <vector>
 
-constexpr int StackSize = 2048;
+static constexpr int StackSize = 2048;
+static constexpr int GlobalSize = 65536;
 
 class VM {
 private:
+  static std::shared_ptr<Object> True;
+  static std::shared_ptr<Object> False;
+
   // For test only
-  std::unique_ptr<Object> lastPopped;
+  std::shared_ptr<Object> lastPopped;
 
 public:
-  std::vector<std::unique_ptr<Object>> constants;
+  std::vector<std::shared_ptr<Object>> constants;
+  std::shared_ptr<std::vector<std::shared_ptr<Object>>> globals;
   Instructions instructions;
 
-  std::vector<std::unique_ptr<Object>> stack;
+  std::vector<std::shared_ptr<Object>> stack;
   int sp;
 
   VM() = delete;
+
   VM(const VM &v) = delete;
-  VM(std::vector<std::unique_ptr<Object>> &&constants, Instructions &&instructions)
-      : constants{std::move(constants)}, instructions{std::move(instructions)}, sp{0}, stack(StackSize) {}
+  VM(std::vector<std::shared_ptr<Object>> &&constants_, Instructions &&instructions)
+      : constants{std::move(constants_)}, instructions{std::move(instructions)}, sp{0}, stack(StackSize) {
+    globals = std::make_shared<std::vector<std::shared_ptr<Object>>>(GlobalSize);
+  }
+
+  VM(std::vector<std::shared_ptr<Object>> &&constants_,
+     std::shared_ptr<std::vector<std::shared_ptr<Object>>> &globals_,
+     Instructions &&instructions)
+      : constants{std::move(constants_)}
+      , globals{globals_}
+      , instructions{std::move(instructions)}
+      , sp{0}
+      , stack(StackSize) {}
 
   /**
    * @brief get the top stack object
@@ -44,14 +62,14 @@ public:
    * @brief push the object to the stack
    *
    */
-  void push(std::unique_ptr<Object> &object);
+  void push(std::shared_ptr<Object> &object);
 
   /**
    * @brief pop the object from the stack
    *
-   * @return std::unique_ptr<Object>
+   * @return std::shared_ptr<Object>
    */
-  std::unique_ptr<Object> pop();
+  std::shared_ptr<Object> pop();
 
   /**
    * @brief execute the binary operation
@@ -67,7 +85,7 @@ public:
    * @param left the left object
    * @param right the right object
    */
-  void executeBinaryIntegerOperation(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
+  void executeBinaryIntegerOperation(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right);
 
   /**
    * @brief execute the comparison such as equal, not equal, greater than, less than
@@ -80,13 +98,13 @@ public:
    * @brief execute the integer comparison such as equal, not equal, greater than, less than
    *
    */
-  void executeIntegerComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
+  void executeIntegerComparision(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right);
 
   /**
    * @brief execute the boolean comparison such as equal, not equal
    *
    */
-  void executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right);
+  void executeBooleanComparision(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right);
 
   /**
    * @brief execute the bang operator, get the value from the stack
@@ -104,13 +122,13 @@ public:
    * @brief For test only get last popped
    *
    */
-  std::unique_ptr<Object> lastPoppedStackElem();
+  std::shared_ptr<Object> lastPoppedStackElem();
 
   /**
    * @brief get the boolean value from the object
    *
    */
-  bool isTruthy(std::unique_ptr<Object> &object);
+  bool isTruthy(std::shared_ptr<Object> &object);
 };
 
 #endif  // _VM_VM_HPP_

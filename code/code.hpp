@@ -46,6 +46,8 @@ struct Ops {
   static const Opcode OpBang;
   static const Opcode OpJumpNotTruthy;
   static const Opcode OpJump;
+  static const Opcode OpGetGlobal;
+  static const Opcode OpSetGlobal;
 };
 
 /**

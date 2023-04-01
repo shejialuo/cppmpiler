@@ -14,6 +14,9 @@ constexpr std::string_view ERROR_OBJ = "ERROR";
 constexpr std::string_view STRING_OBJ = "STRING";
 constexpr std::string_view ARRAY_OBJ = "ARRAY";
 
+std::shared_ptr<Object> VM::True = std::make_shared<Boolean>(true);
+std::shared_ptr<Object> VM::False = std::make_shared<Boolean>(false);
+
 Object *VM::stackTop() {
   if (sp == 0) {
     return nullptr;
@@ -35,11 +38,9 @@ void VM::run() {
     } else if (op == Ops::OpPop) {
       lastPopped = pop();
     } else if (op == Ops::OpTrue) {
-      std::unique_ptr<Object> object = std::make_unique<Boolean>(true);
-      push(object);
+      push(True);
     } else if (op == Ops::OpFalse) {
-      std::unique_ptr<Object> object = std::make_unique<Boolean>(false);
-      push(object);
+      push(False);
     } else if (op == Ops::OpEqual || op == Ops::OpNotEqual || op == Ops::OpGreaterThan) {
       executeComparision(op);
     } else if (op == Ops::OpBang) {
@@ -61,28 +62,36 @@ void VM::run() {
         // Go to the else branch
         ip = position - 1;
       }
-
+    } else if (op == Ops::OpSetGlobal) {
+      int globalIndex = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      ip += 2;
+      (*globals)[globalIndex] = pop();
+    } else if (op == Ops::OpGetGlobal) {
+      int globalIndex = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      ip += 2;
+      auto &value = (*globals)[globalIndex];
+      push((*globals)[globalIndex]);
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
   }
 }
 
-void VM::push(std::unique_ptr<Object> &object) {
+void VM::push(std::shared_ptr<Object> &object) {
   if (sp >= StackSize) {
     throw std::runtime_error("stack overflow");
   }
 
-  stack[sp] = std::move(object);
+  stack[sp] = object;
   sp++;
 }
 
-std::unique_ptr<Object> VM::pop() {
+std::shared_ptr<Object> VM::pop() {
   if (sp == 0) {
     throw std::runtime_error("stack underflow");
   }
 
-  auto object = std::move(stack[sp - 1]);
+  auto object = stack[sp - 1];
   sp--;
   return object;
 }
@@ -101,8 +110,8 @@ void VM::executeBinaryOperation(const Opcode &op) {
 }
 
 void VM::executeBinaryIntegerOperation(const Opcode &op,
-                                       std::unique_ptr<Object> &left,
-                                       std::unique_ptr<Object> &right) {
+                                       std::shared_ptr<Object> &left,
+                                       std::shared_ptr<Object> &right) {
   Integer *rightInteger = dynamic_cast<Integer *>(right.get());
   Integer *leftInteger = dynamic_cast<Integer *>(left.get());
 
@@ -120,7 +129,7 @@ void VM::executeBinaryIntegerOperation(const Opcode &op,
     return;
   }
 
-  std::unique_ptr<Object> resultObject = std::make_unique<Integer>(result);
+  std::shared_ptr<Object> resultObject = std::make_shared<Integer>(result);
   push(resultObject);
 }
 
@@ -139,7 +148,7 @@ void VM::executeComparision(const Opcode &op) {
   }
 }
 
-void VM::executeIntegerComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right) {
+void VM::executeIntegerComparision(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right) {
   Integer *rightInteger = dynamic_cast<Integer *>(right.get());
   Integer *leftInteger = dynamic_cast<Integer *>(left.get());
 
@@ -155,11 +164,10 @@ void VM::executeIntegerComparision(const Opcode &op, std::unique_ptr<Object> &le
     return;
   }
 
-  std::unique_ptr<Object> resultObject = std::make_unique<Boolean>(result);
-  push(resultObject);
+  result ? push(True) : push(False);
 }
 
-void VM::executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &left, std::unique_ptr<Object> &right) {
+void VM::executeBooleanComparision(const Opcode &op, std::shared_ptr<Object> &left, std::shared_ptr<Object> &right) {
   Boolean *rightBoolean = dynamic_cast<Boolean *>(right.get());
   Boolean *leftBoolean = dynamic_cast<Boolean *>(left.get());
 
@@ -173,19 +181,16 @@ void VM::executeBooleanComparision(const Opcode &op, std::unique_ptr<Object> &le
     return;
   }
 
-  std::unique_ptr<Object> resultObject = std::make_unique<Boolean>(result);
-  push(resultObject);
+  result ? push(True) : push(False);
 }
 
 void VM::executeBangOperator() {
   auto operand = pop();
   if (operand->type() == BOOLEAN_OBJ) {
     auto boolean = dynamic_cast<Boolean *>(operand.get());
-    std::unique_ptr<Object> result = std::make_unique<Boolean>(!boolean->value);
-    push(result);
+    !boolean->value ? push(True) : push(False);
   } else {
-    std::unique_ptr<Object> result = std::make_unique<Boolean>(false);
-    push(result);
+    push(False);
   }
 }
 
@@ -194,16 +199,16 @@ void VM::executeMinusOperator() {
 
   if (operand->type() == INTEGER_OBJ) {
     auto integer = dynamic_cast<Integer *>(operand.get());
-    std::unique_ptr<Object> result = std::make_unique<Integer>(-integer->value);
+    std::shared_ptr<Object> result = std::make_shared<Integer>(-integer->value);
     push(result);
   } else {
     spdlog::error("unsupported type for negation: {}", operand->type());
   }
 }
 
-std::unique_ptr<Object> VM::lastPoppedStackElem() { return std::move(lastPopped); }
+std::shared_ptr<Object> VM::lastPoppedStackElem() { return lastPopped; }
 
-bool VM::isTruthy(std::unique_ptr<Object> &object) {
+bool VM::isTruthy(std::shared_ptr<Object> &object) {
   if (object->type() == BOOLEAN_OBJ) {
     auto boolean = dynamic_cast<Boolean *>(object.get());
     return boolean->value;
