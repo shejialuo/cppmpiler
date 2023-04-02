@@ -24,21 +24,34 @@ struct EmittedInstruction {
   int position;
 
   EmittedInstruction() = default;
-  EmittedInstruction(const EmittedInstruction &b) = delete;
+  EmittedInstruction(const EmittedInstruction &b) = default;
   EmittedInstruction(const Opcode &op_, int p) : op{op_}, position{p} {}
+};
+
+struct CompilationScope {
+  Instructions instructions{};
+  EmittedInstruction lastInstruction{};
+  EmittedInstruction previousInstruction{};
+
+  CompilationScope() = default;
 };
 
 class Compiler {
 private:
   Bytecode bytecode;
-  EmittedInstruction lastInstruction{};
-  EmittedInstruction previousInstruction{};
   std::shared_ptr<SymbolTable> symbolTable;
+  std::vector<CompilationScope> scopes;
+  int scopeIndex;
 
 public:
-  Compiler();
-  Compiler(std::vector<std::shared_ptr<Object>> &constants, std::shared_ptr<SymbolTable> &table) : symbolTable{table} {
+  Compiler() : scopeIndex{0} {
+    scopes.push_back(CompilationScope{});
+    symbolTable = std::make_shared<SymbolTable>();
+  }
+  Compiler(std::vector<std::shared_ptr<Object>> &constants, std::shared_ptr<SymbolTable> &table)
+      : symbolTable{table}, scopeIndex{0} {
     bytecode.constants = constants;
+    scopes.push_back(CompilationScope{});
   }
   Compiler(const Bytecode &b) = delete;
 
@@ -85,7 +98,7 @@ public:
    * @brief Return whether the last instruction op is pop
    *
    */
-  inline bool lastInstructionIsPop() const { return lastInstruction.op == Ops::OpPop; }
+  inline bool lastInstructionIsPop() const { return scopes[scopeIndex].lastInstruction.op == Ops::OpPop; }
 
   /**
    * @brief Remove the last pop instruction
@@ -110,12 +123,39 @@ public:
   void changeOperand(int pos, int operand);
 
   /**
+   * @brief return current scope's instructions reference
+   *
+   * @return Instructions&
+   */
+  inline Instructions &currentInstructions() { return scopes[scopeIndex].instructions; }
+
+  /**
    * @brief Return the current bytecode, and the bytecode
    * in the class should not use anymore.
    *
    * @return Bytecode
    */
-  inline Bytecode &getBytecode() { return bytecode; };
+  inline Bytecode &getBytecode() {
+    bytecode.instructions = currentInstructions();
+    return bytecode;
+  };
+
+  /**
+   * @brief Enter a new scope
+   *
+   */
+  void enterScope();
+
+  /**
+   * @brief Leave the current scope
+   *
+   * @return Instructions
+   */
+  Instructions leaveScope();
+
+  inline int getScopeIndex() { return scopeIndex; }
+
+  inline CompilationScope &currentScope() { return scopes[scopeIndex]; }
 };
 
 #endif  // _COMPILER_COMPILER_HPP_

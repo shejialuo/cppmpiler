@@ -50,6 +50,9 @@ struct Ops {
   static const Opcode OpSetGlobal;
   static const Opcode OpArray;
   static const Opcode OpIndex;
+  static const Opcode OpCall;
+  static const Opcode OpReturnValue;
+  static const Opcode OpReturn;
 };
 
 /**

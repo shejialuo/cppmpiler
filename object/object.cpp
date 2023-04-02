@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <string_view>
 
@@ -13,6 +14,7 @@ constexpr std::string_view ERROR_OBJ = "ERROR";
 constexpr std::string_view STRING_OBJ = "STRING";
 constexpr std::string_view BUILTIN_OBJ = "BUILTIN";
 constexpr std::string_view ARRAY_OBJ = "ARRAY";
+constexpr std::string_view COMPILED_FUNCTION_OBJ = "COMPILED_FUNCTION";
 
 Integer::Integer(int64_t v) : value{v} {}
 std::string Integer::inspect() { return std::to_string(value); }
@@ -60,6 +62,20 @@ std::string Function::inspect() {
   return info;
 }
 ObjectType Function::type() { return std::string(FUNCTION_OBJ); }
+
+CompiledFunction::CompiledFunction(Instructions &&i) { instructions = std::move(i); }
+
+std::string CompiledFunction::inspect() {
+  const void *address = static_cast<const void *>(this);
+
+  std::stringstream ss;
+  ss << address;
+
+  std::string info = "CompiledFunction" + ss.str();
+
+  return info;
+}
+ObjectType CompiledFunction::type() { return std::string(COMPILED_FUNCTION_OBJ); }
 
 Builtin::Builtin(BuiltinFunction f) : fn{f} {}
 std::string Builtin::inspect() { return "builtin function"; }

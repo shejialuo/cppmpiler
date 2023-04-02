@@ -10,6 +10,8 @@
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <utility>
+#include <variant>
 #include <vector>
 
 template <typename T>
@@ -26,7 +28,7 @@ struct CompilerTestCase {
 
 std::unique_ptr<Program> parse(const std::string &input);
 Instructions concatInstructions(std::vector<Instructions> &instructions);
-bool testInstructions(const Instructions &expected, const Instructions &actual);
+bool testInstructions(std::vector<Instructions> &expected, const Instructions &actual);
 bool testIntegerObject(int expected, Object *actual);
 bool testStringObject(const std::string &expected, Object *actual);
 
@@ -49,6 +51,27 @@ bool testConstants(std::vector<T> &expected, std::vector<std::shared_ptr<Object>
       if (!testStringObject(expected[i], actual[i].get())) {
         return false;
       }
+    } else if constexpr (std::is_same_v<std::variant<int, std::vector<Instructions>>, T>) {
+      if (std::holds_alternative<int>(expected[i])) {
+        if (!testIntegerObject(std::get<int>(expected[i]), actual[i].get())) {
+          return false;
+        }
+      } else if (std::holds_alternative<std::vector<Instructions>>(expected[i])) {
+        CompiledFunction *compiledFunction = dynamic_cast<CompiledFunction *>(actual[i].get());
+        if (compiledFunction == nullptr) {
+          spdlog::error("object is not CompiledFunction. got={}", actual[i]->type());
+          return false;
+        }
+
+        auto &instructions = std::get<std::vector<Instructions>>(expected[i]);
+
+        if (!testInstructions(instructions, compiledFunction->instructions)) {
+          return false;
+        }
+      }
+    } else {
+      spdlog::error("unsupported type for testConstants");
+      return false;
     }
   }
 
@@ -416,7 +439,7 @@ TEST(Compiler, TestStringExpressions) {
     compiler.compile(program.get());
     auto instructions = compiler.getBytecode().instructions;
     EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
-    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+    EXPECT_TRUE(testConstants<std::string>(test.expectedConstants, compiler.getBytecode().constants));
   }
 }
 
@@ -497,4 +520,63 @@ TEST(Compiler, TestIndexExpressions) {
     EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
     EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
   }
+}
+
+TEST(Compiler, TestFunctions) {
+  std::vector<CompilerTestCase<std::variant<int, std::vector<Instructions>>>> tests{
+      {
+          "fn() { return 5 + 10 }",
+          {
+              5,
+              10,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpConstant, {1}),
+                      Code::make(Ops::OpAdd, {}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}
+
+TEST(Compiler, TestCompilerScopes) {
+  Compiler compiler{};
+
+  EXPECT_EQ(0, compiler.getScopeIndex());
+
+  compiler.emit(Ops::OpMul, {});
+
+  compiler.enterScope();
+  EXPECT_EQ(1, compiler.getScopeIndex());
+
+  compiler.emit(Ops::OpSub, {});
+  EXPECT_EQ(1, compiler.currentInstructions().size());
+  EXPECT_EQ(Ops::OpSub, compiler.currentScope().lastInstruction.op);
+
+  Instructions instructions = compiler.leaveScope();
+  EXPECT_EQ(1, instructions.size());
+
+  EXPECT_EQ(0, compiler.getScopeIndex());
+
+  compiler.emit(Ops::OpAdd, {});
+  EXPECT_EQ(2, compiler.currentInstructions().size());
+  EXPECT_EQ(Ops::OpAdd, compiler.currentScope().lastInstruction.op);
+  EXPECT_EQ(Ops::OpMul, compiler.currentScope().previousInstruction.op);
 }

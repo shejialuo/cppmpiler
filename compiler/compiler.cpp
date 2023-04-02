@@ -8,8 +8,6 @@
 
 #include <memory>
 
-Compiler::Compiler() { symbolTable = std::make_shared<SymbolTable>(); }
-
 void Compiler::compile(Node *node) {
   Program *program = dynamic_cast<Program *>(node);
 
@@ -104,7 +102,7 @@ void Compiler::compile(Node *node) {
     // If there is no else branch, we can set the `OpJumpNotTruthy` operand
     if (ifExpression->alternative == nullptr) {
       // get the consequence position
-      int afterConsequencePosition = bytecode.instructions.size();
+      int afterConsequencePosition = currentInstructions().size();
       //! Pay attention
       // Here, we change the value to be 1, it may seem strange, but
       // it is because we need to jump over the `OpPop` instruction.
@@ -120,7 +118,7 @@ void Compiler::compile(Node *node) {
       // difficult, it is the same idea.
       int jumpPosition = emit(Ops::OpJump, {9999});
 
-      int afterConsequencePosition = bytecode.instructions.size();
+      int afterConsequencePosition = currentInstructions().size();
       changeOperand(jumpNotTruthyPosition, afterConsequencePosition);
 
       compile(ifExpression->alternative.get());
@@ -129,7 +127,7 @@ void Compiler::compile(Node *node) {
         removeLastPop();
       }
 
-      int afterAlternativePosition = bytecode.instructions.size();
+      int afterAlternativePosition = currentInstructions().size();
       changeOperand(jumpPosition, afterAlternativePosition);
     }
   }
@@ -182,6 +180,27 @@ void Compiler::compile(Node *node) {
 
     emit(Ops::OpIndex, {});
   }
+
+  FunctionLiteral *functionLiteral = dynamic_cast<FunctionLiteral *>(node);
+  if (functionLiteral != nullptr) {
+    // We should create a new scope for this new function
+    enterScope();
+
+    compile(functionLiteral->body.get());
+
+    Instructions instructions = leaveScope();
+
+    std::unique_ptr<Object> compiledFunction = std::make_unique<CompiledFunction>(std::move(instructions));
+
+    emit(Ops::OpConstant, {addConstant(compiledFunction)});
+  }
+
+  ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(node);
+  if (returnStatement != nullptr) {
+    compile(returnStatement->returnValue.get());
+
+    emit(Ops::OpReturnValue, {});
+  }
 }
 
 int Compiler::addConstant(std::unique_ptr<Object> &object) {
@@ -199,40 +218,54 @@ int Compiler::emit(const Opcode &op, const std::vector<int> &operands) {
 }
 
 int Compiler::addInstruction(Instructions &instructions) {
-  int posNewInstruction = bytecode.instructions.size();
+  int posNewInstruction = currentInstructions().size();
 
   for (auto &&instruction : instructions) {
-    bytecode.instructions.push_back(instruction);
+    currentInstructions().push_back(instruction);
   }
 
   return posNewInstruction;
 }
 
 void Compiler::setLastInstruction(const Opcode &op, int pos) {
-  previousInstruction.op = lastInstruction.op;
-  previousInstruction.position = lastInstruction.position;
+  currentScope().previousInstruction.op = currentScope().lastInstruction.op;
+  currentScope().previousInstruction.position = currentScope().lastInstruction.position;
 
-  lastInstruction.op = op;
-  lastInstruction.position = pos;
+  currentScope().lastInstruction.op = op;
+  currentScope().lastInstruction.position = pos;
 }
 
 void Compiler::removeLastPop() {
-  bytecode.instructions.erase(bytecode.instructions.begin() + lastInstruction.position);
+  currentInstructions().erase(currentInstructions().begin() + currentScope().lastInstruction.position);
 
-  lastInstruction.op = previousInstruction.op;
-  lastInstruction.position = previousInstruction.position;
+  currentScope().lastInstruction.op = currentScope().previousInstruction.op;
+  currentScope().lastInstruction.position = currentScope().previousInstruction.position;
 }
 
 void Compiler::replaceInstruction(int pos, const Instructions &instruction) {
   // The size must be the same
   for (int i = 0; i < instruction.size(); i++) {
-    bytecode.instructions[pos + i] = instruction[i];
+    currentInstructions()[pos + i] = instruction[i];
   }
 }
 
 void Compiler::changeOperand(int pos, int operand) {
-  auto op = Opcode(bytecode.instructions[pos]);
+  auto op = Opcode(currentInstructions()[pos]);
   auto newInstruction = Code::make(op, {operand});
 
   replaceInstruction(pos, newInstruction);
+}
+
+void Compiler::enterScope() {
+  scopeIndex++;
+  scopes.emplace_back(CompilationScope{});
+}
+
+Instructions Compiler::leaveScope() {
+  Instructions instructions = currentInstructions();
+
+  scopes.pop_back();
+  scopeIndex--;
+
+  return instructions;
 }

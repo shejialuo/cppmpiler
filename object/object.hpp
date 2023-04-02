@@ -17,6 +17,8 @@ using ObjectType = std::string;
 
 using BuiltinFunction = std::function<std::shared_ptr<Object>(std::vector<std::shared_ptr<Object>> &)>;
 
+using Instructions = std::vector<std::byte>;
+
 /**
  * @brief Base class to represent the object
  *
@@ -86,6 +88,21 @@ public:
   Function(std::vector<std::unique_ptr<Identifier>> &&p,
            std::unique_ptr<BlockStatement> &&b,
            std::shared_ptr<Environment> e);
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
+/**
+ * @brief CompiledFunction class represents the compiled function
+ *
+ */
+class CompiledFunction : public Object {
+public:
+  Instructions instructions;
+
+  CompiledFunction() = default;
+  CompiledFunction(Instructions &&i);
 
   ObjectType type() override;
   std::string inspect() override;
