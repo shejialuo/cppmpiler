@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['object_80',['Object',['../classObject.html',1,'']]],
-  ['ops_81',['Ops',['../structOps.html',1,'']]]
+  ['object_85',['Object',['../classObject.html',1,'']]],
+  ['ops_86',['Ops',['../structOps.html',1,'']]]
 ];

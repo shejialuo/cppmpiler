@@ -107,9 +107,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a2801a9e98b0ccc02065c7d5dc9b3d0bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a2801a9e98b0ccc02065c7d5dc9b3d0bb">changeOperand</a> (int pos, int operand)</td></tr>
 <tr class="memdesc:a2801a9e98b0ccc02065c7d5dc9b3d0bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the operand at pos with operand.  <a href="classCompiler.html#a2801a9e98b0ccc02065c7d5dc9b3d0bb">More...</a><br /></td></tr>
 <tr class="separator:a2801a9e98b0ccc02065c7d5dc9b3d0bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d07fb1d1df0187983cd83b44abbb0a7"><td class="memItemLeft" align="right" valign="top">Instructions &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a9d07fb1d1df0187983cd83b44abbb0a7">currentInstructions</a> ()</td></tr>
+<tr class="memdesc:a9d07fb1d1df0187983cd83b44abbb0a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">return current scope's instructions reference  <a href="classCompiler.html#a9d07fb1d1df0187983cd83b44abbb0a7">More...</a><br /></td></tr>
+<tr class="separator:a9d07fb1d1df0187983cd83b44abbb0a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22a69c84dc79e20e687cc8e69ebd8161"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structBytecode.html">Bytecode</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a22a69c84dc79e20e687cc8e69ebd8161">getBytecode</a> ()</td></tr>
 <tr class="memdesc:a22a69c84dc79e20e687cc8e69ebd8161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current bytecode, and the bytecode in the class should not use anymore.  <a href="classCompiler.html#a22a69c84dc79e20e687cc8e69ebd8161">More...</a><br /></td></tr>
 <tr class="separator:a22a69c84dc79e20e687cc8e69ebd8161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2001d229bac994730343dbef1b224a6"><td class="memItemLeft" align="right" valign="top"><a id="ad2001d229bac994730343dbef1b224a6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#ad2001d229bac994730343dbef1b224a6">enterScope</a> ()</td></tr>
+<tr class="memdesc:ad2001d229bac994730343dbef1b224a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter a new scope. <br /></td></tr>
+<tr class="separator:ad2001d229bac994730343dbef1b224a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c40ede88ddb3e244084a22edf0cc5f6"><td class="memItemLeft" align="right" valign="top">Instructions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a3c40ede88ddb3e244084a22edf0cc5f6">leaveScope</a> ()</td></tr>
+<tr class="memdesc:a3c40ede88ddb3e244084a22edf0cc5f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leave the current scope.  <a href="classCompiler.html#a3c40ede88ddb3e244084a22edf0cc5f6">More...</a><br /></td></tr>
+<tr class="separator:a3c40ede88ddb3e244084a22edf0cc5f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd1070e0ad96b0337610e41707b595ac"><td class="memItemLeft" align="right" valign="top"><a id="abd1070e0ad96b0337610e41707b595ac"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getScopeIndex</b> ()</td></tr>
+<tr class="separator:abd1070e0ad96b0337610e41707b595ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e7e6c6dfb186fbc179f85646fa45992"><td class="memItemLeft" align="right" valign="top"><a id="a7e7e6c6dfb186fbc179f85646fa45992"></a>
+<a class="el" href="structCompilationScope.html">CompilationScope</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>currentScope</b> ()</td></tr>
+<tr class="separator:a7e7e6c6dfb186fbc179f85646fa45992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2a80590f70c0e41a879508805644ca2e"></a>
@@ -230,6 +246,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a9d07fb1d1df0187983cd83b44abbb0a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d07fb1d1df0187983cd83b44abbb0a7">&#9670;&nbsp;</a></span>currentInstructions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Instructions&amp; Compiler::currentInstructions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>return current scope's instructions reference </p>
+<dl class="section return"><dt>Returns</dt><dd>Instructions&amp; </dd></dl>
+
+</div>
+</div>
 <a id="ae7df83c48d2ef5befd6da858c21ba384"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7df83c48d2ef5befd6da858c21ba384">&#9670;&nbsp;</a></span>emit()</h2>
 
@@ -293,6 +337,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Return the current bytecode, and the bytecode in the class should not use anymore. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structBytecode.html">Bytecode</a> </dd></dl>
+
+</div>
+</div>
+<a id="a3c40ede88ddb3e244084a22edf0cc5f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c40ede88ddb3e244084a22edf0cc5f6">&#9670;&nbsp;</a></span>leaveScope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Instructions Compiler::leaveScope </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Leave the current scope. </p>
+<dl class="section return"><dt>Returns</dt><dd>Instructions </dd></dl>
 
 </div>
 </div>
