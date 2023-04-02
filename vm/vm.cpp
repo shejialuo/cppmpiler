@@ -17,6 +17,12 @@ constexpr std::string_view ARRAY_OBJ = "ARRAY";
 std::shared_ptr<Object> VM::True = std::make_shared<Boolean>(true);
 std::shared_ptr<Object> VM::False = std::make_shared<Boolean>(false);
 
+static int readTwoBytes(Instructions &instructions, int ip);
+
+static int readTwoBytes(Instructions &instructions, int ip) {
+  return (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+}
+
 Object *VM::stackTop() {
   if (sp == 0) {
     return nullptr;
@@ -29,7 +35,7 @@ void VM::run() {
     auto op = Opcode(instructions[ip]);
     if (op == Ops::OpConstant) {
       // Restore the index value here
-      int index = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      int index = readTwoBytes(instructions, ip);
       ip += 2;
 
       push(constants[index]);
@@ -48,11 +54,11 @@ void VM::run() {
     } else if (op == Ops::OpMinus) {
       executeMinusOperator();
     } else if (op == Ops::OpJump) {
-      int position = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      int position = readTwoBytes(instructions, ip);
       // We should jump to the position - 1 because the for loop will increment it
       ip = position - 1;
     } else if (op == Ops::OpJumpNotTruthy) {
-      int position = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      int position = readTwoBytes(instructions, ip);
 
       // Go to the if branch
       ip += 2;
@@ -63,16 +69,16 @@ void VM::run() {
         ip = position - 1;
       }
     } else if (op == Ops::OpSetGlobal) {
-      int globalIndex = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      int globalIndex = readTwoBytes(instructions, ip);
       ip += 2;
       (*globals)[globalIndex] = pop();
     } else if (op == Ops::OpGetGlobal) {
-      int globalIndex = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      int globalIndex = readTwoBytes(instructions, ip);
       ip += 2;
       auto &value = (*globals)[globalIndex];
       push((*globals)[globalIndex]);
     } else if (op == Ops::OpArray) {
-      int numElements = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      int numElements = readTwoBytes(instructions, ip);
       ip += 2;
 
       auto array = buildArray(sp - numElements, sp);
