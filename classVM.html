@@ -123,10 +123,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ad39181eafafc9050221bb45c003e5ee2">executeMinusOperator</a> ()</td></tr>
 <tr class="memdesc:ad39181eafafc9050221bb45c003e5ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the minus operator, get the value from the stack <br /></td></tr>
 <tr class="separator:ad39181eafafc9050221bb45c003e5ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae706473ae26bfc2a47e780ddec3879b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ae706473ae26bfc2a47e780ddec3879b9">executeIndexExpression</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;index)</td></tr>
+<tr class="memdesc:ae706473ae26bfc2a47e780ddec3879b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the index expression  <a href="classVM.html#ae706473ae26bfc2a47e780ddec3879b9">More...</a><br /></td></tr>
+<tr class="separator:ae706473ae26bfc2a47e780ddec3879b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0905da65aeee8137c81f23aa8fbfb95f"><td class="memItemLeft" align="right" valign="top"><a id="a0905da65aeee8137c81f23aa8fbfb95f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a0905da65aeee8137c81f23aa8fbfb95f">executeArrayIndex</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;index)</td></tr>
+<tr class="memdesc:a0905da65aeee8137c81f23aa8fbfb95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the array index <br /></td></tr>
+<tr class="separator:a0905da65aeee8137c81f23aa8fbfb95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0872afe9210b5be9a64192b76df53a4"><td class="memItemLeft" align="right" valign="top"><a id="ae0872afe9210b5be9a64192b76df53a4"></a>
 std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ae0872afe9210b5be9a64192b76df53a4">lastPoppedStackElem</a> ()</td></tr>
 <tr class="memdesc:ae0872afe9210b5be9a64192b76df53a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">For test only get last popped. <br /></td></tr>
 <tr class="separator:ae0872afe9210b5be9a64192b76df53a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b121dc0dad7cd72cbc8c701976ea40c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a8b121dc0dad7cd72cbc8c701976ea40c">buildArray</a> (int startIndex, int endIndex)</td></tr>
+<tr class="memdesc:a8b121dc0dad7cd72cbc8c701976ea40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">build the array object  <a href="classVM.html#a8b121dc0dad7cd72cbc8c701976ea40c">More...</a><br /></td></tr>
+<tr class="separator:a8b121dc0dad7cd72cbc8c701976ea40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44eb57aa8cc25f75dbb7ef0798b45c69"><td class="memItemLeft" align="right" valign="top"><a id="a44eb57aa8cc25f75dbb7ef0798b45c69"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a44eb57aa8cc25f75dbb7ef0798b45c69">isTruthy</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;object)</td></tr>
 <tr class="memdesc:a44eb57aa8cc25f75dbb7ef0798b45c69"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the boolean value from the object <br /></td></tr>
@@ -151,6 +161,44 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
 <tr class="separator:afc6daf19f5367e20129009a35b4c7cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8b121dc0dad7cd72cbc8c701976ea40c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b121dc0dad7cd72cbc8c701976ea40c">&#9670;&nbsp;</a></span>buildArray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; VM::buildArray </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>endIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>build the array object </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startIndex</td><td>the start index of the array </td></tr>
+    <tr><td class="paramname">endIndex</td><td>the end index of the array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
 <a id="a637055df636e0d0cf3a8cb3d2e967c26"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a637055df636e0d0cf3a8cb3d2e967c26">&#9670;&nbsp;</a></span>executeBinaryIntegerOperation()</h2>
 
@@ -285,6 +333,43 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">op</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae706473ae26bfc2a47e780ddec3879b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae706473ae26bfc2a47e780ddec3879b9">&#9670;&nbsp;</a></span>executeIndexExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::executeIndexExpression </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the index expression </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">left</td><td>the left object </td></tr>
+    <tr><td class="paramname">index</td><td>the index object </td></tr>
   </table>
   </dd>
 </dl>
