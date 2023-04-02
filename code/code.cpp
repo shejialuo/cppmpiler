@@ -25,6 +25,7 @@ const Opcode Ops::OpJump{14};
 const Opcode Ops::OpGetGlobal{15};
 const Opcode Ops::OpSetGlobal{16};
 const Opcode Ops::OpArray{17};
+const Opcode Ops::OpIndex{18};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -99,6 +100,10 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
     {
         Ops::OpArray,
         Definition{"OpArray", {2}},
+    },
+    {
+        Ops::OpIndex,
+        Definition{"OpIndex", {}},
     },
 };
 

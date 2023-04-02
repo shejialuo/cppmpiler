@@ -49,6 +49,7 @@ struct Ops {
   static const Opcode OpGetGlobal;
   static const Opcode OpSetGlobal;
   static const Opcode OpArray;
+  static const Opcode OpIndex;
 };
 
 /**

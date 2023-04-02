@@ -174,6 +174,14 @@ void Compiler::compile(Node *node) {
 
     emit(Ops::OpArray, {static_cast<int>(arrayLiteral->elements.size())});
   }
+
+  IndexExpression *indexExpression = dynamic_cast<IndexExpression *>(node);
+  if (indexExpression != nullptr) {
+    compile(indexExpression->left.get());
+    compile(indexExpression->index.get());
+
+    emit(Ops::OpIndex, {});
+  }
 }
 
 int Compiler::addConstant(std::unique_ptr<Object> &object) {

@@ -469,3 +469,32 @@ TEST(Compiler, TestArrayLiterals) {
     EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
   }
 }
+
+TEST(Compiler, TestIndexExpressions) {
+  std::vector<CompilerTestCase<int>> tests{
+      {
+          "[1, 2, 3][1 + 1]",
+          {1, 2, 3, 1, 1},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpArray, {3}),
+              Code::make(Ops::OpConstant, {3}),
+              Code::make(Ops::OpConstant, {4}),
+              Code::make(Ops::OpAdd, {}),
+              Code::make(Ops::OpIndex, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}

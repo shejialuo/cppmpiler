@@ -288,3 +288,11 @@ TEST(VM, TestArrayLiterals) {
     EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }
+
+TEST(VM, TestIndexExpressions) {
+  std::vector<vmTestCase<int>> tests{
+      {"[1, 2, 3][1]", 2},
+      {"[1,2,3][0 + 2]", 3},
+      {"[[1, 1, 1][0][0]]", 1},
+  };
+}

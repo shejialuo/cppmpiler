@@ -86,6 +86,11 @@ void VM::run() {
 
       push(array);
 
+    } else if (op == Ops::OpIndex) {
+      auto index = pop();
+      auto left = pop();
+
+      executeIndexExpression(left, index);
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
@@ -257,4 +262,25 @@ bool VM::isTruthy(std::shared_ptr<Object> &object) {
   }
 
   return true;
+}
+
+void VM::executeIndexExpression(std::shared_ptr<Object> &left, std::shared_ptr<Object> &index) {
+  if (left->type() == ARRAY_OBJ && index->type() == INTEGER_OBJ) {
+    executeArrayIndex(left, index);
+  } else {
+    spdlog::error("index operator not supported: {} {}", left->type(), index->type());
+  }
+}
+
+void VM::executeArrayIndex(std::shared_ptr<Object> &left, std::shared_ptr<Object> &index) {
+  Array *array = dynamic_cast<Array *>(left.get());
+  Integer *integer = dynamic_cast<Integer *>(index.get());
+
+  int i = integer->value;
+
+  if (i < 0 || i >= array->elements.size()) {
+    spdlog::error("index out of bounds: {} {}", i, array->elements.size());
+  } else {
+    push(array->elements[i]);
+  }
 }

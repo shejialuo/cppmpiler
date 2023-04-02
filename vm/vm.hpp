@@ -128,6 +128,20 @@ public:
   void executeMinusOperator();
 
   /**
+   * @brief execute the index expression
+   *
+   * @param left the left object
+   * @param index the index object
+   */
+  void executeIndexExpression(std::shared_ptr<Object> &left, std::shared_ptr<Object> &index);
+
+  /**
+   * @brief execute the array index
+   *
+   */
+  void executeArrayIndex(std::shared_ptr<Object> &left, std::shared_ptr<Object> &index);
+
+  /**
    * @brief For test only get last popped
    *
    */
