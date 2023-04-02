@@ -25,6 +25,7 @@ bool testExpectedObject(const T &expected, Object *actual);
 std::unique_ptr<Program> parse(const std::string &input);
 bool testIntegerObject(int expected, Object *actual);
 bool testBooleanObject(bool expected, Object *actual);
+bool testIntegerArrayObject(const std::vector<int> &expected, Object *actual);
 
 std::unique_ptr<Program> parse(const std::string &input) {
   Lexer lexer{input};
@@ -40,6 +41,8 @@ bool testExpectedObject(const T &expected, Object *actual) {
     return testBooleanObject(expected, actual);
   } else if constexpr (std::is_same_v<std::string, T>) {
     return testStringObject(expected, actual);
+  } else if constexpr (std::is_same_v<std::vector<int>, T>) {
+    return testIntegerArrayObject(expected, actual);
   }
   return false;
 }
@@ -84,6 +87,27 @@ bool testStringObject(const std::string &expected, Object *actual) {
   if (string->value != expected) {
     spdlog::error("object has wrong value. want={}, got={}", expected, string->value);
     return false;
+  }
+
+  return true;
+}
+
+bool testIntegerArrayObject(const std::vector<int> &expected, Object *actual) {
+  auto array = dynamic_cast<const Array *>(actual);
+  if (array == nullptr) {
+    spdlog::error("object is not Array. got={}", actual->type());
+    return false;
+  }
+
+  if (array->elements.size() != expected.size()) {
+    spdlog::error("array has wrong num of elements. want={}, got={}", expected.size(), array->elements.size());
+    return false;
+  }
+
+  for (std::size_t i = 0; i < expected.size(); ++i) {
+    if (!testIntegerObject(expected[i], array->elements[i].get())) {
+      return false;
+    }
   }
 
   return true;
@@ -226,6 +250,28 @@ TEST(VM, TestStringExpressions) {
       {"\"monkey\"", "monkey"},
       {"\"mon\" + \"key\"", "monkey"},
       {"\"mon\" + \"key\" + \"banana\"", "monkeybanana"},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
+
+TEST(VM, TestArrayLiterals) {
+  std::vector<vmTestCase<std::vector<int>>> tests{
+      {"[]", {}},
+      {"[1, 2, 3]", {1, 2, 3}},
+      {"[1 + 2, 3 * 4, 5 + 6]", {3, 12, 11}},
   };
 
   for (auto &&test : tests) {

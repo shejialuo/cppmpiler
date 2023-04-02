@@ -419,3 +419,53 @@ TEST(Compiler, TestStringExpressions) {
     EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
   }
 }
+
+TEST(Compiler, TestArrayLiterals) {
+  std::vector<CompilerTestCase<int>> tests{
+      {
+          "[]",
+          {},
+          {
+              Code::make(Ops::OpArray, {0}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "[1, 2, 3]",
+          {1, 2, 3},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpArray, {3}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "[1 + 2, 3 - 4, 5 * 6]",
+          {1, 2, 3, 4, 5, 6},
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpAdd, {}),
+              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpConstant, {3}),
+              Code::make(Ops::OpSub, {}),
+              Code::make(Ops::OpConstant, {4}),
+              Code::make(Ops::OpConstant, {5}),
+              Code::make(Ops::OpMul, {}),
+              Code::make(Ops::OpArray, {3}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}

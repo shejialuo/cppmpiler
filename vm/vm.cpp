@@ -71,6 +71,15 @@ void VM::run() {
       ip += 2;
       auto &value = (*globals)[globalIndex];
       push((*globals)[globalIndex]);
+    } else if (op == Ops::OpArray) {
+      int numElements = (int(instructions[ip + 1]) << 8) | int(instructions[ip + 2]);
+      ip += 2;
+
+      auto array = buildArray(sp - numElements, sp);
+      sp -= numElements;
+
+      push(array);
+
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
@@ -222,6 +231,18 @@ void VM::executeMinusOperator() {
 }
 
 std::shared_ptr<Object> VM::lastPoppedStackElem() { return lastPopped; }
+
+std::shared_ptr<Object> VM::buildArray(int startIndex, int endIndex) {
+  std::vector<std::shared_ptr<Object>> elements;
+  for (int i = startIndex; i < endIndex; i++) {
+    elements.push_back(stack[i]);
+  }
+
+  auto array = std::make_shared<Array>();
+  array->elements = elements;
+
+  return array;
+}
 
 bool VM::isTruthy(std::shared_ptr<Object> &object) {
   if (object->type() == BOOLEAN_OBJ) {

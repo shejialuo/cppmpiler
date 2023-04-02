@@ -134,6 +134,15 @@ public:
   std::shared_ptr<Object> lastPoppedStackElem();
 
   /**
+   * @brief build the array object
+   *
+   * @param startIndex the start index of the array
+   * @param endIndex the end index of the array
+   * @return std::shared_ptr<Object>
+   */
+  std::shared_ptr<Object> buildArray(int startIndex, int endIndex);
+
+  /**
    * @brief get the boolean value from the object
    *
    */

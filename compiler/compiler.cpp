@@ -165,6 +165,15 @@ void Compiler::compile(Node *node) {
     std::unique_ptr<Object> string = std::make_unique<String>(stringLiteral->value);
     emit(Ops::OpConstant, {addConstant(string)});
   }
+
+  ArrayLiteral *arrayLiteral = dynamic_cast<ArrayLiteral *>(node);
+  if (arrayLiteral != nullptr) {
+    for (auto &&element : arrayLiteral->elements) {
+      compile(element.get());
+    }
+
+    emit(Ops::OpArray, {static_cast<int>(arrayLiteral->elements.size())});
+  }
 }
 
 int Compiler::addConstant(std::unique_ptr<Object> &object) {
