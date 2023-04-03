@@ -1,4 +1,4 @@
-add_library(vm STATIC vm.cpp)
+add_library(vm STATIC vm.cpp frame.cpp)
 
 target_include_directories(vm PUBLIC ../compiler ../code ../object ../ast ../token)
 

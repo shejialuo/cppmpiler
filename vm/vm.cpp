@@ -31,12 +31,17 @@ Object *VM::stackTop() {
 }
 
 void VM::run() {
-  for (int ip = 0; ip < instructions.size(); ip++) {
+  // Must set int to avoid integer compare with unsigned integer
+  int length = currentFrame()->instructions().size() - 1;
+  while (currentFrame()->ip < length) {
+    currentFrame()->ip++;
+    int ip = currentFrame()->ip;
+    Instructions &instructions = currentFrame()->instructions();
     auto op = Opcode(instructions[ip]);
     if (op == Ops::OpConstant) {
       // Restore the index value here
       int index = readTwoBytes(instructions, ip);
-      ip += 2;
+      currentFrame()->ip += 2;
 
       push(constants[index]);
     } else if (op == Ops::OpAdd || op == Ops::OpSub || op == Ops::OpMul || op == Ops::OpDiv) {
@@ -56,30 +61,30 @@ void VM::run() {
     } else if (op == Ops::OpJump) {
       int position = readTwoBytes(instructions, ip);
       // We should jump to the position - 1 because the for loop will increment it
-      ip = position - 1;
+      currentFrame()->ip = position - 1;
     } else if (op == Ops::OpJumpNotTruthy) {
       int position = readTwoBytes(instructions, ip);
 
       // Go to the if branch
-      ip += 2;
+      currentFrame()->ip += 2;
 
       auto condition = pop();
       if (!isTruthy(condition)) {
         // Go to the else branch
-        ip = position - 1;
+        currentFrame()->ip = position - 1;
       }
     } else if (op == Ops::OpSetGlobal) {
       int globalIndex = readTwoBytes(instructions, ip);
-      ip += 2;
+      currentFrame()->ip += 2;
       (*globals)[globalIndex] = pop();
     } else if (op == Ops::OpGetGlobal) {
       int globalIndex = readTwoBytes(instructions, ip);
-      ip += 2;
+      currentFrame()->ip += 2;
       auto &value = (*globals)[globalIndex];
       push((*globals)[globalIndex]);
     } else if (op == Ops::OpArray) {
       int numElements = readTwoBytes(instructions, ip);
-      ip += 2;
+      currentFrame()->ip += 2;
 
       auto array = buildArray(sp - numElements, sp);
       sp -= numElements;
@@ -283,4 +288,16 @@ void VM::executeArrayIndex(std::shared_ptr<Object> &left, std::shared_ptr<Object
   } else {
     push(array->elements[i]);
   }
+}
+
+std::shared_ptr<Frame> &VM::currentFrame() { return frames[framesIndex - 1]; }
+
+void VM::pushFrame(std::shared_ptr<Frame> &frame) {
+  frames[framesIndex] = frame;
+  framesIndex++;
+}
+
+std::shared_ptr<Frame> VM::popFrame() {
+  framesIndex--;
+  return frames[framesIndex];
 }
