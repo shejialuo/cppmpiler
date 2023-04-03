@@ -205,6 +205,12 @@ void Compiler::compile(Node *node) {
 
     emit(Ops::OpReturnValue, {});
   }
+
+  CallExpression *callExpression = dynamic_cast<CallExpression *>(node);
+  if (callExpression != nullptr) {
+    compile(callExpression->function.get());
+    emit(Ops::OpCall, {});
+  }
 }
 
 int Compiler::addConstant(std::unique_ptr<Object> &object) {

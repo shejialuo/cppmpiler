@@ -620,3 +620,56 @@ TEST(Compiler, TestCompilerScopes) {
   EXPECT_EQ(Ops::OpAdd, compiler.currentScope().lastInstruction.op);
   EXPECT_EQ(Ops::OpMul, compiler.currentScope().previousInstruction.op);
 }
+
+TEST(Compiler, TestFunctionCalls) {
+  std::vector<CompilerTestCase<std::variant<int, std::vector<Instructions>>>> tests{
+      {
+          "fn() { 24 }();",
+          {
+              24,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpCall, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "let noArg = fn() { 24 }; \
+           noArg();",
+          {
+              24,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpSetGlobal, {0}),
+              Code::make(Ops::OpGetGlobal, {0}),
+              Code::make(Ops::OpCall, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}
