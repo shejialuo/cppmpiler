@@ -93,10 +93,10 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a85e428924ed8741d524707b2a2fe7a4d">setLastInstruction</a> (const Opcode &amp;op, int pos)</td></tr>
 <tr class="memdesc:a85e428924ed8741d524707b2a2fe7a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Last Instruction object. <br /></td></tr>
 <tr class="separator:a85e428924ed8741d524707b2a2fe7a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95db22ed4fe3e4134aa8d9ebf39e0624"><td class="memItemLeft" align="right" valign="top"><a id="a95db22ed4fe3e4134aa8d9ebf39e0624"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a95db22ed4fe3e4134aa8d9ebf39e0624">lastInstructionIsPop</a> () const</td></tr>
-<tr class="memdesc:a95db22ed4fe3e4134aa8d9ebf39e0624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the last instruction op is pop. <br /></td></tr>
-<tr class="separator:a95db22ed4fe3e4134aa8d9ebf39e0624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43f4c0dae41000675b0b08d334a52913"><td class="memItemLeft" align="right" valign="top"><a id="a43f4c0dae41000675b0b08d334a52913"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a43f4c0dae41000675b0b08d334a52913">lastInstructionIs</a> (const Opcode &amp;op)</td></tr>
+<tr class="memdesc:a43f4c0dae41000675b0b08d334a52913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the last instruction op is pop. <br /></td></tr>
+<tr class="separator:a43f4c0dae41000675b0b08d334a52913"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e006174d79b35d41ad555df2d55231c"><td class="memItemLeft" align="right" valign="top"><a id="a7e006174d79b35d41ad555df2d55231c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a7e006174d79b35d41ad555df2d55231c">removeLastPop</a> ()</td></tr>
 <tr class="memdesc:a7e006174d79b35d41ad555df2d55231c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the last pop instruction. <br /></td></tr>
@@ -120,6 +120,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a3c40ede88ddb3e244084a22edf0cc5f6"><td class="memItemLeft" align="right" valign="top">Instructions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a3c40ede88ddb3e244084a22edf0cc5f6">leaveScope</a> ()</td></tr>
 <tr class="memdesc:a3c40ede88ddb3e244084a22edf0cc5f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leave the current scope.  <a href="classCompiler.html#a3c40ede88ddb3e244084a22edf0cc5f6">More...</a><br /></td></tr>
 <tr class="separator:a3c40ede88ddb3e244084a22edf0cc5f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ffd1d0a8789172c16e673e16e9eabac"><td class="memItemLeft" align="right" valign="top"><a id="a8ffd1d0a8789172c16e673e16e9eabac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompiler.html#a8ffd1d0a8789172c16e673e16e9eabac">replaceLastPopWithReturn</a> ()</td></tr>
+<tr class="memdesc:a8ffd1d0a8789172c16e673e16e9eabac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the last pop instruction with return. <br /></td></tr>
+<tr class="separator:a8ffd1d0a8789172c16e673e16e9eabac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd1070e0ad96b0337610e41707b595ac"><td class="memItemLeft" align="right" valign="top"><a id="abd1070e0ad96b0337610e41707b595ac"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>getScopeIndex</b> ()</td></tr>
 <tr class="separator:abd1070e0ad96b0337610e41707b595ac"><td class="memSeparator" colspan="2">&#160;</td></tr>

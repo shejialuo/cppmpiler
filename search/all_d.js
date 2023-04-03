@@ -5,8 +5,9 @@ var searchData=
   ['readstring_118',['readString',['../classLexer.html#a91e3b1b45647e8492fe380aa794caf36',1,'Lexer']]],
   ['removelastpop_119',['removeLastPop',['../classCompiler.html#a7e006174d79b35d41ad555df2d55231c',1,'Compiler']]],
   ['replaceinstruction_120',['replaceInstruction',['../classCompiler.html#a5fe3745b972916edaa8b346cbf185542',1,'Compiler']]],
-  ['rest_121',['rest',['../classEvaluator.html#adc36ff61ad4acbac96002808e821ae20',1,'Evaluator']]],
-  ['returnstatement_122',['ReturnStatement',['../classReturnStatement.html',1,'']]],
-  ['returnvalue_123',['ReturnValue',['../classReturnValue.html',1,'']]],
-  ['run_124',['run',['../classVM.html#ae3743d27f798753f65caa01f88859d5b',1,'VM']]]
+  ['replacelastpopwithreturn_121',['replaceLastPopWithReturn',['../classCompiler.html#a8ffd1d0a8789172c16e673e16e9eabac',1,'Compiler']]],
+  ['rest_122',['rest',['../classEvaluator.html#adc36ff61ad4acbac96002808e821ae20',1,'Evaluator']]],
+  ['returnstatement_123',['ReturnStatement',['../classReturnStatement.html',1,'']]],
+  ['returnvalue_124',['ReturnValue',['../classReturnValue.html',1,'']]],
+  ['run_125',['run',['../classVM.html#ae3743d27f798753f65caa01f88859d5b',1,'VM']]]
 ];
