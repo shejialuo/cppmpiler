@@ -141,6 +141,16 @@ std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;<
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a44eb57aa8cc25f75dbb7ef0798b45c69">isTruthy</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;object)</td></tr>
 <tr class="memdesc:a44eb57aa8cc25f75dbb7ef0798b45c69"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the boolean value from the object <br /></td></tr>
 <tr class="separator:a44eb57aa8cc25f75dbb7ef0798b45c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43dce478f290859bb9dccd31acbd400d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classFrame.html">Frame</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a43dce478f290859bb9dccd31acbd400d">currentFrame</a> ()</td></tr>
+<tr class="memdesc:a43dce478f290859bb9dccd31acbd400d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current frame  <a href="classVM.html#a43dce478f290859bb9dccd31acbd400d">More...</a><br /></td></tr>
+<tr class="separator:a43dce478f290859bb9dccd31acbd400d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a210417bd5e66e0450a155dd5670ecba7"><td class="memItemLeft" align="right" valign="top"><a id="a210417bd5e66e0450a155dd5670ecba7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a210417bd5e66e0450a155dd5670ecba7">pushFrame</a> (std::shared_ptr&lt; <a class="el" href="classFrame.html">Frame</a> &gt; &amp;frame)</td></tr>
+<tr class="memdesc:a210417bd5e66e0450a155dd5670ecba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">push the frame <br /></td></tr>
+<tr class="separator:a210417bd5e66e0450a155dd5670ecba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b7a6feceddfbbed5e688f832d09f75d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classFrame.html">Frame</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a8b7a6feceddfbbed5e688f832d09f75d">popFrame</a> ()</td></tr>
+<tr class="memdesc:a8b7a6feceddfbbed5e688f832d09f75d"><td class="mdescLeft">&#160;</td><td class="mdescRight">pop the frame  <a href="classVM.html#a8b7a6feceddfbbed5e688f832d09f75d">More...</a><br /></td></tr>
+<tr class="separator:a8b7a6feceddfbbed5e688f832d09f75d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -150,15 +160,18 @@ std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object
 <tr class="memitem:a94d46eeae4760e7490aeed1bb849c70d"><td class="memItemLeft" align="right" valign="top"><a id="a94d46eeae4760e7490aeed1bb849c70d"></a>
 std::shared_ptr&lt; std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>globals</b></td></tr>
 <tr class="separator:a94d46eeae4760e7490aeed1bb849c70d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9d0fb25a6c12e9f37020c75b87fc927"><td class="memItemLeft" align="right" valign="top"><a id="af9d0fb25a6c12e9f37020c75b87fc927"></a>
-Instructions&#160;</td><td class="memItemRight" valign="bottom"><b>instructions</b></td></tr>
-<tr class="separator:af9d0fb25a6c12e9f37020c75b87fc927"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad26a0d3c463695833d3bdb2f874a6e67"><td class="memItemLeft" align="right" valign="top"><a id="ad26a0d3c463695833d3bdb2f874a6e67"></a>
 std::vector&lt; std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stack</b></td></tr>
 <tr class="separator:ad26a0d3c463695833d3bdb2f874a6e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc6daf19f5367e20129009a35b4c7cbe"><td class="memItemLeft" align="right" valign="top"><a id="afc6daf19f5367e20129009a35b4c7cbe"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
 <tr class="separator:afc6daf19f5367e20129009a35b4c7cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2064a17570fa84c6749616743817d05e"><td class="memItemLeft" align="right" valign="top"><a id="a2064a17570fa84c6749616743817d05e"></a>
+std::vector&lt; std::shared_ptr&lt; <a class="el" href="classFrame.html">Frame</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>frames</b></td></tr>
+<tr class="separator:a2064a17570fa84c6749616743817d05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e568d23b78e7bbc870c200276f7fd9"><td class="memItemLeft" align="right" valign="top"><a id="a58e568d23b78e7bbc870c200276f7fd9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>framesIndex</b></td></tr>
+<tr class="separator:a58e568d23b78e7bbc870c200276f7fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8b121dc0dad7cd72cbc8c701976ea40c"></a>
@@ -196,6 +209,26 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a43dce478f290859bb9dccd31acbd400d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43dce478f290859bb9dccd31acbd400d">&#9670;&nbsp;</a></span>currentFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classFrame.html">Frame</a> &gt; &amp; VM::currentFrame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the current frame </p>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Frame&gt; </dd></dl>
 
 </div>
 </div>
@@ -393,6 +426,26 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sp</b></td></tr>
 
 <p>pop the object from the stack </p>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a8b7a6feceddfbbed5e688f832d09f75d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b7a6feceddfbbed5e688f832d09f75d">&#9670;&nbsp;</a></span>popFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classFrame.html">Frame</a> &gt; VM::popFrame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>pop the frame </p>
+<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Frame&gt; </dd></dl>
 
 </div>
 </div>
