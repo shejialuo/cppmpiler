@@ -94,7 +94,7 @@ void Compiler::compile(Node *node) {
 
     compile(ifExpression->consequence.get());
 
-    if (lastInstructionIsPop()) {
+    if (lastInstructionIs(Ops::OpPop)) {
       // remove the `OpPop` instruction in a block statement
       removeLastPop();
     }
@@ -123,7 +123,7 @@ void Compiler::compile(Node *node) {
 
       compile(ifExpression->alternative.get());
 
-      if (lastInstructionIsPop()) {
+      if (lastInstructionIs(Ops::OpPop)) {
         removeLastPop();
       }
 
@@ -187,6 +187,10 @@ void Compiler::compile(Node *node) {
     enterScope();
 
     compile(functionLiteral->body.get());
+
+    if (lastInstructionIs(Ops::OpPop)) {
+      replaceLastPopWithReturn();
+    }
 
     Instructions instructions = leaveScope();
 
@@ -268,4 +272,10 @@ Instructions Compiler::leaveScope() {
   scopeIndex--;
 
   return instructions;
+}
+
+void Compiler::replaceLastPopWithReturn() {
+  int lastPosition = currentScope().lastInstruction.position;
+  replaceInstruction(lastPosition, Code::make(Ops::OpReturnValue, {}));
+  currentScope().lastInstruction.op = Ops::OpReturnValue;
 }

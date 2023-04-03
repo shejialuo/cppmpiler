@@ -544,6 +544,46 @@ TEST(Compiler, TestFunctions) {
               Code::make(Ops::OpPop, {}),
           },
       },
+      {
+          "fn() { 5 + 10 }",
+          {
+              5,
+              10,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpConstant, {1}),
+                      Code::make(Ops::OpAdd, {}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "fn() {1; 2 }",
+          {
+              1,
+              2,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpPop, {}),
+                      Code::make(Ops::OpConstant, {1}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
   };
 
   for (auto &&test : tests) {

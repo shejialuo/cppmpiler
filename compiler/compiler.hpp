@@ -98,7 +98,9 @@ public:
    * @brief Return whether the last instruction op is pop
    *
    */
-  inline bool lastInstructionIsPop() const { return scopes[scopeIndex].lastInstruction.op == Ops::OpPop; }
+  inline bool lastInstructionIs(const Opcode &op) {
+    return currentInstructions().empty() || scopes[scopeIndex].lastInstruction.op == op;
+  }
 
   /**
    * @brief Remove the last pop instruction
@@ -152,6 +154,12 @@ public:
    * @return Instructions
    */
   Instructions leaveScope();
+
+  /**
+   * @brief Replace the last pop instruction with return
+   *
+   */
+  void replaceLastPopWithReturn();
 
   inline int getScopeIndex() { return scopeIndex; }
 
