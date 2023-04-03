@@ -1,6 +1,7 @@
 #include "vm.hpp"
 
 #include "code.hpp"
+#include "frame.hpp"
 #include "object.hpp"
 #include "spdlog/spdlog.h"
 
@@ -96,6 +97,20 @@ void VM::run() {
       auto left = pop();
 
       executeIndexExpression(left, index);
+    } else if (op == Ops::OpCall) {
+      std::shared_ptr<CompiledFunction> fn = std::dynamic_pointer_cast<CompiledFunction>(stack[sp - 1]);
+      if (fn == nullptr) {
+        spdlog::error("calling non-function");
+      } else {
+        auto frame = std::make_shared<Frame>(fn, -1);
+        pushFrame(frame);
+      }
+    } else if (op == Ops::OpReturnValue) {
+      auto returnValue = pop();
+      popFrame();
+      pop();
+
+      push(returnValue);
     } else {
       spdlog::error("unknown opcode: {}", op);
     }

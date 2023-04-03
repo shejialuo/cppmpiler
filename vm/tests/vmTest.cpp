@@ -296,3 +296,70 @@ TEST(VM, TestIndexExpressions) {
       {"[[1, 1, 1][0][0]]", 1},
   };
 }
+
+TEST(VM, TestCallingFunctionsWithoutArguments) {
+  std::vector<vmTestCase<int>> tests{
+      {"let fivePlusTen = fn() { 5 + 10; }; fivePlusTen();", 15},
+      {"let one = fn() { 1; }; let two = fn() { 2; }; one() + two();", 3},
+      {"let a = fn() { 1; }; let b = fn() { a() + 1; }; let c = fn() { b() + 1; }; c();", 3},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
+
+TEST(VM, TestFunctionsWithReturnStatement) {
+  std::vector<vmTestCase<int>> tests{
+      {"let earlyExit = fn() { return 99; 100; }; earlyExit();", 99},
+      {"let earlyExit = fn() { return 99; return 100; }; earlyExit();", 99},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
+
+TEST(VM, TestFirstClassFunctions) {
+  std::vector<vmTestCase<int>> tests{
+      {"let returnsOneReturner = fn() { fn() { 1; }; }; let returnsOne = returnsOneReturner(); returnsOne();", 1},
+      {"let returnsOneReturner = fn() { let returnsOne = fn() { 1; }; returnsOne; }; let returnsOne = "
+       "returnsOneReturner(); returnsOne();",
+       1},
+      {"let returnsOneReturner = fn() { let returnsOne = fn() { 1; }; returnsOne; }; returnsOneReturner()();", 1},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}
