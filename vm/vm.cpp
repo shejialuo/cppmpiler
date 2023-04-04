@@ -96,11 +96,14 @@ void VM::run() {
 
       executeIndexExpression(left, index);
     } else if (op == Ops::OpCall) {
-      std::shared_ptr<CompiledFunction> fn = std::dynamic_pointer_cast<CompiledFunction>(stack[sp - 1]);
+      int argumentSize = int(instructions[ip + 1]);
+      currentFrame()->ip++;
+
+      std::shared_ptr<CompiledFunction> fn = std::dynamic_pointer_cast<CompiledFunction>(stack[sp - 1 - argumentSize]);
       if (fn == nullptr) {
         spdlog::error("calling non-function");
       } else {
-        auto frame = std::make_shared<Frame>(fn, sp);
+        auto frame = std::make_shared<Frame>(fn, sp - argumentSize);
         pushFrame(frame);
 
         // we extend the sp value for storing locals, the local constant

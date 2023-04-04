@@ -642,7 +642,7 @@ TEST(Compiler, TestFunctionCalls) {
           },
           {
               Code::make(Ops::OpConstant, {1}),
-              Code::make(Ops::OpCall, {}),
+              Code::make(Ops::OpCall, {0}),
               Code::make(Ops::OpPop, {}),
           },
       },
@@ -663,7 +663,7 @@ TEST(Compiler, TestFunctionCalls) {
               Code::make(Ops::OpConstant, {1}),
               Code::make(Ops::OpSetGlobal, {0}),
               Code::make(Ops::OpGetGlobal, {0}),
-              Code::make(Ops::OpCall, {}),
+              Code::make(Ops::OpCall, {0}),
               Code::make(Ops::OpPop, {}),
           },
       },

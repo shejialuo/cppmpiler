@@ -394,3 +394,29 @@ TEST(VM, TestCallingFunctionsWithBindings) {
     EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }
+
+TEST(VM, TestCallingFunctionsWithArgumentsAndBindings) {
+  std::vector<vmTestCase<int>> tests{
+      {"let identity = fn(a) { a; }; identity(4);", 4},
+      {"let sum = fn(a, b) { a + b; }; sum(1, 2);", 3},
+      {"let sum = fn(a, b) { let c = a + b; c; }; sum(1, 2);", 3},
+      {"let sum = fn(a, b) { let c = a + b; c; }; sum(1, 2) + sum(3, 4);", 10},
+      {"let sum = fn(a, b) { let c = a + b; c; }; \
+        let outer = fn() { sum(1, 2) + sum(3, 4);}; outer();",
+       10},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}

@@ -112,7 +112,7 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
     },
     {
         Ops::OpCall,
-        Definition{"OpCall", {}},
+        Definition{"OpCall", {1}},
     },
     {
         Ops::OpReturnValue,

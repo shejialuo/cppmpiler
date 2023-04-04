@@ -193,6 +193,10 @@ void Compiler::compile(Node *node) {
     // We should create a new scope for this new function
     enterScope();
 
+    for (auto &&parameter : functionLiteral->parameters) {
+      symbolTable->define(parameter->value);
+    }
+
     compile(functionLiteral->body.get());
 
     if (lastInstructionIs(Ops::OpPop)) {
@@ -217,7 +221,14 @@ void Compiler::compile(Node *node) {
   CallExpression *callExpression = dynamic_cast<CallExpression *>(node);
   if (callExpression != nullptr) {
     compile(callExpression->function.get());
-    emit(Ops::OpCall, {});
+
+    for (auto &&argument : callExpression->arguments) {
+      compile(argument.get());
+    }
+
+    int argumentSize = callExpression->arguments.size();
+
+    emit(Ops::OpCall, {argumentSize});
   }
 }
 
