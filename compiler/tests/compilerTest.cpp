@@ -5,6 +5,7 @@
 #include "object.hpp"
 #include "parser.hpp"
 #include "spdlog/spdlog.h"
+#include "symbolTable.hpp"
 
 #include <gtest/gtest.h>
 #include <memory>
@@ -600,6 +601,7 @@ TEST(Compiler, TestCompilerScopes) {
   Compiler compiler{};
 
   EXPECT_EQ(0, compiler.getScopeIndex());
+  std::shared_ptr<SymbolTable> globalSymbolTable = compiler.currentSymbolTable();
 
   compiler.emit(Ops::OpMul, {});
 
@@ -609,11 +611,14 @@ TEST(Compiler, TestCompilerScopes) {
   compiler.emit(Ops::OpSub, {});
   EXPECT_EQ(1, compiler.currentInstructions().size());
   EXPECT_EQ(Ops::OpSub, compiler.currentScope().lastInstruction.op);
+  EXPECT_EQ(compiler.currentSymbolTable()->getOuter().get(), globalSymbolTable.get());
 
   Instructions instructions = compiler.leaveScope();
   EXPECT_EQ(1, instructions.size());
 
   EXPECT_EQ(0, compiler.getScopeIndex());
+  EXPECT_EQ(compiler.currentSymbolTable().get(), globalSymbolTable.get());
+  EXPECT_EQ(compiler.currentSymbolTable()->getOuter(), nullptr);
 
   compiler.emit(Ops::OpAdd, {});
   EXPECT_EQ(2, compiler.currentInstructions().size());
@@ -659,6 +664,82 @@ TEST(Compiler, TestFunctionCalls) {
               Code::make(Ops::OpSetGlobal, {0}),
               Code::make(Ops::OpGetGlobal, {0}),
               Code::make(Ops::OpCall, {}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+    EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
+  }
+}
+
+TEST(Compiler, TestLetStatementScopes) {
+  std::vector<CompilerTestCase<std::variant<int, std::vector<Instructions>>>> tests{
+      {
+          "let num = 55; fn() { num }",
+          {
+              55,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpGetGlobal, {0}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpSetGlobal, {0}),
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "fn () { let num = 55; num }",
+          {
+              55,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpSetLocal, {0}),
+                      Code::make(Ops::OpGetLocal, {0}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+      {
+          "fn () {let a = 55; let b = 77; a + b}",
+          {
+              55,
+              77,
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpConstant, {0}),
+                      Code::make(Ops::OpSetLocal, {0}),
+                      Code::make(Ops::OpConstant, {1}),
+                      Code::make(Ops::OpSetLocal, {1}),
+                      Code::make(Ops::OpGetLocal, {0}),
+                      Code::make(Ops::OpGetLocal, {1}),
+                      Code::make(Ops::OpAdd, {}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpConstant, {2}),
               Code::make(Ops::OpPop, {}),
           },
       },

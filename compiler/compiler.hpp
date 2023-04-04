@@ -164,6 +164,8 @@ public:
   inline int getScopeIndex() { return scopeIndex; }
 
   inline CompilationScope &currentScope() { return scopes[scopeIndex]; }
+
+  inline std::shared_ptr<SymbolTable> &currentSymbolTable() { return symbolTable; }
 };
 
 #endif  // _COMPILER_COMPILER_HPP_

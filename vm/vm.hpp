@@ -38,9 +38,9 @@ public:
   VM(std::vector<std::shared_ptr<Object>> &&constants_, Instructions &&instructions)
       : constants{std::move(constants_)}, sp{0}, stack(StackSize), frames(MaxFrames), framesIndex{1} {
     globals = std::make_shared<std::vector<std::shared_ptr<Object>>>(GlobalSize);
-    auto mainFn = std::make_shared<CompiledFunction>(std::move(instructions));
+    auto mainFn = std::make_shared<CompiledFunction>(std::move(instructions), 0);
     // Here, we must set the frame's ip to -1
-    auto mainFrame = std::make_shared<Frame>(mainFn, -1);
+    auto mainFrame = std::make_shared<Frame>(mainFn, 0);
     frames[0] = mainFrame;
   }
 
@@ -53,8 +53,8 @@ public:
       , stack(StackSize)
       , frames(MaxFrames)
       , framesIndex{1} {
-    auto mainFn = std::make_shared<CompiledFunction>(std::move(instructions));
-    auto mainFrame = std::make_shared<Frame>(mainFn, -1);
+    auto mainFn = std::make_shared<CompiledFunction>(std::move(instructions), 0);
+    auto mainFrame = std::make_shared<Frame>(mainFn, 0);
     frames[0] = mainFrame;
   }
 

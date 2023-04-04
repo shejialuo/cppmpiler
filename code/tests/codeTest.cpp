@@ -16,6 +16,7 @@ TEST(Code, TestMake) {
       {Ops::OpConstant, {65534}, {Ops::OpConstant, std::byte(255), std::byte(254)}},
       {Ops::OpConstant, {20}, {Ops::OpConstant, std::byte(0), std::byte(20)}},
       {Ops::OpAdd, {}, {Ops::OpAdd}},
+      {Ops::OpGetLocal, {255}, {Ops::OpGetLocal, std::byte(255)}},
   };
 
   for (auto &test : tests) {
@@ -33,6 +34,7 @@ TEST(Code, TestReadOperands) {
 
   std::vector<TestData> tests = {
       {Ops::OpConstant, {65534}, 2},
+      {Ops::OpGetLocal, {255}, 1},
   };
 
   for (auto &&test : tests) {

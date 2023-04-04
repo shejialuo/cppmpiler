@@ -100,9 +100,10 @@ public:
 class CompiledFunction : public Object {
 public:
   Instructions instructions;
+  int numLocals;
 
   CompiledFunction() = default;
-  CompiledFunction(Instructions &&i);
+  CompiledFunction(Instructions &&i, int numLocals_);
 
   ObjectType type() override;
   std::string inspect() override;

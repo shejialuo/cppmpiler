@@ -144,7 +144,11 @@ void Compiler::compile(Node *node) {
     compile(letStatement->value.get());
 
     Symbol &symbol = symbolTable->define(letStatement->name->value);
-    emit(Ops::OpSetGlobal, {symbol.index});
+    if (symbol.symbolScope == Symbol::globalScope) {
+      emit(Ops::OpSetGlobal, {symbol.index});
+    } else {
+      emit(Ops::OpSetLocal, {symbol.index});
+    }
   }
 
   Identifier *identifier = dynamic_cast<Identifier *>(node);
@@ -154,8 +158,11 @@ void Compiler::compile(Node *node) {
       spdlog::error("identifier not found: {}", identifier->value);
       return;
     }
-
-    emit(Ops::OpGetGlobal, {symbol.value().get().index});
+    if (symbol.value().get().symbolScope == Symbol::localScope) {
+      emit(Ops::OpGetLocal, {symbol.value().get().index});
+    } else {
+      emit(Ops::OpGetGlobal, {symbol.value().get().index});
+    }
   }
 
   StringLiteral *stringLiteral = dynamic_cast<StringLiteral *>(node);
@@ -192,9 +199,10 @@ void Compiler::compile(Node *node) {
       replaceLastPopWithReturn();
     }
 
+    int numLocals = currentSymbolTable()->getNumDefinition();
     Instructions instructions = leaveScope();
 
-    std::unique_ptr<Object> compiledFunction = std::make_unique<CompiledFunction>(std::move(instructions));
+    std::unique_ptr<Object> compiledFunction = std::make_unique<CompiledFunction>(std::move(instructions), numLocals);
 
     emit(Ops::OpConstant, {addConstant(compiledFunction)});
   }
@@ -269,6 +277,7 @@ void Compiler::changeOperand(int pos, int operand) {
 void Compiler::enterScope() {
   scopeIndex++;
   scopes.emplace_back(CompilationScope{});
+  symbolTable = std::make_shared<SymbolTable>(symbolTable);
 }
 
 Instructions Compiler::leaveScope() {
@@ -276,6 +285,7 @@ Instructions Compiler::leaveScope() {
 
   scopes.pop_back();
   scopeIndex--;
+  symbolTable = symbolTable->getOuter();
 
   return instructions;
 }

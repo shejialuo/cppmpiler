@@ -53,6 +53,8 @@ struct Ops {
   static const Opcode OpCall;
   static const Opcode OpReturnValue;
   static const Opcode OpReturn;
+  static const Opcode OpGetLocal;
+  static const Opcode OpSetLocal;
 };
 
 /**

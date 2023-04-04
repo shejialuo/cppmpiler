@@ -32,9 +32,7 @@ Object *VM::stackTop() {
 }
 
 void VM::run() {
-  // Must set int to avoid integer compare with unsigned integer
-  int length = currentFrame()->instructions().size() - 1;
-  while (currentFrame()->ip < length) {
+  while (currentFrame()->ip < static_cast<int>(currentFrame()->instructions().size() - 1)) {
     currentFrame()->ip++;
     int ip = currentFrame()->ip;
     Instructions &instructions = currentFrame()->instructions();
@@ -102,15 +100,29 @@ void VM::run() {
       if (fn == nullptr) {
         spdlog::error("calling non-function");
       } else {
-        auto frame = std::make_shared<Frame>(fn, -1);
+        auto frame = std::make_shared<Frame>(fn, sp);
         pushFrame(frame);
+
+        // we extend the sp value for storing locals, the local constant
+        // need the binding here.
+        sp += fn->numLocals;
       }
     } else if (op == Ops::OpReturnValue) {
       auto returnValue = pop();
-      popFrame();
-      pop();
+      auto frame = popFrame();
+      sp = frame->basePointer - 1;
 
       push(returnValue);
+    } else if (op == Ops::OpSetLocal) {
+      int localIndex = int(instructions[ip + 1]);
+      currentFrame()->ip++;
+      // The base pointer is the index of the first local variable
+      stack[currentFrame()->basePointer + localIndex] = pop();
+    } else if (op == Ops::OpGetLocal) {
+      int localIndex = int(instructions[ip + 1]);
+      currentFrame()->ip++;
+
+      push(stack[currentFrame()->basePointer + localIndex]);
     } else {
       spdlog::error("unknown opcode: {}", op);
     }

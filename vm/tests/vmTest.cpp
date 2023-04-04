@@ -363,3 +363,34 @@ TEST(VM, TestFirstClassFunctions) {
     EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }
+
+TEST(VM, TestCallingFunctionsWithBindings) {
+  std::vector<vmTestCase<int>> tests{
+      {"let one = fn() { let one = 1; one; }; one();", 1},
+      {"let oneAndTwo = fn() { let one = 1; let two = 2; one + two; }; oneAndTwo();", 3},
+      {"let oneAndTwo = fn() { let one = 1; let two = 2; one + two; }; let threeAndFour = fn() { let three = 3; "
+       "let four = 4; three + four; }; oneAndTwo() + threeAndFour();",
+       10},
+      {"let firstFoobar = fn() { let foobar = 50; foobar; }; let secondFoobar = fn() { let foobar = 100; foobar; }; "
+       "firstFoobar() + secondFoobar();",
+       150},
+      {"let globalSeed = 50; let minusOne = fn() { let num = 1; globalSeed - num; }; let minusTwo = fn() { let num = "
+       "2; "
+       "globalSeed - num; }; minusOne() + minusTwo();",
+       97},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}

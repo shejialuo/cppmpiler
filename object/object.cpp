@@ -63,7 +63,9 @@ std::string Function::inspect() {
 }
 ObjectType Function::type() { return std::string(FUNCTION_OBJ); }
 
-CompiledFunction::CompiledFunction(Instructions &&i) { instructions = std::move(i); }
+CompiledFunction::CompiledFunction(Instructions &&i, int numLocals_) : numLocals{numLocals_} {
+  instructions = std::move(i);
+}
 
 std::string CompiledFunction::inspect() {
   const void *address = static_cast<const void *>(this);
