@@ -160,8 +160,10 @@ void Compiler::compile(Node *node) {
     }
     if (symbol.value().get().symbolScope == Symbol::localScope) {
       emit(Ops::OpGetLocal, {symbol.value().get().index});
-    } else {
+    } else if (symbol.value().get().symbolScope == Symbol::globalScope) {
       emit(Ops::OpGetGlobal, {symbol.value().get().index});
+    } else {
+      emit(Ops::OpGetBuiltin, {symbol.value().get().index});
     }
   }
 

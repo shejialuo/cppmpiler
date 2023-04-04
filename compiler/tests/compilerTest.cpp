@@ -754,3 +754,33 @@ TEST(Compiler, TestLetStatementScopes) {
     EXPECT_TRUE(testConstants(test.expectedConstants, compiler.getBytecode().constants));
   }
 }
+
+TEST(Compiler, TestBuiltins) {
+  std::vector<CompilerTestCase<int>> tests{
+      {
+          "len([]); push([], 1);",
+          {
+              1,
+          },
+          {
+              Code::make(Ops::OpGetBuiltin, {0}),
+              Code::make(Ops::OpArray, {0}),
+              Code::make(Ops::OpCall, {1}),
+              Code::make(Ops::OpPop, {}),
+              Code::make(Ops::OpGetBuiltin, {4}),
+              Code::make(Ops::OpArray, {0}),
+              Code::make(Ops::OpConstant, {0}),
+              Code::make(Ops::OpCall, {2}),
+              Code::make(Ops::OpPop, {}),
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+  }
+}

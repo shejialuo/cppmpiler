@@ -10,6 +10,7 @@
 struct Symbol {
   static std::string globalScope;
   static std::string localScope;
+  static std::string builtinScope;
 
   std::string name;
   std::string symbolScope;
@@ -39,6 +40,7 @@ public:
   inline int getNumDefinition() { return numDefinitions; }
 
   Symbol &define(const std::string &name);
+  Symbol &defineBuiltin(int index, const std::string &name);
   std::optional<std::reference_wrapper<Symbol>> resolve(const std::string &name);
 };
 

@@ -2,6 +2,7 @@
 #define _COMPILER_COMPILER_HPP_
 
 #include "ast.hpp"
+#include "builtins.hpp"
 #include "code.hpp"
 #include "object.hpp"
 #include "symbolTable.hpp"
@@ -47,11 +48,19 @@ public:
   Compiler() : scopeIndex{0} {
     scopes.push_back(CompilationScope{});
     symbolTable = std::make_shared<SymbolTable>();
+
+    for (int i = 0; i < Builtins::getBuiltinNames().size(); i++) {
+      symbolTable->defineBuiltin(i, Builtins::getBuiltinNames()[i]);
+    }
   }
   Compiler(std::vector<std::shared_ptr<Object>> &constants, std::shared_ptr<SymbolTable> &table)
       : symbolTable{table}, scopeIndex{0} {
     bytecode.constants = constants;
     scopes.push_back(CompilationScope{});
+
+    for (int i = 0; i < Builtins::getBuiltinNames().size(); i++) {
+      symbolTable->defineBuiltin(i, Builtins::getBuiltinNames()[i]);
+    }
   }
   Compiler(const Bytecode &b) = delete;
 

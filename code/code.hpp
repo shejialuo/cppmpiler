@@ -55,6 +55,7 @@ struct Ops {
   static const Opcode OpReturn;
   static const Opcode OpGetLocal;
   static const Opcode OpSetLocal;
+  static const Opcode OpGetBuiltin;
 };
 
 /**

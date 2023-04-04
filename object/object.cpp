@@ -48,13 +48,15 @@ std::string Function::inspect() {
   std::string info{};
   info += "fn(";
 
-  int i = 0;
-  for (; i < parameters.size() - 1; ++i) {
-    info += parameters[i]->getString();
-    info += ", ";
-  }
+  if (!parameters.empty()) {
+    int i = 0;
+    for (; i < parameters.size() - 1; ++i) {
+      info += parameters[i]->getString();
+      info += ", ";
+    }
 
-  info += parameters[i]->getString();
+    info += parameters[i]->getString();
+  }
   info += ") {\n";
   info += body->getString();
   info += "\n}";
@@ -84,6 +86,10 @@ std::string Builtin::inspect() { return "builtin function"; }
 ObjectType Builtin::type() { return std::string(BUILTIN_OBJ); }
 
 std::string Array::inspect() {
+  if (elements.empty()) {
+    return "[]";
+  }
+
   std::string info = "[";
 
   int i = 0;

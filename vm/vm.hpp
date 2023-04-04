@@ -155,6 +155,29 @@ public:
   void executeArrayIndex(std::shared_ptr<Object> &left, std::shared_ptr<Object> &index);
 
   /**
+   * @brief execute the function call
+   *
+   * @param argumentSize
+   */
+  void executeCall(int argumentSize);
+
+  /**
+   * @brief execute the function call
+   *
+   * @param fn
+   * @param argumentSize
+   */
+  void callFunction(std::shared_ptr<CompiledFunction> &fn, int argumentSize);
+
+  /**
+   * @brief execute the builtin function call
+   *
+   * @param builtin
+   * @param argumentSize
+   */
+  void callBuiltin(std::shared_ptr<Builtin> &builtin, int argumentSize);
+
+  /**
    * @brief For test only get last popped
    *
    */

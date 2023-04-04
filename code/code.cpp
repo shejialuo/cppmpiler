@@ -31,6 +31,7 @@ const Opcode Ops::OpReturnValue{20};
 const Opcode Ops::OpReturn{21};
 const Opcode Ops::OpGetLocal{22};
 const Opcode Ops::OpSetLocal{23};
+const Opcode Ops::OpGetBuiltin{24};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -129,6 +130,10 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
     {
         Ops::OpSetLocal,
         Definition{"OpSetLocal", {1}},
+    },
+    {
+        Ops::OpGetBuiltin,
+        Definition{"OpGetBuiltin", {1}},
     },
 };
 

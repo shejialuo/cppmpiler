@@ -5,6 +5,7 @@
 
 std::string Symbol::globalScope{"GLOBAL"};
 std::string Symbol::localScope{"LOCAL"};
+std::string Symbol::builtinScope{"BUILTIN"};
 
 Symbol &SymbolTable::define(const std::string &name) {
   Symbol symbol{name, Symbol::globalScope, numDefinitions};
@@ -15,6 +16,12 @@ Symbol &SymbolTable::define(const std::string &name) {
 
   store[name] = std::move(symbol);
   numDefinitions++;
+  return store[name];
+}
+
+Symbol &SymbolTable::defineBuiltin(int index, const std::string &name) {
+  Symbol symbol{name, Symbol::builtinScope, index};
+  store[name] = std::move(symbol);
   return store[name];
 }
 

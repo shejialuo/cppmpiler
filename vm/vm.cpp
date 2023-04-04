@@ -1,5 +1,6 @@
 #include "vm.hpp"
 
+#include "builtins.hpp"
 #include "code.hpp"
 #include "frame.hpp"
 #include "object.hpp"
@@ -99,17 +100,7 @@ void VM::run() {
       int argumentSize = int(instructions[ip + 1]);
       currentFrame()->ip++;
 
-      std::shared_ptr<CompiledFunction> fn = std::dynamic_pointer_cast<CompiledFunction>(stack[sp - 1 - argumentSize]);
-      if (fn == nullptr) {
-        spdlog::error("calling non-function");
-      } else {
-        auto frame = std::make_shared<Frame>(fn, sp - argumentSize);
-        pushFrame(frame);
-
-        // we extend the sp value for storing locals, the local constant
-        // need the binding here.
-        sp += fn->numLocals;
-      }
+      executeCall(argumentSize);
     } else if (op == Ops::OpReturnValue) {
       auto returnValue = pop();
       auto frame = popFrame();
@@ -126,6 +117,13 @@ void VM::run() {
       currentFrame()->ip++;
 
       push(stack[currentFrame()->basePointer + localIndex]);
+    } else if (op == Ops::OpGetBuiltin) {
+      int builtIndex = int(instructions[ip + 1]);
+      currentFrame()->ip++;
+
+      std::shared_ptr<Object> definition = Builtins::getBuiltinByIndex(builtIndex);
+
+      push(definition);
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
@@ -330,4 +328,40 @@ void VM::pushFrame(std::shared_ptr<Frame> &frame) {
 std::shared_ptr<Frame> VM::popFrame() {
   framesIndex--;
   return frames[framesIndex];
+}
+
+void VM::executeCall(int argumentSize) {
+  std::shared_ptr<CompiledFunction> fn = std::dynamic_pointer_cast<CompiledFunction>(stack[sp - 1 - argumentSize]);
+  if (fn != nullptr) {
+    return callFunction(fn, argumentSize);
+  }
+
+  std::shared_ptr<Builtin> builtin = std::dynamic_pointer_cast<Builtin>(stack[sp - 1 - argumentSize]);
+  if (builtin != nullptr) {
+    return callBuiltin(builtin, argumentSize);
+  }
+
+  spdlog::error("calling non-function and non-builtin");
+}
+void VM::callFunction(std::shared_ptr<CompiledFunction> &fn, int argumentSize) {
+  auto frame = std::make_shared<Frame>(fn, sp - argumentSize);
+  pushFrame(frame);
+
+  // we extend the sp value for storing locals, the local constant
+  // need the binding here.
+  sp += fn->numLocals;
+}
+
+void VM::callBuiltin(std::shared_ptr<Builtin> &builtin, int argumentSize) {
+  std::vector<std::shared_ptr<Object>> args;
+  for (int i = sp - argumentSize; i < sp; i++) {
+    args.push_back(stack[i]);
+  }
+
+  std::shared_ptr<Object> result = builtin->fn(args);
+  sp -= argumentSize + 1;
+
+  if (result != nullptr) {
+    push(result);
+  }
 }

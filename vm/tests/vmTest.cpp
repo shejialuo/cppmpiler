@@ -420,3 +420,25 @@ TEST(VM, TestCallingFunctionsWithArgumentsAndBindings) {
     EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }
+
+TEST(VM, TestBuiltinFunctions) {
+  std::vector<vmTestCase<int>> tests{
+      {R"(len(""))", 0},
+      {R"(len("four"))", 4},
+      {R"(len("hello world"))", 11},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}

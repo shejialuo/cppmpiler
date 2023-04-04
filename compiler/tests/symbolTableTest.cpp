@@ -104,3 +104,35 @@ TEST(SymbolTable, TestResolveLocal) {
     }
   }
 }
+
+TEST(SymbolTable, TestDefineResolveBuiltins) {
+  auto global = std::make_shared<SymbolTable>();
+  auto firstLocal = std::make_shared<SymbolTable>(global);
+  auto secondLocal = std::make_shared<SymbolTable>(firstLocal);
+
+  std::vector<Symbol> expected{
+      {"a", Symbol::builtinScope, 0},
+      {"c", Symbol::builtinScope, 1},
+      {"e", Symbol::builtinScope, 2},
+      {"f", Symbol::builtinScope, 3},
+  };
+
+  for (int i = 0; i < expected.size(); i++) {
+    global->defineBuiltin(i, expected[i].name);
+  }
+
+  std::vector<std::shared_ptr<SymbolTable>> tests{global, firstLocal, secondLocal};
+
+  for (auto &&test : tests) {
+    for (auto &&symbol : expected) {
+      auto result = test->resolve(symbol.name);
+      if (!result.has_value()) {
+        FAIL();
+      }
+
+      if (result.value().get() != symbol) {
+        FAIL();
+      }
+    }
+  }
+}
