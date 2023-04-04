@@ -14,7 +14,6 @@ private:
   static std::shared_ptr<Boolean> False;
 
   static std::vector<std::shared_ptr<Environment>> environments;
-  static std::unordered_map<std::string, std::shared_ptr<Builtin>> builtins;
 
 public:
   /**
@@ -179,8 +178,6 @@ public:
    * @return std::shared_ptr<Object>
    */
   static std::shared_ptr<Object> evalFunctions(Object *fn, std::vector<std::shared_ptr<Object>> &arguments);
-
-  static inline std::unordered_map<std::string, std::shared_ptr<Builtin>> &getBuiltins() { return builtins; }
 };
 
 #endif  // _EVALUATOR_EVALUATOR_HPP_
