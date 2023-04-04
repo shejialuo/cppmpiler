@@ -1,17 +1,19 @@
 var searchData=
 [
-  ['callexpression_10',['CallExpression',['../classCallExpression.html',1,'']]],
-  ['changeoperand_11',['changeOperand',['../classCompiler.html#a2801a9e98b0ccc02065c7d5dc9b3d0bb',1,'Compiler']]],
-  ['code_12',['Code',['../classCode.html',1,'']]],
-  ['compilationscope_13',['CompilationScope',['../structCompilationScope.html',1,'']]],
-  ['compile_14',['compile',['../classCompiler.html#a1c935950a135e582c141a319a06e0f0c',1,'Compiler']]],
-  ['compiledfunction_15',['CompiledFunction',['../classCompiledFunction.html',1,'']]],
-  ['compiler_16',['Compiler',['../classCompiler.html',1,'']]],
-  ['compilertestcase_17',['CompilerTestCase',['../structCompilerTestCase.html',1,'']]],
-  ['consecutivesubstring_18',['consecutiveSubstring',['../classLexer.html#ab225d53df2be0240db97d01089e03d70',1,'Lexer']]],
-  ['cppmpiler_19',['cppmpiler',['../md_README.html',1,'']]],
-  ['currentframe_20',['currentFrame',['../classVM.html#a43dce478f290859bb9dccd31acbd400d',1,'VM']]],
-  ['currentinstructions_21',['currentInstructions',['../classCompiler.html#a9d07fb1d1df0187983cd83b44abbb0a7',1,'Compiler']]],
-  ['currentprecedence_22',['currentPrecedence',['../classParser.html#aaecd833b159163ac36d8763989c4f1cf',1,'Parser']]],
-  ['currenttokenis_23',['currentTokenIs',['../classParser.html#a8e0650bac2163108bccae9db68aca464',1,'Parser']]]
+  ['callbuiltin_11',['callBuiltin',['../classVM.html#a10edb39dc894f7c72e4f37b1dd06353f',1,'VM']]],
+  ['callexpression_12',['CallExpression',['../classCallExpression.html',1,'']]],
+  ['callfunction_13',['callFunction',['../classVM.html#a32ad9cbb760a5ce783e92eb70f966202',1,'VM']]],
+  ['changeoperand_14',['changeOperand',['../classCompiler.html#a2801a9e98b0ccc02065c7d5dc9b3d0bb',1,'Compiler']]],
+  ['code_15',['Code',['../classCode.html',1,'']]],
+  ['compilationscope_16',['CompilationScope',['../structCompilationScope.html',1,'']]],
+  ['compile_17',['compile',['../classCompiler.html#a1c935950a135e582c141a319a06e0f0c',1,'Compiler']]],
+  ['compiledfunction_18',['CompiledFunction',['../classCompiledFunction.html',1,'']]],
+  ['compiler_19',['Compiler',['../classCompiler.html',1,'']]],
+  ['compilertestcase_20',['CompilerTestCase',['../structCompilerTestCase.html',1,'']]],
+  ['consecutivesubstring_21',['consecutiveSubstring',['../classLexer.html#ab225d53df2be0240db97d01089e03d70',1,'Lexer']]],
+  ['cppmpiler_22',['cppmpiler',['../md_README.html',1,'']]],
+  ['currentframe_23',['currentFrame',['../classVM.html#a43dce478f290859bb9dccd31acbd400d',1,'VM']]],
+  ['currentinstructions_24',['currentInstructions',['../classCompiler.html#a9d07fb1d1df0187983cd83b44abbb0a7',1,'Compiler']]],
+  ['currentprecedence_25',['currentPrecedence',['../classParser.html#aaecd833b159163ac36d8763989c4f1cf',1,'Parser']]],
+  ['currenttokenis_26',['currentTokenIs',['../classParser.html#a8e0650bac2163108bccae9db68aca464',1,'Parser']]]
 ];

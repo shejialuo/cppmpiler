@@ -130,6 +130,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a0905da65aeee8137c81f23aa8fbfb95f">executeArrayIndex</a> (std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;left, std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt; &amp;index)</td></tr>
 <tr class="memdesc:a0905da65aeee8137c81f23aa8fbfb95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the array index <br /></td></tr>
 <tr class="separator:a0905da65aeee8137c81f23aa8fbfb95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad81cf42a8b119c034b0048c9605c6536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ad81cf42a8b119c034b0048c9605c6536">executeCall</a> (int argumentSize)</td></tr>
+<tr class="memdesc:ad81cf42a8b119c034b0048c9605c6536"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the function call  <a href="classVM.html#ad81cf42a8b119c034b0048c9605c6536">More...</a><br /></td></tr>
+<tr class="separator:ad81cf42a8b119c034b0048c9605c6536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32ad9cbb760a5ce783e92eb70f966202"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a32ad9cbb760a5ce783e92eb70f966202">callFunction</a> (std::shared_ptr&lt; <a class="el" href="classCompiledFunction.html">CompiledFunction</a> &gt; &amp;fn, int argumentSize)</td></tr>
+<tr class="memdesc:a32ad9cbb760a5ce783e92eb70f966202"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the function call  <a href="classVM.html#a32ad9cbb760a5ce783e92eb70f966202">More...</a><br /></td></tr>
+<tr class="separator:a32ad9cbb760a5ce783e92eb70f966202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10edb39dc894f7c72e4f37b1dd06353f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a10edb39dc894f7c72e4f37b1dd06353f">callBuiltin</a> (std::shared_ptr&lt; <a class="el" href="classBuiltin.html">Builtin</a> &gt; &amp;builtin, int argumentSize)</td></tr>
+<tr class="memdesc:a10edb39dc894f7c72e4f37b1dd06353f"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the builtin function call  <a href="classVM.html#a10edb39dc894f7c72e4f37b1dd06353f">More...</a><br /></td></tr>
+<tr class="separator:a10edb39dc894f7c72e4f37b1dd06353f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0872afe9210b5be9a64192b76df53a4"><td class="memItemLeft" align="right" valign="top"><a id="ae0872afe9210b5be9a64192b76df53a4"></a>
 std::shared_ptr&lt; <a class="el" href="classObject.html">Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ae0872afe9210b5be9a64192b76df53a4">lastPoppedStackElem</a> ()</td></tr>
 <tr class="memdesc:ae0872afe9210b5be9a64192b76df53a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">For test only get last popped. <br /></td></tr>
@@ -209,6 +218,80 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>framesIndex</b></td></
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Object&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a10edb39dc894f7c72e4f37b1dd06353f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10edb39dc894f7c72e4f37b1dd06353f">&#9670;&nbsp;</a></span>callBuiltin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::callBuiltin </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classBuiltin.html">Builtin</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>builtin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argumentSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the builtin function call </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">builtin</td><td></td></tr>
+    <tr><td class="paramname">argumentSize</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a32ad9cbb760a5ce783e92eb70f966202"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32ad9cbb760a5ce783e92eb70f966202">&#9670;&nbsp;</a></span>callFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::callFunction </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classCompiledFunction.html">CompiledFunction</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>fn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argumentSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the function call </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fn</td><td></td></tr>
+    <tr><td class="paramname">argumentSize</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -340,6 +423,32 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>framesIndex</b></td></
     <tr><td class="paramname">op</td><td>the operator </td></tr>
     <tr><td class="paramname">left</td><td>the left object </td></tr>
     <tr><td class="paramname">right</td><td>the right object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad81cf42a8b119c034b0048c9605c6536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad81cf42a8b119c034b0048c9605c6536">&#9670;&nbsp;</a></span>executeCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VM::executeCall </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argumentSize</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>execute the function call </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argumentSize</td><td></td></tr>
   </table>
   </dd>
 </dl>
