@@ -1,3 +1,3 @@
 #include "frame.hpp"
 
-Instructions &Frame::instructions() { return fn->instructions; }
+Instructions &Frame::instructions() { return closure->fn->instructions; }

@@ -109,6 +109,16 @@ public:
   std::string inspect() override;
 };
 
+class Closure : public Object {
+public:
+  std::shared_ptr<CompiledFunction> fn;
+
+  Closure(std::shared_ptr<CompiledFunction> &fn_) : fn{fn_} {}
+
+  ObjectType type() override;
+  std::string inspect() override;
+};
+
 /**
  * @brief Error class represents the error
  *

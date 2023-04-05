@@ -541,7 +541,7 @@ TEST(Compiler, TestFunctions) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpClosure, {2, 0}),
               Code::make(Ops::OpPop, {}),
           },
       },
@@ -561,7 +561,7 @@ TEST(Compiler, TestFunctions) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpClosure, {2, 0}),
               Code::make(Ops::OpPop, {}),
           },
       },
@@ -581,7 +581,7 @@ TEST(Compiler, TestFunctions) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpClosure, {2, 0}),
               Code::make(Ops::OpPop, {}),
           },
       },
@@ -641,7 +641,7 @@ TEST(Compiler, TestFunctionCalls) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpClosure, {1, 0}),
               Code::make(Ops::OpCall, {0}),
               Code::make(Ops::OpPop, {}),
           },
@@ -660,7 +660,7 @@ TEST(Compiler, TestFunctionCalls) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpClosure, {1, 0}),
               Code::make(Ops::OpSetGlobal, {0}),
               Code::make(Ops::OpGetGlobal, {0}),
               Code::make(Ops::OpCall, {0}),
@@ -696,7 +696,7 @@ TEST(Compiler, TestLetStatementScopes) {
           {
               Code::make(Ops::OpConstant, {0}),
               Code::make(Ops::OpSetGlobal, {0}),
-              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpClosure, {1, 0}),
               Code::make(Ops::OpPop, {}),
           },
       },
@@ -715,7 +715,7 @@ TEST(Compiler, TestLetStatementScopes) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {1}),
+              Code::make(Ops::OpClosure, {1, 0}),
               Code::make(Ops::OpPop, {}),
           },
       },
@@ -739,7 +739,7 @@ TEST(Compiler, TestLetStatementScopes) {
               },
           },
           {
-              Code::make(Ops::OpConstant, {2}),
+              Code::make(Ops::OpClosure, {2, 0}),
               Code::make(Ops::OpPop, {}),
           },
       },

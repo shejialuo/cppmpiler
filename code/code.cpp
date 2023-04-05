@@ -32,6 +32,7 @@ const Opcode Ops::OpReturn{21};
 const Opcode Ops::OpGetLocal{22};
 const Opcode Ops::OpSetLocal{23};
 const Opcode Ops::OpGetBuiltin{24};
+const Opcode Ops::OpClosure{25};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -135,6 +136,12 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
         Ops::OpGetBuiltin,
         Definition{"OpGetBuiltin", {1}},
     },
+    {
+        Ops::OpClosure,
+        // The first operand is the index of the constant, the second operand is
+        // the number of free variables
+        Definition{"OpClosure", {2, 1}},
+    },
 };
 
 Instructions Code::make(const Opcode &op, const std::vector<int> &operands) {
@@ -225,6 +232,8 @@ std::string Code::getString(Instructions &instruction) {
       info += definition.name;
     } else if (operandCount == 1) {
       info += definition.name + " " + std::to_string(operands[0]);
+    } else if (operandCount == 2) {
+      info += definition.name + " " + std::to_string(operands[0]) + " " + std::to_string(operands[1]);
     } else {
       info += "ERROR: unhandled operandCount for" + definition.name;
     }

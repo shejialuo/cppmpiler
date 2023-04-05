@@ -210,7 +210,9 @@ void Compiler::compile(Node *node) {
 
     std::unique_ptr<Object> compiledFunction = std::make_unique<CompiledFunction>(std::move(instructions), numLocals);
 
-    emit(Ops::OpConstant, {addConstant(compiledFunction)});
+    int functionIndex = addConstant(compiledFunction);
+
+    emit(Ops::OpClosure, {functionIndex, 0});
   }
 
   ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(node);

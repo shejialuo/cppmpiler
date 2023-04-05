@@ -15,6 +15,7 @@ constexpr std::string_view STRING_OBJ = "STRING";
 constexpr std::string_view BUILTIN_OBJ = "BUILTIN";
 constexpr std::string_view ARRAY_OBJ = "ARRAY";
 constexpr std::string_view COMPILED_FUNCTION_OBJ = "COMPILED_FUNCTION";
+constexpr std::string_view CLOSURE_OBJ = "CLOSURE";
 
 Integer::Integer(int64_t v) : value{v} {}
 std::string Integer::inspect() { return std::to_string(value); }
@@ -80,6 +81,18 @@ std::string CompiledFunction::inspect() {
   return info;
 }
 ObjectType CompiledFunction::type() { return std::string(COMPILED_FUNCTION_OBJ); }
+
+ObjectType Closure::type() { return std::string(CLOSURE_OBJ); }
+std::string Closure::inspect() {
+  const void *address = static_cast<const void *>(this);
+
+  std::stringstream ss;
+  ss << address;
+
+  std::string info = "Closure" + ss.str();
+
+  return info;
+}
 
 Builtin::Builtin(BuiltinFunction f) : fn{f} {}
 std::string Builtin::inspect() { return "builtin function"; }

@@ -39,8 +39,8 @@ public:
       : constants{std::move(constants_)}, sp{0}, stack(StackSize), frames(MaxFrames), framesIndex{1} {
     globals = std::make_shared<std::vector<std::shared_ptr<Object>>>(GlobalSize);
     auto mainFn = std::make_shared<CompiledFunction>(std::move(instructions), 0);
-    // Here, we must set the frame's ip to -1
-    auto mainFrame = std::make_shared<Frame>(mainFn, 0);
+    auto mainClosure = std::make_shared<Closure>(mainFn);
+    auto mainFrame = std::make_shared<Frame>(mainClosure, 0);
     frames[0] = mainFrame;
   }
 
@@ -54,7 +54,8 @@ public:
       , frames(MaxFrames)
       , framesIndex{1} {
     auto mainFn = std::make_shared<CompiledFunction>(std::move(instructions), 0);
-    auto mainFrame = std::make_shared<Frame>(mainFn, 0);
+    auto mainClosure = std::make_shared<Closure>(mainFn);
+    auto mainFrame = std::make_shared<Frame>(mainClosure, 0);
     frames[0] = mainFrame;
   }
 
@@ -162,12 +163,18 @@ public:
   void executeCall(int argumentSize);
 
   /**
-   * @brief execute the function call
+   * @brief execute the function closure
    *
-   * @param fn
+   * @param closure
    * @param argumentSize
    */
-  void callFunction(std::shared_ptr<CompiledFunction> &fn, int argumentSize);
+  void callClosure(std::shared_ptr<Closure> &closure, int argumentSize);
+
+  /**
+   * @brief push the closure to the stack at the run time
+   *
+   */
+  void pushClosure(int constantIndex);
 
   /**
    * @brief execute the builtin function call

@@ -8,14 +8,14 @@
 
 class Frame {
 public:
-  std::shared_ptr<CompiledFunction> fn;
+  std::shared_ptr<Closure> closure;
   int ip;
   int basePointer;
 
   Frame() = default;
   Frame(const Frame &f) = default;
   Frame(Frame &&f) = default;
-  Frame(std::shared_ptr<CompiledFunction> &fn_, int basePointer_) : fn{fn_}, ip{-1}, basePointer{basePointer_} {}
+  Frame(std::shared_ptr<Closure> &closure_, int basePointer_) : closure{closure_}, ip{-1}, basePointer{basePointer_} {}
 
   Instructions &instructions();
 };

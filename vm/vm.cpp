@@ -124,6 +124,13 @@ void VM::run() {
       std::shared_ptr<Object> definition = Builtins::getBuiltinByIndex(builtIndex);
 
       push(definition);
+    } else if (op == Ops::OpClosure) {
+      int constantIndex = readTwoBytes(instructions, ip);
+      int freeVariableSize = int(instructions[ip + 3]);
+      currentFrame()->ip += 3;
+
+      pushClosure(constantIndex);
+
     } else {
       spdlog::error("unknown opcode: {}", op);
     }
@@ -331,9 +338,9 @@ std::shared_ptr<Frame> VM::popFrame() {
 }
 
 void VM::executeCall(int argumentSize) {
-  std::shared_ptr<CompiledFunction> fn = std::dynamic_pointer_cast<CompiledFunction>(stack[sp - 1 - argumentSize]);
-  if (fn != nullptr) {
-    return callFunction(fn, argumentSize);
+  std::shared_ptr<Closure> closure = std::dynamic_pointer_cast<Closure>(stack[sp - 1 - argumentSize]);
+  if (closure != nullptr) {
+    return callClosure(closure, argumentSize);
   }
 
   std::shared_ptr<Builtin> builtin = std::dynamic_pointer_cast<Builtin>(stack[sp - 1 - argumentSize]);
@@ -343,13 +350,13 @@ void VM::executeCall(int argumentSize) {
 
   spdlog::error("calling non-function and non-builtin");
 }
-void VM::callFunction(std::shared_ptr<CompiledFunction> &fn, int argumentSize) {
-  auto frame = std::make_shared<Frame>(fn, sp - argumentSize);
+void VM::callClosure(std::shared_ptr<Closure> &closure, int argumentSize) {
+  auto frame = std::make_shared<Frame>(closure, sp - argumentSize);
   pushFrame(frame);
 
   // we extend the sp value for storing locals, the local constant
   // need the binding here.
-  sp += fn->numLocals;
+  sp += closure->fn->numLocals;
 }
 
 void VM::callBuiltin(std::shared_ptr<Builtin> &builtin, int argumentSize) {
@@ -364,4 +371,17 @@ void VM::callBuiltin(std::shared_ptr<Builtin> &builtin, int argumentSize) {
   if (result != nullptr) {
     push(result);
   }
+}
+
+void VM::pushClosure(int constantIndex) {
+  auto constant = constants[constantIndex];
+  auto fn = std::dynamic_pointer_cast<CompiledFunction>(constant);
+  if (fn == nullptr) {
+    spdlog::error("not a function: {}", constant->type());
+    return;
+  }
+
+  std::shared_ptr<Object> closure = std::make_shared<Closure>(fn);
+
+  push(closure);
 }
