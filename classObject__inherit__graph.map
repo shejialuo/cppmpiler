@@ -1,12 +1,13 @@
 <map id="Object" name="Object">
-<area shape="rect" id="node1" title="Base class to represent the object." alt="" coords="431,5,495,32"/>
+<area shape="rect" id="node1" title="Base class to represent the object." alt="" coords="467,5,531,32"/>
 <area shape="rect" id="node2" href="$classArray.html" title="Array." alt="" coords="5,80,63,107"/>
 <area shape="rect" id="node3" href="$classBoolean.html" title="Boolean class represents bool." alt="" coords="87,80,162,107"/>
 <area shape="rect" id="node4" href="$classBuiltin.html" title=" " alt="" coords="186,80,250,107"/>
-<area shape="rect" id="node5" href="$classCompiledFunction.html" title="CompiledFunction class represents the compiled function." alt="" coords="274,80,413,107"/>
-<area shape="rect" id="node6" href="$classError.html" title="Error class represents the error." alt="" coords="437,80,490,107"/>
-<area shape="rect" id="node7" href="$classFunction.html" title="Function class represents the function." alt="" coords="514,80,591,107"/>
-<area shape="rect" id="node8" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="616,80,684,107"/>
-<area shape="rect" id="node9" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="709,80,810,107"/>
-<area shape="rect" id="node10" href="$classString.html" title="Represents the string &quot;foobar&quot;." alt="" coords="835,80,895,107"/>
+<area shape="rect" id="node5" href="$classClosure.html" title=" " alt="" coords="275,80,345,107"/>
+<area shape="rect" id="node6" href="$classCompiledFunction.html" title="CompiledFunction class represents the compiled function." alt="" coords="370,80,509,107"/>
+<area shape="rect" id="node7" href="$classError.html" title="Error class represents the error." alt="" coords="533,80,586,107"/>
+<area shape="rect" id="node8" href="$classFunction.html" title="Function class represents the function." alt="" coords="610,80,687,107"/>
+<area shape="rect" id="node9" href="$classInteger.html" title="Integer class represents int64_t." alt="" coords="712,80,780,107"/>
+<area shape="rect" id="node10" href="$classReturnValue.html" title="ReturnValue class represents the return value." alt="" coords="805,80,906,107"/>
+<area shape="rect" id="node11" href="$classString.html" title="Represents the string &quot;foobar&quot;." alt="" coords="931,80,991,107"/>
 </map>

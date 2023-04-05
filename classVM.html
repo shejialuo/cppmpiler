@@ -133,9 +133,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ad81cf42a8b119c034b0048c9605c6536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ad81cf42a8b119c034b0048c9605c6536">executeCall</a> (int argumentSize)</td></tr>
 <tr class="memdesc:ad81cf42a8b119c034b0048c9605c6536"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the function call  <a href="classVM.html#ad81cf42a8b119c034b0048c9605c6536">More...</a><br /></td></tr>
 <tr class="separator:ad81cf42a8b119c034b0048c9605c6536"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32ad9cbb760a5ce783e92eb70f966202"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a32ad9cbb760a5ce783e92eb70f966202">callFunction</a> (std::shared_ptr&lt; <a class="el" href="classCompiledFunction.html">CompiledFunction</a> &gt; &amp;fn, int argumentSize)</td></tr>
-<tr class="memdesc:a32ad9cbb760a5ce783e92eb70f966202"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the function call  <a href="classVM.html#a32ad9cbb760a5ce783e92eb70f966202">More...</a><br /></td></tr>
-<tr class="separator:a32ad9cbb760a5ce783e92eb70f966202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe3ffabcc64d090fdbcdb9ceb0bf835"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#acbe3ffabcc64d090fdbcdb9ceb0bf835">callClosure</a> (std::shared_ptr&lt; <a class="el" href="classClosure.html">Closure</a> &gt; &amp;closure, int argumentSize)</td></tr>
+<tr class="memdesc:acbe3ffabcc64d090fdbcdb9ceb0bf835"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the function closure  <a href="classVM.html#acbe3ffabcc64d090fdbcdb9ceb0bf835">More...</a><br /></td></tr>
+<tr class="separator:acbe3ffabcc64d090fdbcdb9ceb0bf835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac85d28697e3296fbd63b51ec986b3ef2"><td class="memItemLeft" align="right" valign="top"><a id="ac85d28697e3296fbd63b51ec986b3ef2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#ac85d28697e3296fbd63b51ec986b3ef2">pushClosure</a> (int constantIndex)</td></tr>
+<tr class="memdesc:ac85d28697e3296fbd63b51ec986b3ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">push the closure to the stack at the run time <br /></td></tr>
+<tr class="separator:ac85d28697e3296fbd63b51ec986b3ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10edb39dc894f7c72e4f37b1dd06353f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVM.html#a10edb39dc894f7c72e4f37b1dd06353f">callBuiltin</a> (std::shared_ptr&lt; <a class="el" href="classBuiltin.html">Builtin</a> &gt; &amp;builtin, int argumentSize)</td></tr>
 <tr class="memdesc:a10edb39dc894f7c72e4f37b1dd06353f"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute the builtin function call  <a href="classVM.html#a10edb39dc894f7c72e4f37b1dd06353f">More...</a><br /></td></tr>
 <tr class="separator:a10edb39dc894f7c72e4f37b1dd06353f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -258,17 +262,17 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>framesIndex</b></td></
 
 </div>
 </div>
-<a id="a32ad9cbb760a5ce783e92eb70f966202"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32ad9cbb760a5ce783e92eb70f966202">&#9670;&nbsp;</a></span>callFunction()</h2>
+<a id="acbe3ffabcc64d090fdbcdb9ceb0bf835"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe3ffabcc64d090fdbcdb9ceb0bf835">&#9670;&nbsp;</a></span>callClosure()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void VM::callFunction </td>
+          <td class="memname">void VM::callClosure </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classCompiledFunction.html">CompiledFunction</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>fn</em>, </td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classClosure.html">Closure</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>closure</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -284,10 +288,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>framesIndex</b></td></
       </table>
 </div><div class="memdoc">
 
-<p>execute the function call </p>
+<p>execute the function closure </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fn</td><td></td></tr>
+    <tr><td class="paramname">closure</td><td></td></tr>
     <tr><td class="paramname">argumentSize</td><td></td></tr>
   </table>
   </dd>
