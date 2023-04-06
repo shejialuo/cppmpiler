@@ -33,6 +33,7 @@ const Opcode Ops::OpGetLocal{22};
 const Opcode Ops::OpSetLocal{23};
 const Opcode Ops::OpGetBuiltin{24};
 const Opcode Ops::OpClosure{25};
+const Opcode Ops::OpGetFree{26};
 
 const std::unordered_map<Opcode, Definition> Code::definitions{
     // For OpConstant, we store the index not the number itself
@@ -141,6 +142,10 @@ const std::unordered_map<Opcode, Definition> Code::definitions{
         // The first operand is the index of the constant, the second operand is
         // the number of free variables
         Definition{"OpClosure", {2, 1}},
+    },
+    {
+        Ops::OpGetFree,
+        Definition{"OpGetFree", {1}},
     },
 };
 

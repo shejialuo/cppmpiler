@@ -170,6 +170,13 @@ public:
    */
   void replaceLastPopWithReturn();
 
+  /**
+   * @brief load the symbol to the stack
+   *
+   * @param symbol
+   */
+  void loadSymbol(std::reference_wrapper<Symbol> symbol);
+
   inline int getScopeIndex() { return scopeIndex; }
 
   inline CompilationScope &currentScope() { return scopes[scopeIndex]; }

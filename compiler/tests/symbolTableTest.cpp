@@ -136,3 +136,74 @@ TEST(SymbolTable, TestDefineResolveBuiltins) {
     }
   }
 }
+
+TEST(SymbolTable, TestResolveFree) {
+  auto global = std::make_shared<SymbolTable>();
+  auto firstLocal = std::make_shared<SymbolTable>(global);
+  auto secondLocal = std::make_shared<SymbolTable>(firstLocal);
+
+  global->define("a");
+  global->define("b");
+
+  firstLocal->define("c");
+  firstLocal->define("d");
+
+  secondLocal->define("e");
+  secondLocal->define("f");
+
+  struct TestData {
+    std::shared_ptr<SymbolTable> table;
+    std::vector<Symbol> expectedSymbols;
+    std::vector<Symbol> expectedFreeSymbols;
+
+    TestData() = default;
+  };
+
+  std::vector<TestData> tests{
+      {
+          firstLocal,
+          {
+              {"a", Symbol::globalScope, 0},
+              {"b", Symbol::globalScope, 1},
+              {"c", Symbol::localScope, 0},
+              {"d", Symbol::localScope, 1},
+          },
+          {},
+      },
+      {
+          secondLocal,
+          {
+              {"a", Symbol::globalScope, 0},
+              {"b", Symbol::globalScope, 1},
+              {"c", Symbol::freeScope, 0},
+              {"d", Symbol::freeScope, 1},
+              {"e", Symbol::localScope, 0},
+              {"f", Symbol::localScope, 1},
+          },
+          {
+              {"c", Symbol::localScope, 0},
+              {"d", Symbol::localScope, 1},
+          },
+      },
+  };
+
+  for (auto &&test : tests) {
+    for (auto &&symbol : test.expectedSymbols) {
+      auto result = test.table->resolve(symbol.name);
+      if (!result.has_value()) {
+        FAIL();
+      }
+
+      if (result.value().get() != symbol) {
+        FAIL();
+      }
+    }
+
+    for (int i = 0; i < test.expectedFreeSymbols.size(); i++) {
+      auto &&result = test.table->getFreeSymbols()[i];
+      if (result != test.expectedFreeSymbols[i]) {
+        FAIL();
+      }
+    }
+  }
+}

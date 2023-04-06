@@ -784,3 +784,82 @@ TEST(Compiler, TestBuiltins) {
     EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
   }
 }
+
+TEST(compiler, TestClosures) {
+  std::vector<CompilerTestCase<std::variant<int, std::vector<Instructions>>>> tests{
+      {
+          "fn (a) {fn (b) {a + b}}",
+          {
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpGetFree, {0}),
+                      Code::make(Ops::OpGetLocal, {0}),
+                      Code::make(Ops::OpAdd, {}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpGetLocal, {0}),
+                      Code::make(Ops::OpClosure, {0, 1}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpClosure, {1, 0}),
+              Code::make(Ops::OpPop, {}),
+
+          },
+      },
+      {
+          "fn(a) {fn(b) {fn(c) { a + b + c} }}",
+          {
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpGetFree, {0}),
+                      Code::make(Ops::OpGetFree, {1}),
+                      Code::make(Ops::OpAdd, {}),
+                      Code::make(Ops::OpGetLocal, {}),
+                      Code::make(Ops::OpAdd, {}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpGetFree, {0}),
+                      Code::make(Ops::OpGetLocal, {0}),
+                      Code::make(Ops::OpClosure, {0, 2}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+              std::variant<int, std::vector<Instructions>>{
+                  std::in_place_index<1>,
+                  {
+                      Code::make(Ops::OpGetLocal, {0}),
+                      Code::make(Ops::OpClosure, {1, 1}),
+                      Code::make(Ops::OpReturnValue, {}),
+                  },
+              },
+          },
+          {
+              Code::make(Ops::OpClosure, {2, 0}),
+              Code::make(Ops::OpPop, {}),
+
+          },
+      },
+
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+    Compiler compiler;
+    compiler.compile(program.get());
+    auto instructions = compiler.getBytecode().instructions;
+    EXPECT_TRUE(testInstructions(test.expectedInstructions, instructions));
+  }
+}

@@ -158,13 +158,7 @@ void Compiler::compile(Node *node) {
       spdlog::error("identifier not found: {}", identifier->value);
       return;
     }
-    if (symbol.value().get().symbolScope == Symbol::localScope) {
-      emit(Ops::OpGetLocal, {symbol.value().get().index});
-    } else if (symbol.value().get().symbolScope == Symbol::globalScope) {
-      emit(Ops::OpGetGlobal, {symbol.value().get().index});
-    } else {
-      emit(Ops::OpGetBuiltin, {symbol.value().get().index});
-    }
+    loadSymbol(symbol.value());
   }
 
   StringLiteral *stringLiteral = dynamic_cast<StringLiteral *>(node);
@@ -205,14 +199,19 @@ void Compiler::compile(Node *node) {
       replaceLastPopWithReturn();
     }
 
+    auto &freeSymbols = symbolTable->getFreeSymbols();
     int numLocals = currentSymbolTable()->getNumDefinition();
     Instructions instructions = leaveScope();
+
+    for (auto &&symbol : freeSymbols) {
+      loadSymbol(symbol);
+    }
 
     std::unique_ptr<Object> compiledFunction = std::make_unique<CompiledFunction>(std::move(instructions), numLocals);
 
     int functionIndex = addConstant(compiledFunction);
 
-    emit(Ops::OpClosure, {functionIndex, 0});
+    emit(Ops::OpClosure, {functionIndex, static_cast<int>(freeSymbols.size())});
   }
 
   ReturnStatement *returnStatement = dynamic_cast<ReturnStatement *>(node);
@@ -309,4 +308,16 @@ void Compiler::replaceLastPopWithReturn() {
   int lastPosition = currentScope().lastInstruction.position;
   replaceInstruction(lastPosition, Code::make(Ops::OpReturnValue, {}));
   currentScope().lastInstruction.op = Ops::OpReturnValue;
+}
+
+void Compiler::loadSymbol(std::reference_wrapper<Symbol> symbol) {
+  if (symbol.get().symbolScope == Symbol::localScope) {
+    emit(Ops::OpGetLocal, {symbol.get().index});
+  } else if (symbol.get().symbolScope == Symbol::globalScope) {
+    emit(Ops::OpGetGlobal, {symbol.get().index});
+  } else if (symbol.get().symbolScope == Symbol::builtinScope) {
+    emit(Ops::OpGetBuiltin, {symbol.get().index});
+  } else {
+    emit(Ops::OpGetFree, {symbol.get().index});
+  }
 }

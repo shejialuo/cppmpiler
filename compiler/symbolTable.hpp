@@ -6,11 +6,13 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 struct Symbol {
   static std::string globalScope;
   static std::string localScope;
   static std::string builtinScope;
+  static std::string freeScope;
 
   std::string name;
   std::string symbolScope;
@@ -31,6 +33,7 @@ private:
   std::shared_ptr<SymbolTable> outer{};
   std::unordered_map<std::string, Symbol> store{};
   int numDefinitions{};
+  std::vector<Symbol> freeSymbols{};
 
 public:
   SymbolTable() = default;
@@ -38,9 +41,11 @@ public:
 
   inline std::shared_ptr<SymbolTable> &getOuter() { return outer; }
   inline int getNumDefinition() { return numDefinitions; }
+  inline std::vector<Symbol> &getFreeSymbols() { return freeSymbols; }
 
   Symbol &define(const std::string &name);
   Symbol &defineBuiltin(int index, const std::string &name);
+  Symbol &defineFree(const Symbol &freeSymbol);
   std::optional<std::reference_wrapper<Symbol>> resolve(const std::string &name);
 };
 
