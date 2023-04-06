@@ -6,5 +6,6 @@ var searchData=
   ['leavescope_84',['leaveScope',['../classCompiler.html#a3c40ede88ddb3e244084a22edf0cc5f6',1,'Compiler']]],
   ['len_85',['len',['../classBuiltins.html#aacecf5bd792594eb059b3071fdf8b2fe',1,'Builtins']]],
   ['letstatement_86',['LetStatement',['../classLetStatement.html',1,'']]],
-  ['lexer_87',['Lexer',['../classLexer.html',1,'']]]
+  ['lexer_87',['Lexer',['../classLexer.html',1,'']]],
+  ['loadsymbol_88',['loadSymbol',['../classCompiler.html#a8a0ca1a35cc0f9d8f016d9d6ad60f0f0',1,'Compiler']]]
 ];
