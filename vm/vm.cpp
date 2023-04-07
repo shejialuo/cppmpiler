@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <vector>
 
 constexpr std::string_view INTEGER_OBJ = "INTEGER";
 constexpr std::string_view BOOLEAN_OBJ = "BOOLEAN";
@@ -129,7 +130,14 @@ void VM::run() {
       int freeVariableSize = int(instructions[ip + 3]);
       currentFrame()->ip += 3;
 
-      pushClosure(constantIndex);
+      pushClosure(constantIndex, freeVariableSize);
+
+    } else if (op == Ops::OpGetFree) {
+      int freeIndex = int(instructions[ip + 1]);
+      currentFrame()->ip++;
+
+      auto currentClosure = currentFrame()->closure;
+      push(currentClosure->free[freeIndex]);
 
     } else {
       spdlog::error("unknown opcode: {}", op);
@@ -373,7 +381,7 @@ void VM::callBuiltin(std::shared_ptr<Builtin> &builtin, int argumentSize) {
   }
 }
 
-void VM::pushClosure(int constantIndex) {
+void VM::pushClosure(int constantIndex, int numFree) {
   auto constant = constants[constantIndex];
   auto fn = std::dynamic_pointer_cast<CompiledFunction>(constant);
   if (fn == nullptr) {
@@ -381,7 +389,14 @@ void VM::pushClosure(int constantIndex) {
     return;
   }
 
-  std::shared_ptr<Object> closure = std::make_shared<Closure>(fn);
+  std::vector<std::shared_ptr<Object>> free{};
+
+  for (int i = 0; i < numFree; i++) {
+    free.push_back(stack[sp - numFree + i]);
+  }
+  sp -= numFree;
+
+  std::shared_ptr<Object> closure = std::make_shared<Closure>(fn, std::move(free));
 
   push(closure);
 }

@@ -112,8 +112,13 @@ public:
 class Closure : public Object {
 public:
   std::shared_ptr<CompiledFunction> fn;
+  std::vector<std::shared_ptr<Object>> free{};
 
+  Closure() = default;
   Closure(std::shared_ptr<CompiledFunction> &fn_) : fn{fn_} {}
+  Closure(std::shared_ptr<CompiledFunction> &fn_, std::vector<std::shared_ptr<Object>> &&free_) : fn{fn_} {
+    free = std::move(free_);
+  }
 
   ObjectType type() override;
   std::string inspect() override;

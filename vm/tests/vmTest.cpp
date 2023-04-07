@@ -442,3 +442,28 @@ TEST(VM, TestBuiltinFunctions) {
     EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
   }
 }
+
+TEST(VM, TestClosures) {
+  std::vector<vmTestCase<int>> tests{
+      {"let newClosure = fn(a) {fn() {a;};};let closure = newClosure(99); closure();", 99},
+      {"let newAdderOuter = fn(a, b) {let c = a + b; fn(d) {let e = d + c; fn(f) {e + f;};};};"
+       "let newAdderInner = newAdderOuter(1, 2); \
+        let adder = newAdderInner(3); \
+        adder(8)",
+       14},
+  };
+
+  for (auto &&test : tests) {
+    auto program = parse(test.input);
+
+    Compiler compiler;
+    compiler.compile(program.get());
+
+    VM vm{std::move(compiler.getBytecode().constants), std::move(compiler.getBytecode().instructions)};
+    vm.run();
+
+    auto stackElem = vm.lastPoppedStackElem();
+
+    EXPECT_TRUE(testExpectedObject(test.expected, stackElem.get()));
+  }
+}

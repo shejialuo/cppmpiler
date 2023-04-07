@@ -174,7 +174,7 @@ public:
    * @brief push the closure to the stack at the run time
    *
    */
-  void pushClosure(int constantIndex);
+  void pushClosure(int constantIndex, int numFree);
 
   /**
    * @brief execute the builtin function call
