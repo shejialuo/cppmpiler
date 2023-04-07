@@ -30,6 +30,6 @@ var searchData=
   ['prefixexpression_122',['PrefixExpression',['../classPrefixExpression.html',1,'']]],
   ['program_123',['Program',['../classProgram.html',1,'']]],
   ['push_124',['push',['../classBuiltins.html#abd9a5007a2bac1c8921b5ee686abfbc8',1,'Builtins::push()'],['../classVM.html#a481beb6f345da89e691570fcbfef257d',1,'VM::push(std::shared_ptr&lt; Object &gt; &amp;object)']]],
-  ['pushclosure_125',['pushClosure',['../classVM.html#ac85d28697e3296fbd63b51ec986b3ef2',1,'VM']]],
+  ['pushclosure_125',['pushClosure',['../classVM.html#afdb513dfe5a23da9891cfe00feedf657',1,'VM']]],
   ['pushframe_126',['pushFrame',['../classVM.html#a210417bd5e66e0450a155dd5670ecba7',1,'VM']]]
 ];
